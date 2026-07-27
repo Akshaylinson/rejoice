@@ -37,7 +37,7 @@
 <link rel="icon" type="image/png" sizes="192x192" href="favicon/android-chrome-192x192.png">
 <link rel="icon" type="image/png" sizes="512x512" href="favicon/android-chrome-512x512.png">
 <link rel="manifest" href="favicon/site.webmanifest">
-<meta name="theme-color" content="#0A2463">
+<meta name="theme-color" content="#FF7D00">
 <link rel="preload" as="image" href="images/hero.jpg">
 
   <script src="https://cdn.tailwindcss.com"></script>
@@ -127,12 +127,20 @@
     
     html {
       scroll-behavior: smooth;
+      margin: 0;
+      padding: 0;
     }
     
     body {
       font-family: 'Exo 2', sans-serif;
       color: #1E1E24;
       overflow-x: hidden;
+      margin: 0;
+      padding: 0;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
     }
     
     .gradient-bg {
@@ -329,7 +337,7 @@
 <body class="font-sans bg-light text-dark scroll-smooth">
  
 <!-- Navigation -->
-<nav class="fixed w-full z-50 gradient-bg text-white shadow-md transition-all duration-300">
+<nav class="fixed top-0 left-0 w-full z-50 gradient-bg text-white shadow-md transition-all duration-300">
   <div class="container mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
     <div class="flex items-center space-x-3">
       <img src="images/logo.png" alt="Rejoice Logo" class="h-10 w-10 object-contain" herf="#home" loading="lazy" >
