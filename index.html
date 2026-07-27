@@ -1489,10 +1489,11 @@
     closeModalBtn.addEventListener('click', hideModal);
     modal.addEventListener('click', e => { if (e.target === modal) hideModal(); });
 
+    const SHEET_URL = 'https://script.google.com/macros/s/AKfycbzlzgJ3iA7zW_xw-7cEjOuasfONaDNG84WaslO-xq3jxvijgjPEpa0iuTWRCza8snFZ/exec';
+
     bookingForm.addEventListener('submit', function(e) {
       e.preventDefault();
       const entry = {
-        id: Date.now(),
         submittedAt: new Date().toISOString(),
         package: document.getElementById('booking-package-name').value,
         name: document.getElementById('bk-name').value.trim(),
@@ -1506,12 +1507,27 @@
         budget: document.getElementById('bk-budget').value,
         notes: document.getElementById('bk-notes').value.trim()
       };
-      const existing = JSON.parse(localStorage.getItem('rejoice_bookings') || '[]');
-      existing.push(entry);
-      localStorage.setItem('rejoice_bookings', JSON.stringify(existing));
-      bookingForm.classList.add('hidden');
-      bookingSuccess.classList.remove('hidden');
-      setTimeout(hideModal, 3500);
+
+      const submitBtn = bookingForm.querySelector('button[type="submit"]');
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Submitting...';
+
+      fetch(SHEET_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(entry)
+      })
+      .then(() => {
+        bookingForm.classList.add('hidden');
+        bookingSuccess.classList.remove('hidden');
+        setTimeout(hideModal, 3500);
+      })
+      .catch(() => {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="fas fa-paper-plane mr-2"></i> Submit Enquiry';
+        alert('Something went wrong. Please try again or contact us directly.');
+      });
     });
   });
 </script>
