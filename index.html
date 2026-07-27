@@ -18,10 +18,11 @@
 <link rel="icon" type="image/png" sizes="512x512" href="favicon/android-chrome-512x512.png">
 <link rel="manifest" href="favicon/site.webmanifest">
 <meta name="theme-color" content="#0A2463">
+<link rel="preload" as="image" href="images/hero.jpg">
 
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"></noscript>
   <script>
     tailwind.config = {
       theme: {
@@ -295,7 +296,7 @@
     
     <!-- Mobile Menu Button -->
     <div class="md:hidden">
-      <button id="menuBtn" class="text-2xl focus:outline-none">
+      <button id="menuBtn" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobileMenu" class="text-2xl focus:outline-none">
         <i class="fas fa-bars"></i>
       </button>
     </div>
@@ -318,15 +319,11 @@
 
   menuBtn.addEventListener('click', () => {
     mobileMenu.classList.toggle('hidden');
-    // Toggle between hamburger and close icon
     const icon = menuBtn.querySelector('i');
-    if (mobileMenu.classList.contains('hidden')) {
-      icon.classList.remove('fa-times');
-      icon.classList.add('fa-bars');
-    } else {
-      icon.classList.remove('fa-bars');
-      icon.classList.add('fa-times');
-    }
+    const isOpen = !mobileMenu.classList.contains('hidden');
+    menuBtn.setAttribute('aria-expanded', isOpen);
+    icon.classList.toggle('fa-bars', !isOpen);
+    icon.classList.toggle('fa-times', isOpen);
   });
 </script>
   
@@ -334,7 +331,7 @@
   <!-- Hero Section -->
   <section id="home" class="min-h-screen flex items-center justify-center relative overflow-hidden">
     <div class="absolute inset-0 bg-black/30 z-10"></div>
-    <img src="images/hero.jpg" alt="Hero Background" class="absolute inset-0 w-full h-full object-cover" />
+    <img src="images/hero.jpg" alt="Hero Background" class="absolute inset-0 w-full h-full object-cover" fetchpriority="high" />
     <div class="container mx-auto px-4 sm:px-6 relative z-20 flex flex-col items-center justify-center py-20">
       <div class="text-center text-white mb-10 max-w-4xl mx-auto">
         <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 animate-fadeIn">
@@ -555,7 +552,7 @@
       <!-- Package Card 1 -->
       <div class="package-card group relative rounded-xl overflow-hidden bg-white shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100" data-category="popular">
         <div class="relative h-64 overflow-hidden">
-          <img src="images/packages/munnar1.webp" alt="Munnar Weekend" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700">
+          <img src="images/packages/munnar1.webp" alt="Munnar Weekend" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700" loading="eager">
           <!-- Discount badge -->
           <div class="absolute top-4 right-4 bg-accent text-white text-xs font-bold px-3 py-1 rounded-full flex items-center shadow-lg">
             <div class="w-2 h-2 bg-white rounded-full mr-2 animate-pulse"></div>
@@ -582,7 +579,7 @@
             <i class="fas fa-users mr-2"></i>
             <span>20+ People</span>
           </div>
-          <p class="text-gray-600 mb-5">Explore the tea gardens and misty hills of Munnar in this perfect weekend getaway.</p>
+          <p class="text-gray-700 mb-5">Explore the tea gardens and misty hills of Munnar in this perfect weekend getaway.</p>
           
           <!-- Features chips -->
           <div class="flex flex-wrap gap-2 mb-5">
@@ -606,7 +603,7 @@
       <!-- Package Card 2 -->
       <div class="package-card group relative rounded-xl overflow-hidden bg-white shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100" data-category="adventure">
         <div class="relative h-64 overflow-hidden">
-          <img src="images/packages/wayanad1.webp" alt="Wayanad Adventure" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700">
+          <img src="images/packages/wayanad1.webp" alt="Wayanad Adventure" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700" loading="lazy">
           <div class="absolute top-4 right-4 bg-secondary text-white text-xs font-bold px-3 py-1 rounded-full flex items-center shadow-lg">
             <i class="fas fa-bolt mr-2"></i>
             Adventure
@@ -627,7 +624,7 @@
             <i class="fas fa-users mr-2"></i>
             <span>10+ People</span>
           </div>
-          <p class="text-gray-600 mb-5">Trek through lush forests and explore ancient caves with our experienced guides.</p>
+          <p class="text-gray-700 mb-5">Trek through lush forests and explore ancient caves with our experienced guides.</p>
           
           <div class="flex flex-wrap gap-2 mb-5">
             <span class="feature-chip"><i class="fas fa-hiking mr-1"></i> Expert Guide</span>
@@ -650,7 +647,7 @@
       <!-- Package Card 3 -->
       <div class="package-card group relative rounded-xl overflow-hidden bg-white shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100" data-category="luxury">
         <div class="relative h-64 overflow-hidden">
-          <img src="images/packages/houseboat1.webp" alt="Luxury Houseboat" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700">
+          <img src="images/packages/houseboat1.webp" alt="Luxury Houseboat" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700" loading="lazy">
           <div class="absolute top-4 right-4 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full flex items-center shadow-lg">
             <i class="fas fa-crown mr-2"></i>
             Luxury
@@ -674,7 +671,7 @@
             <i class="fas fa-users mr-2"></i>
             <span>Private</span>
           </div>
-          <p class="text-gray-600 mb-5">Luxury houseboat experience with premium amenities and personalized service.</p>
+          <p class="text-gray-700 mb-5">Luxury houseboat experience with premium amenities and personalized service.</p>
           
           <div class="flex flex-wrap gap-2 mb-5">
             <span class="feature-chip"><i class="fas fa-umbrella-beach mr-1"></i> Private Deck</span>
@@ -697,7 +694,7 @@
       <!-- Hidden Package Cards (will be shown when clicking "View More") -->
       <div class="package-card hidden group relative rounded-xl overflow-hidden bg-white shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100" data-category="popular">
         <div class="relative h-64 overflow-hidden">
-          <img src="images/packages/kashmir2.webp" alt="Kashmir Valley" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700">
+          <img src="images/packages/kashmir2.webp" alt="Kashmir Valley" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700" loading="lazy">
           <div class="absolute top-4 right-4 bg-accent text-white text-xs font-bold px-3 py-1 rounded-full flex items-center shadow-lg">
             Popular
           </div>
@@ -739,7 +736,7 @@
       
       <div class="package-card hidden group relative rounded-xl overflow-hidden bg-white shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100" data-category="adventure">
         <div class="relative h-64 overflow-hidden">
-          <img src="images/packages/ladakh1.webp" alt="Ladakh Expedition" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700">
+          <img src="images/packages/ladakh1.webp" alt="Ladakh Expedition" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700" loading="lazy">
           <div class="absolute top-4 right-4 bg-secondary text-white text-xs font-bold px-3 py-1 rounded-full flex items-center shadow-lg">
             Adventure
           </div>
@@ -782,7 +779,7 @@
     
     <div class="package-card hidden group relative rounded-xl overflow-hidden bg-white shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100" data-category="cultural">
   <div class="relative h-64 overflow-hidden">
-    <img src="images/packages/hampi2.webp" alt="Hampi Heritage" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700">
+    <img src="images/packages/hampi2.webp" alt="Hampi Heritage" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700" loading="lazy">
     <div class="absolute top-4 right-4 bg-secondary text-white text-xs font-bold px-3 py-1 rounded-full flex items-center shadow-lg">
       Cultural
     </div>
@@ -825,7 +822,7 @@
 
 <div class="package-card hidden group relative rounded-xl overflow-hidden bg-white shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100" data-category="wildlife">
   <div class="relative h-64 overflow-hidden">
-    <img src="images/packages/badhipur1.webp" alt="Bandipur Safari" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700">
+    <img src="images/packages/badhipur1.webp" alt="Bandipur Safari" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700" loading="lazy">
     <div class="absolute top-4 right-4 bg-secondary text-white text-xs font-bold px-3 py-1 rounded-full flex items-center shadow-lg">
       Wildlife
     </div>
@@ -868,7 +865,7 @@
 
 <div class="package-card hidden group relative rounded-xl overflow-hidden bg-white shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100" data-category="spiritual">
   <div class="relative h-64 overflow-hidden">
-    <img src="images/packages/ramesharam2.webp" alt="Rameshwaram Pilgrimage" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700">
+    <img src="images/packages/ramesharam2.webp" alt="Rameshwaram Pilgrimage" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700" loading="lazy">
     <div class="absolute top-4 right-4 bg-secondary text-white text-xs font-bold px-3 py-1 rounded-full flex items-center shadow-lg">
       Spiritual
     </div>
@@ -910,7 +907,7 @@
 
 <div class="package-card hidden group relative rounded-xl overflow-hidden bg-white shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100" data-category="adventure">
   <div class="relative h-64 overflow-hidden">
-    <img src="images/packages/coorg1.webp" alt="Coorg Adventure" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700">
+    <img src="images/packages/coorg1.webp" alt="Coorg Adventure" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700" loading="lazy">
     <div class="absolute top-4 right-4 bg-secondary text-white text-xs font-bold px-3 py-1 rounded-full flex items-center shadow-lg">
       Adventure
     </div>
@@ -952,7 +949,7 @@
      
       <div class="package-card hidden group relative rounded-xl overflow-hidden bg-white shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100" data-category="hillstation">
   <div class="relative h-64 overflow-hidden">
-    <img src="images/packages/ooty2.webp" alt="Ooty Hill Retreat" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700">
+    <img src="images/packages/ooty2.webp" alt="Ooty Hill Retreat" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700" loading="lazy">
     <div class="absolute top-4 right-4 bg-secondary text-white text-xs font-bold px-3 py-1 rounded-full flex items-center shadow-lg">
       Hill Station
     </div>
@@ -994,7 +991,7 @@
 
 <div class="package-card hidden group relative rounded-xl overflow-hidden bg-white shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100" data-category="cultural">
   <div class="relative h-64 overflow-hidden">
-    <img src="images/packages/madurai2.webp" alt="Madurai Temple Tour" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700">
+    <img src="images/packages/madurai2.webp" alt="Madurai Temple Tour" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700" loading="lazy">
     <div class="absolute top-4 right-4 bg-secondary text-white text-xs font-bold px-3 py-1 rounded-full flex items-center shadow-lg">
       Cultural
     </div>
@@ -1036,7 +1033,7 @@
 
 <div class="package-card hidden group relative rounded-xl overflow-hidden bg-white shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100" data-category="beach">
   <div class="relative h-64 overflow-hidden">
-    <img src="images/packages/kovallam1.webp" alt="Kovalam Beach Stay" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700">
+    <img src="images/packages/kovallam1.webp" alt="Kovalam Beach Stay" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700" loading="lazy">
     <div class="absolute top-4 right-4 bg-secondary text-white text-xs font-bold px-3 py-1 rounded-full flex items-center shadow-lg">
       Beach
     </div>
@@ -1078,7 +1075,7 @@
 
 <div class="package-card hidden group relative rounded-xl overflow-hidden bg-white shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100" data-category="nature">
   <div class="relative h-64 overflow-hidden">
-    <img src="images/packages/athirapilly.webp" alt="Athirapilly Waterfalls" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700">
+    <img src="images/packages/athirapilly.webp" alt="Athirapilly Waterfalls" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700" loading="lazy">
     <div class="absolute top-4 right-4 bg-secondary text-white text-xs font-bold px-3 py-1 rounded-full flex items-center shadow-lg">
       Nature
     </div>
@@ -1121,7 +1118,7 @@
       
       <div class="package-card hidden group relative rounded-xl overflow-hidden bg-white shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100" data-category="luxury">
         <div class="relative h-64 overflow-hidden">
-          <img src="images/packages/goa2.webp" alt="Goa Retreat" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700">
+          <img src="images/packages/goa2.webp" alt="Goa Retreat" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700" loading="lazy">
           <div class="absolute top-4 right-4 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full flex items-center shadow-lg">
             Luxury
           </div>
@@ -1206,12 +1203,12 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1"><i class="fas fa-user mr-1 text-accent"></i> Full Name <span class="text-red-500">*</span></label>
-            <input type="text" id="bk-name" required placeholder="Your full name"
+            <input type="text" id="bk-name" required placeholder="Your full name" autocomplete="name"
               class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition">
           </div>
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1"><i class="fas fa-phone mr-1 text-accent"></i> Phone Number <span class="text-red-500">*</span></label>
-            <input type="tel" id="bk-phone" required placeholder="+91 XXXXX XXXXX"
+            <input type="tel" id="bk-phone" required placeholder="+91 XXXXX XXXXX" autocomplete="tel"
               class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition">
           </div>
         </div>
@@ -1220,12 +1217,12 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1"><i class="fas fa-envelope mr-1 text-accent"></i> Email Address <span class="text-red-500">*</span></label>
-            <input type="email" id="bk-email" required placeholder="you@example.com"
+            <input type="email" id="bk-email" required placeholder="you@example.com" autocomplete="email"
               class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition">
           </div>
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1"><i class="fas fa-map-marker-alt mr-1 text-accent"></i> Travelling From <span class="text-red-500">*</span></label>
-            <input type="text" id="bk-location" required placeholder="City / State"
+            <input type="text" id="bk-location" required placeholder="City / State" autocomplete="address-level2"
               class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition">
           </div>
         </div>
@@ -3113,7 +3110,7 @@
       </div>
       
       <div class="border-t border-gray-800 pt-8 text-center text-gray-400 text-sm">
-        <p>&copy;2025 Rejoice Tour Packages. All rights reserved.</p>
+        <p>&copy;<span id="copy-year"></span> Rejoice Tour Packages. All rights reserved.</p>
       </div>
     </div>
   </footer>
@@ -3206,5 +3203,6 @@
       });
     });
   </script>
+<script>document.getElementById('copy-year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
