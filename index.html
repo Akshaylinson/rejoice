@@ -1,0 +1,3108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rejoice - Premium Travel Experiences</title>
+
+<meta name="application-name" content="Rejoice Tour Packages">
+<meta name="apple-mobile-web-app-title" content="Rejoice">
+
+
+  <!-- Favicon & App Icons -->
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/x-icon" href="/favicon/favicon.ico">
+
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon/android-chrome-192x192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/favicon/android-chrome-512x512.png">
+
+<link rel="manifest" href="/favicon/site.webmanifest">
+<meta name="theme-color" content="#0A2463">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#0A2463',
+            secondary: '#3E92CC',
+            accent: '#FF7D00',
+            dark: '#1E1E24',
+            light: '#F8F7FF',
+          },
+          fontFamily: {
+            sans: ['"Exo 2"', 'sans-serif'],
+            heading: ['"Exo 2"', 'sans-serif'],
+          },
+          fontSize: {
+            'heading-1': ['3.5rem', '1.1'],
+            'heading-2': ['2.5rem', '1.2'],
+            'heading-3': ['2rem', '1.3'],
+            'heading-4': ['1.5rem', '1.4'],
+          },
+          animation: {
+            'float': 'float 6s ease-in-out infinite',
+            'fadeIn': 'fadeIn 1s ease-in',
+            'bounce-slow': 'bounce 2s infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-20px)' },
+            },
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' },
+            }
+          },
+          spacing: {
+            'section': '5rem',
+            'section-lg': '8rem',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700;800&display=swap');
+    
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    body {
+      font-family: 'Exo 2', sans-serif;
+      color: #1E1E24;
+      overflow-x: hidden;
+    }
+    
+    .gradient-bg {
+      background: linear-gradient(135deg, #0A2463 0%, #3E92CC 100%);
+    }
+    
+    .glass-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .parallax {
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    
+    .scroll-snap {
+      scroll-snap-type: y mandatory;
+    }
+    
+    .scroll-snap-section {
+      scroll-snap-align: start;
+    }
+    
+    .heading-decorator {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .heading-decorator::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 0.25rem;
+      background-color: #FF7D00;
+      opacity: 0.3;
+      border-radius: 0.125rem;
+    }
+    
+    .btn-primary {
+      background-color: #FF7D00;
+      color: white;
+      font-weight: 600;
+      padding: 0.75rem 2rem;
+      border-radius: 9999px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+    
+    .btn-primary:hover {
+      background-color: #E66F00;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+    
+    .btn-secondary {
+      background-color: transparent;
+      color: #0A2463;
+      font-weight: 600;
+      padding: 0.75rem 2rem;
+      border-radius: 9999px;
+      border: 2px solid #0A2463;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-secondary:hover {
+      background-color: rgba(10, 36, 99, 0.1);
+      transform: translateY(-2px);
+    }
+    
+    .btn-white {
+      background-color: transparent;
+      color: white;
+      font-weight: 600;
+      padding: 0.75rem 2rem;
+      border-radius: 9999px;
+      border: 2px solid white;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-white:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+    
+    .card {
+      transition: all 0.3s ease;
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+    
+    .section-padding {
+      padding-top: 5rem;
+      padding-bottom: 5rem;
+    }
+    
+    .section-padding-lg {
+      padding-top: 8rem;
+      padding-bottom: 8rem;
+    }
+    
+    @keyframes scroll {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(calc(-100% + 100vw));
+      }
+    }
+    
+    .animate-scroll {
+      animation: scroll 60s linear infinite;
+    }
+    
+    .animate-scroll:hover {
+      animation-play-state: paused;
+    }
+    
+    .perspective {
+      perspective: 1200px;
+    }
+    
+    .preserve-3d {
+      transform-style: preserve-3d;
+    }
+    
+    .blog-flip-inner {
+      transition: transform 0.6s cubic-bezier(.4,2,.6,1);
+      transform-style: preserve-3d;
+      min-height: 100%;
+      height: 100%;
+    }
+    
+    .blog-flip-front, .blog-flip-back {
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      min-height: 100%;
+      height: 100%;
+    }
+    
+    .blog-flip-back {
+      transform: rotateY(180deg);
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .blog-flip-card.flipped .blog-flip-inner {
+      transform: rotateY(180deg);
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 1024px) {
+      .section-padding {
+        padding-top: 4rem;
+        padding-bottom: 4rem;
+      }
+      
+      .section-padding-lg {
+        padding-top: 6rem;
+        padding-bottom: 6rem;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .section-padding {
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+      }
+      
+      .section-padding-lg {
+        padding-top: 4rem;
+        padding-bottom: 4rem;
+      }
+    }
+  </style>
+</head>
+<body class="font-sans bg-light text-dark scroll-smooth">
+ 
+<!-- Navigation -->
+<nav class="fixed w-full z-50 gradient-bg text-white shadow-md transition-all duration-300">
+  <div class="container mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
+    <div class="flex items-center space-x-3">
+      <img src="images/logo.png" alt="Rejoice Logo" class="h-10 w-10 object-contain" herf="#home">
+      <span class="text-2xl font-bold tracking-wider">REJOICE</span>
+    </div>
+    
+    <!-- Desktop Navigation -->
+    <div class="hidden md:flex space-x-6 lg:space-x-8 items-center">
+      <a href="#home" class="font-medium hover:text-accent transition duration-300 py-2">Home</a>
+      <a href="#about" class="font-medium hover:text-accent transition duration-300 py-2">About</a>
+      <!-- <a href="#destinations" class="font-medium hover:text-accent transition duration-300 py-2">Destinations</a> -->
+      <a href="#packages" class="font-medium hover:text-accent transition duration-300 py-2">Packages</a>
+      <a href="#testimonials" class="font-medium hover:text-accent transition duration-300 py-2">Testimonials</a>
+      <a href="#contact" class="font-medium hover:text-accent transition duration-300 py-2">Contact</a>
+      <a href="https://wa.me/9562585128?text=Hi%20Rejoice%20Team,%20I%20would%20like%20to%20book%20a%20call%20about%20your%20travel%20services." target="_blank" class="ml-4 bg-orange-500 hover:bg-orange-600 text-white font-medium py-2 px-4 rounded-lg transition duration-300">
+        BOOK A CALL
+      </a>
+    </div>
+    
+    <!-- Mobile Menu Button -->
+    <div class="md:hidden">
+      <button id="menuBtn" class="text-2xl focus:outline-none">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu (hidden by default) -->
+  <div id="mobileMenu" class="hidden md:hidden bg-gray-900 w-full px-4 py-3">
+    <a href="#about" class="block font-medium hover:text-accent transition duration-300 py-2">About</a>
+    <a href="#packages" class="block font-medium hover:text-accent transition duration-300 py-2">Packages</a>
+    <a href="#testimonials" class="block font-medium hover:text-accent transition duration-300 py-2">Testimonials</a>
+    <a href="#contact" class="block font-medium hover:text-accent transition duration-300 py-2">Contact</a>
+    <a href="https://wa.me/9562585128?text=Hi%20Rejoice%20Team,%20I%20would%20like%20to%20book%20a%20call%20about%20your%20travel%20services." class="block font-medium hover:text-accent transition duration-300 py-2">BOOK A CALL</a>
+  </div>
+</nav>
+
+<!-- JavaScript for Mobile Menu Toggle -->
+<script>
+  const menuBtn = document.getElementById('menuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  menuBtn.addEventListener('click', () => {
+    mobileMenu.classList.toggle('hidden');
+    // Toggle between hamburger and close icon
+    const icon = menuBtn.querySelector('i');
+    if (mobileMenu.classList.contains('hidden')) {
+      icon.classList.remove('fa-times');
+      icon.classList.add('fa-bars');
+    } else {
+      icon.classList.remove('fa-bars');
+      icon.classList.add('fa-times');
+    }
+  });
+</script>
+  
+
+  <!-- Hero Section -->
+  <section id="home" class="min-h-screen flex items-center justify-center relative overflow-hidden">
+    <div class="absolute inset-0 bg-black/30 z-10"></div>
+    <img src="images/hero.jpg" alt="Hero Background" class="absolute inset-0 w-full h-full object-cover" />
+    <div class="container mx-auto px-4 sm:px-6 relative z-20 flex flex-col items-center justify-center py-20">
+      <div class="text-center text-white mb-10 max-w-4xl mx-auto">
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 animate-fadeIn">
+          <span class="text-accent">REJOICE<br></span> IN EVERY JOURNEY
+        </h1>
+        <p class="text-lg sm:text-xl md:text-2xl mb-8 mx-auto animate-fadeIn animation-delay-200">
+          Your dream trip, expertly planned. Celebrate with 10k+ happy travelers!
+        </p>
+        <div class="flex flex-wrap justify-center gap-4 animate-fadeIn animation-delay-400">
+          <a href="#packages" class="btn-primary">
+            Explore Packages
+          </a>
+          <a href="https://wa.me/9562585128?text=Hi%20Rejoice%20Team,%20I%20would%20like%20to%20book%20a%20trip%20with%20your%20travel%20services."" class="btn-white">
+            Book My Trip
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20 animate-bounce-slow">
+      <a href="#about" class="text-white text-2xl">
+        <i class="fas fa-chevron-down"></i>
+      </a>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="section-padding-lg bg-gradient-to-br from-white via-blue-50 to-light relative overflow-hidden">
+    <!-- Decorative elements -->
+    <div class="absolute top-0 left-0 w-64 h-64 opacity-10 pointer-events-none z-0">
+      <svg viewBox="0 0 200 200" fill="none"><circle cx="100" cy="100" r="100" fill="#0A2463"/></svg>
+    </div>
+    <div class="absolute bottom-0 right-0 w-80 h-80 opacity-10 pointer-events-none z-0">
+      <svg viewBox="0 0 320 320" fill="none"><rect width="320" height="320" rx="160" fill="#FF7D00"/></svg>
+    </div>
+    
+    <div class="container mx-auto px-4 sm:px-6 relative z-10">
+      <div class="flex flex-col lg:flex-row items-center gap-8 xl:gap-16">
+        <!-- Left: Text Content -->
+        <div class="lg:w-1/2 w-full">
+          <h2 class="text-3xl md:text-4xl font-bold mb-6 heading-decorator">
+            About <span class="text-accent">Rejoice</span>
+          </h2>
+          <p class="text-lg text-gray-700 mb-8 leading-relaxed">
+            <span class="font-semibold text-accent">Rejoice</span> is where journeys become stories. Since 2018, we've been curating transformative travel experiences that blend luxury, authenticity, and adventure. Our passion is to connect you with the soul of every destination—seamlessly, safely, and memorably.
+          </p>
+          
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
+            <div class="glass-card p-6 rounded-xl flex flex-col items-start shadow-md hover:shadow-lg transition">
+              <span class="text-3xl text-accent mb-2"><i class="fas fa-globe-asia"></i></span>
+              <span class="text-xl font-bold mb-1">640+ Destinations</span>
+              <span class="text-gray-500 text-sm">Across India & beyond</span>
+            </div>
+            
+            <div class="glass-card p-6 rounded-xl flex flex-col items-start shadow-md hover:shadow-lg transition">
+              <span class="text-3xl text-secondary mb-2"><i class="fas fa-handshake"></i></span>
+              <span class="text-xl font-bold mb-1">5k+ Partners</span>
+              <span class="text-gray-500 text-sm">Hotels & local guides</span>
+            </div>
+            
+            <div class="glass-card p-6 rounded-xl flex flex-col items-start shadow-md hover:shadow-lg transition">
+              <span class="text-3xl text-primary mb-2"><i class="fas fa-users"></i></span>
+              <span class="text-xl font-bold mb-1">20k+ Travelers</span>
+              <span class="text-gray-500 text-sm">Happy & loyal clients</span>
+            </div>
+            
+            <div class="glass-card p-6 rounded-xl flex flex-col items-start shadow-md hover:shadow-lg transition">
+              <span class="text-3xl text-accent mb-2"><i class="fas fa-award"></i></span>
+              <span class="text-xl font-bold mb-1">Award-Winning</span>
+              <span class="text-gray-500 text-sm">Recognized for excellence</span>
+            </div>
+          </div>
+          
+          <div class="flex flex-wrap gap-4">
+            <a href="#packages" class="btn-primary">
+              Explore Packages
+            </a>
+            <a href="#contact" class="btn-secondary">
+              Custom Trip
+            </a>
+          </div>
+        </div>
+        
+        <!-- Right: Interactive Trip Planner Widget -->
+        <div class="lg:w-1/2 w-full mt-10 lg:mt-0">
+          <div class="glass-card rounded-2xl shadow-xl p-6 md:p-8 border border-white/30 backdrop-blur-md relative">
+            <div class="absolute -top-8 right-8 bg-accent text-white rounded-full w-16 h-16 flex items-center justify-center shadow-lg text-3xl animate-float z-10">
+              <i class="fas fa-map-signs"></i>
+            </div>
+            <h3 class="text-2xl font-bold mb-6 text-primary flex items-center gap-2">
+              Plan Your Dream Trip
+            </h3>
+            <form id="tripPlannerForm" class="space-y-5">
+              <div>
+                <label class="block text-gray-700 mb-2 font-medium" for="planner-destination">Destination</label>
+                <select id="planner-destination" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent bg-white">
+                  <option value="">Select destination</option>
+                  <option value="Ladakh">Ladakh</option>
+                  <option value="Goa">Goa</option>
+                  <option value="Kerala">Kerala</option>
+                  <option value="Kashmir">Kashmir</option>
+                  <option value="Custom">Custom</option>
+                </select>
+              </div>
+              
+              <div class="flex flex-col sm:flex-row gap-4">
+                <div class="w-full sm:w-1/2">
+                  <label class="block text-gray-700 mb-2 font-medium" for="planner-from">From</label>
+                  <input type="date" id="planner-from" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent bg-white">
+                </div>
+                <div class="w-full sm:w-1/2">
+                  <label class="block text-gray-700 mb-2 font-medium" for="planner-to">To</label>
+                  <input type="date" id="planner-to" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent bg-white">
+                </div>
+              </div>
+              
+              <div>
+                <label class="block text-gray-700 mb-2 font-medium" for="planner-travelers">Travelers</label>
+                <input type="number" min="1" max="20" id="planner-travelers" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent bg-white" placeholder="Number of travelers">
+              </div>
+              
+              <div>
+                <label class="block text-gray-700 mb-2 font-medium" for="planner-type">Trip Type</label>
+                <select id="planner-type" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent bg-white">
+                  <option value="">Select type</option>
+                  <option value="Adventure">Adventure</option>
+                  <option value="Family">Family</option>
+                  <option value="Honeymoon">Honeymoon</option>
+                  <option value="Corporate">Corporate</option>
+                  <option value="Custom">Custom</option>
+                </select>
+              </div>
+              
+              <button type="submit" class="w-full bg-primary hover:bg-blue-800 text-white font-bold py-3 px-6 rounded-lg transition transform hover:scale-[1.02] shadow-md">
+                Plan My Trip
+              </button>
+            </form>
+            <div id="tripPlannerResult" class="mt-6 hidden bg-green-50 border border-green-200 text-green-700 rounded-lg p-4 text-center"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Special Offers Section -->
+  <section class="section-padding bg-gradient-to-r from-primary to-secondary text-white">
+    <div class="container mx-auto px-4 sm:px-6">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold mb-3">Special Offers</h2>
+        <p class="opacity-90">Limited-time deals for your next adventure</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 transition hover:scale-[1.02]">
+          <div class="bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full inline-block mb-3">
+            -25% OFF
+          </div>
+          <h3 class="text-xl font-bold mb-2">Early Bird Ladakh</h3>
+          <p class="mb-4">Book 3 months in advance and save 25% on our Himalayan adventure</p>
+          <div class="flex items-center text-sm opacity-80">
+            <i class="fas fa-clock mr-2"></i>
+            <span>Offer ends: June 30, 2025</span>
+          </div>
+        </div>
+        
+        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 transition hover:scale-[1.02]">
+          <div class="bg-accent text-white text-xs font-bold px-3 py-1 rounded-full inline-block mb-3">
+            FAMILY DEAL
+          </div>
+          <h3 class="text-xl font-bold mb-2">Goa Family Package</h3>
+          <p class="mb-4">Kids stay & eat free at our partner resorts in North Goa</p>
+          <div class="flex items-center text-sm opacity-80">
+            <i class="fas fa-clock mr-2"></i>
+            <span>Valid until: August 15, 2026</span>
+          </div>
+        </div>
+        
+        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 transition hover:scale-[1.02]">
+          <div class="bg-primary text-white text-xs font-bold px-3 py-1 rounded-full inline-block mb-3">
+            GROUP OFFER
+          </div>
+          <h3 class="text-xl font-bold mb-2">Group Discount</h3>
+          <p class="mb-4">Groups of 6+ get 15% off on all domestic packages</p>
+          <div class="flex items-center text-sm opacity-80">
+            <i class="fas fa-clock mr-2"></i>
+            <span>Year-round offer</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+<!-- Packages Section with HubSpot Integration -->
+<section id="packages" class="section-padding bg-gradient-to-b from-light to-gray-50 relative overflow-hidden">
+  <!-- Decorative elements -->
+  <div class="absolute inset-0 overflow-hidden pointer-events-none">
+    <div class="absolute top-0 left-0 w-full h-full opacity-5">
+      <div class="grid-pattern"></div>
+    </div>
+    <div class="absolute -right-20 -top-20 w-64 h-64 bg-accent/10 rounded-full filter blur-3xl"></div>
+    <div class="absolute -left-20 -bottom-20 w-96 h-96 bg-primary/10 rounded-full filter blur-3xl"></div>
+  </div>
+
+  <div class="container mx-auto px-4 sm:px-6 relative z-10">
+    <div class="text-center mb-16">
+      <div class="inline-block relative">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4 heading-decorator">
+          Our Travel Packages
+        </h2>
+      </div>
+      <p class="text-gray-600 max-w-2xl mx-auto mt-6 text-lg">
+        Carefully curated experiences that showcase the best of each destination
+      </p>
+    </div>
+
+    <!-- Packages Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="package-container">
+      <!-- Package Card 1 -->
+      <div class="package-card group relative rounded-xl overflow-hidden bg-white shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100" data-category="popular">
+        <div class="relative h-64 overflow-hidden">
+          <img src="images/packages/munnar1.webp" alt="Munnar Weekend" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700">
+          <!-- Discount badge -->
+          <div class="absolute top-4 right-4 bg-accent text-white text-xs font-bold px-3 py-1 rounded-full flex items-center shadow-lg">
+            <div class="w-2 h-2 bg-white rounded-full mr-2 animate-pulse"></div>
+            35% OFF
+          </div>
+          <!-- Price tag -->
+          <div class="absolute bottom-4 left-4 bg-white/90 text-dark font-bold px-4 py-2 rounded-lg backdrop-blur-sm border border-gray-200 shadow-sm">
+            <span class="text-sm font-normal text-gray-500 line-through mr-1">₹20,999</span>
+            <span class="text-accent">₹13,999</span>
+          </div>
+        </div>
+        <div class="p-6">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="text-xl font-bold text-dark">Munnar Weekend</h3>
+            <div class="flex items-center text-yellow-400">
+              <i class="fas fa-star"></i>
+              <span class="ml-1 text-sm text-gray-600">4.8</span>
+            </div>
+          </div>
+          <div class="flex items-center text-gray-500 text-sm mb-4">
+            <i class="far fa-clock mr-2"></i>
+            <span>2 Days</span>
+            <span class="mx-2">•</span>
+            <i class="fas fa-users mr-2"></i>
+            <span>20+ People</span>
+          </div>
+          <p class="text-gray-600 mb-5">Explore the tea gardens and misty hills of Munnar in this perfect weekend getaway.</p>
+          
+          <!-- Features chips -->
+          <div class="flex flex-wrap gap-2 mb-5">
+            <span class="feature-chip"><i class="fas fa-utensils mr-1"></i> Meals Included</span>
+            <span class="feature-chip"><i class="fas fa-hotel mr-1"></i> 3-Star Hotel</span>
+            <span class="feature-chip"><i class="fas fa-map-marked-alt mr-1"></i> Guided Tours</span>
+          </div>
+          
+          <div class="flex justify-between items-center pt-4 border-t border-gray-100">
+            <a href="#contact" class="text-accent font-medium hover:text-primary transition flex items-center group">
+              Explore Details
+              <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform"></i>
+            </a>
+            <button class="btn-primary text-sm py-2 px-4 book-now-btn" data-package="Munnar Weekend">
+              Book Now
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Package Card 2 -->
+      <div class="package-card group relative rounded-xl overflow-hidden bg-white shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100" data-category="adventure">
+        <div class="relative h-64 overflow-hidden">
+          <img src="images/packages/wayanad1.webp" alt="Wayanad Adventure" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700">
+          <div class="absolute top-4 right-4 bg-secondary text-white text-xs font-bold px-3 py-1 rounded-full flex items-center shadow-lg">
+            <i class="fas fa-bolt mr-2"></i>
+            Adventure
+          </div>
+        </div>
+        <div class="p-6">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="text-xl font-bold text-dark">Wayanad Trekking</h3>
+            <div class="flex items-center text-yellow-400">
+              <i class="fas fa-star"></i>
+              <span class="ml-1 text-sm text-gray-600">4.9</span>
+            </div>
+          </div>
+          <div class="flex items-center text-gray-500 text-sm mb-4">
+            <i class="far fa-clock mr-2"></i>
+            <span>3 Days</span>
+            <span class="mx-2">•</span>
+            <i class="fas fa-users mr-2"></i>
+            <span>10+ People</span>
+          </div>
+          <p class="text-gray-600 mb-5">Trek through lush forests and explore ancient caves with our experienced guides.</p>
+          
+          <div class="flex flex-wrap gap-2 mb-5">
+            <span class="feature-chip"><i class="fas fa-hiking mr-1"></i> Expert Guide</span>
+            <span class="feature-chip"><i class="fas fa-camera mr-1"></i> Photography</span>
+            <span class="feature-chip"><i class="fas fa-campground mr-1"></i> Camping</span>
+          </div>
+          
+          <div class="flex justify-between items-center pt-4 border-t border-gray-100">
+            <a href="#contact" class="text-secondary font-medium hover:text-primary transition flex items-center group">
+              Explore Details
+              <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform"></i>
+            </a>
+            <button class="btn-primary text-sm py-2 px-4 book-now-btn" data-package="Wayanad Trekking">
+              Book Now
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Package Card 3 -->
+      <div class="package-card group relative rounded-xl overflow-hidden bg-white shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100" data-category="luxury">
+        <div class="relative h-64 overflow-hidden">
+          <img src="images/packages/houseboat1.webp" alt="Luxury Houseboat" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700">
+          <div class="absolute top-4 right-4 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full flex items-center shadow-lg">
+            <i class="fas fa-crown mr-2"></i>
+            Luxury
+          </div>
+          <div class="absolute bottom-4 left-4 bg-white/90 text-dark font-bold px-4 py-2 rounded-lg backdrop-blur-sm border border-gray-200 shadow-sm">
+            <span class="text-primary">₹12,999</span>
+          </div>
+        </div>
+        <div class="p-6">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="text-xl font-bold text-dark">Premium Houseboat</h3>
+            <div class="flex items-center text-yellow-400">
+              <i class="fas fa-star"></i>
+              <span class="ml-1 text-sm text-gray-600">5.0</span>
+            </div>
+          </div>
+          <div class="flex items-center text-gray-500 text-sm mb-4">
+            <i class="far fa-clock mr-2"></i>
+            <span>2 Nights</span>
+            <span class="mx-2">•</span>
+            <i class="fas fa-users mr-2"></i>
+            <span>Private</span>
+          </div>
+          <p class="text-gray-600 mb-5">Luxury houseboat experience with premium amenities and personalized service.</p>
+          
+          <div class="flex flex-wrap gap-2 mb-5">
+            <span class="feature-chip"><i class="fas fa-umbrella-beach mr-1"></i> Private Deck</span>
+            <span class="feature-chip"><i class="fas fa-concierge-bell mr-1"></i> Butler Service</span>
+            <span class="feature-chip"><i class="fas fa-fish mr-1"></i> Fresh Seafood</span>
+          </div>
+          
+          <div class="flex justify-between items-center pt-4 border-t border-gray-100">
+            <a href="#contact" class="text-primary font-medium hover:text-secondary transition flex items-center group">
+              Explore Details
+              <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform"></i>
+            </a>
+            <button class="btn-primary text-sm py-2 px-4 book-now-btn" data-package="Premium Houseboat">
+              Book Now
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Hidden Package Cards (will be shown when clicking "View More") -->
+      <div class="package-card hidden group relative rounded-xl overflow-hidden bg-white shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100" data-category="popular">
+        <div class="relative h-64 overflow-hidden">
+          <img src="images/packages/kashmir2.webp" alt="Kashmir Valley" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700">
+          <div class="absolute top-4 right-4 bg-accent text-white text-xs font-bold px-3 py-1 rounded-full flex items-center shadow-lg">
+            Popular
+          </div>
+        </div>
+        <div class="p-6">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="text-xl font-bold text-dark">Kashmir Paradise</h3>
+            <div class="flex items-center text-yellow-400">
+              <i class="fas fa-star"></i>
+              <span class="ml-1 text-sm text-gray-600">4.7</span>
+            </div>
+          </div>
+          <div class="flex items-center text-gray-500 text-sm mb-4">
+            <i class="far fa-clock mr-2"></i>
+            <span>5 Days</span>
+            <span class="mx-2">•</span>
+            <i class="fas fa-users mr-2"></i>
+            <span>4-8 People</span>
+          </div>
+          <p class="text-gray-600 mb-5">Experience the breathtaking beauty of Kashmir's valleys, lakes, and mountains.</p>
+          
+          <div class="flex flex-wrap gap-2 mb-5">
+            <span class="feature-chip"><i class="fas fa-snowflake mr-1"></i> Snow Activities</span>
+            <span class="feature-chip"><i class="fas fa-hotel mr-1"></i> 4-Star Stay</span>
+            <span class="feature-chip"><i class="fas fa-ship mr-1"></i> Shikara Ride</span>
+          </div>
+          
+          <div class="flex justify-between items-center pt-4 border-t border-gray-100">
+            <a href="#contact" class="text-accent font-medium hover:text-primary transition flex items-center group">
+              Explore Details
+              <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform"></i>
+            </a>
+            <button class="btn-primary text-sm py-2 px-4 book-now-btn" data-package="Kashmir Paradise">
+              Book Now
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="package-card hidden group relative rounded-xl overflow-hidden bg-white shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100" data-category="adventure">
+        <div class="relative h-64 overflow-hidden">
+          <img src="images/packages/ladakh1.webp" alt="Ladakh Expedition" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700">
+          <div class="absolute top-4 right-4 bg-secondary text-white text-xs font-bold px-3 py-1 rounded-full flex items-center shadow-lg">
+            Adventure
+          </div>
+        </div>
+        <div class="p-6">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="text-xl font-bold text-dark">Ladakh Expedition</h3>
+            <div class="flex items-center text-yellow-400">
+              <i class="fas fa-star"></i>
+              <span class="ml-1 text-sm text-gray-600">4.9</span>
+            </div>
+          </div>
+          <div class="flex items-center text-gray-500 text-sm mb-4">
+            <i class="far fa-clock mr-2"></i>
+            <span>7 Days</span>
+            <span class="mx-2">•</span>
+            <i class="fas fa-users mr-2"></i>
+            <span>10+ People</span>
+          </div>
+          <p class="text-gray-600 mb-5">Conquer the high passes of Ladakh and experience its unique culture and landscapes.</p>
+          
+          <div class="flex flex-wrap gap-2 mb-5">
+            <span class="feature-chip"><i class="fas fa-mountain mr-1"></i> High Altitude</span>
+            <span class="feature-chip"><i class="fas fa-camera mr-1"></i> Photography</span>
+            <span class="feature-chip"><i class="fas fa-om mr-1"></i> Cultural Tour</span>
+          </div>
+          
+          <div class="flex justify-between items-center pt-4 border-t border-gray-100">
+            <a href="#contact" class="text-secondary font-medium hover:text-primary transition flex items-center group">
+              Explore Details
+              <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform"></i>
+            </a>
+            <button class="btn-primary text-sm py-2 px-4 book-now-btn" data-package="Ladakh Expedition">
+              Book Now
+            </button>
+          </div>
+        </div>
+      </div>
+
+    
+    <div class="package-card hidden group relative rounded-xl overflow-hidden bg-white shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100" data-category="cultural">
+  <div class="relative h-64 overflow-hidden">
+    <img src="images/packages/hampi2.webp" alt="Hampi Heritage" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700">
+    <div class="absolute top-4 right-4 bg-secondary text-white text-xs font-bold px-3 py-1 rounded-full flex items-center shadow-lg">
+      Cultural
+    </div>
+  </div>
+  <div class="p-6">
+    <div class="flex justify-between items-start mb-3">
+      <h3 class="text-xl font-bold text-dark">Hampi Heritage Tour</h3>
+      <div class="flex items-center text-yellow-400">
+        <i class="fas fa-star"></i>
+        <span class="ml-1 text-sm text-gray-600">4.7</span>
+      </div>
+    </div>
+    <div class="flex items-center text-gray-500 text-sm mb-4">
+      <i class="far fa-clock mr-2"></i>
+      <span>3 Days</span>
+      <span class="mx-2">•</span>
+      <i class="fas fa-users mr-2"></i>
+      <span>20+ People</span>
+    </div>
+    <p class="text-gray-600 mb-5">Discover the ruins of the Vijayanagara Empire, a UNESCO World Heritage Site with fascinating history.</p>
+    
+    <div class="flex flex-wrap gap-2 mb-5">
+      <span class="feature-chip"><i class="fas fa-university mr-1"></i> Ancient Ruins</span>
+      <span class="feature-chip"><i class="fas fa-bicycle mr-1"></i> Biking Tour</span>
+      <span class="feature-chip"><i class="fas fa-history mr-1"></i> Historical</span>
+    </div>
+    
+    <div class="flex justify-between items-center pt-4 border-t border-gray-100">
+      <a href="#contact" class="text-secondary font-medium hover:text-primary transition flex items-center group">
+        Explore Details
+        <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform"></i>
+      </a>
+      <button class="btn-primary text-sm py-2 px-4 book-now-btn" data-package="Hampi Heritage Tour">
+        Book Now
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<div class="package-card hidden group relative rounded-xl overflow-hidden bg-white shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100" data-category="wildlife">
+  <div class="relative h-64 overflow-hidden">
+    <img src="images/packages/badhipur1.webp" alt="Bandipur Safari" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700">
+    <div class="absolute top-4 right-4 bg-secondary text-white text-xs font-bold px-3 py-1 rounded-full flex items-center shadow-lg">
+      Wildlife
+    </div>
+  </div>
+  <div class="p-6">
+    <div class="flex justify-between items-start mb-3">
+      <h3 class="text-xl font-bold text-dark">Bandipur Safari</h3>
+      <div class="flex items-center text-yellow-400">
+        <i class="fas fa-star"></i>
+        <span class="ml-1 text-sm text-gray-600">4.5</span>
+      </div>
+    </div>
+    <div class="flex items-center text-gray-500 text-sm mb-4">
+      <i class="far fa-clock mr-2"></i>
+      <span>2 Days</span>
+      <span class="mx-2">•</span>
+      <i class="fas fa-users mr-2"></i>
+      <span>10+ People</span>
+    </div>
+    <p class="text-gray-600 mb-5">Spot tigers, elephants and other wildlife in one of India's most famous national parks.</p>
+    
+    <div class="flex flex-wrap gap-2 mb-5">
+      <span class="feature-chip"><i class="fas fa-paw mr-1"></i> Tiger Spotting</span>
+      <span class="feature-chip"><i class="fas fa-tree mr-1"></i> Jungle Stay</span>
+      <span class="feature-chip"><i class="fas fa-binoculars mr-1"></i> Safari Rides</span>
+    </div>
+    
+    <div class="flex justify-between items-center pt-4 border-t border-gray-100">
+      <a href="#contact" class="text-secondary font-medium hover:text-primary transition flex items-center group">
+        Explore Details
+        <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform"></i>
+      </a>
+      <button class="btn-primary text-sm py-2 px-4 book-now-btn" data-package="Bandipur Safari">
+        Book Now
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<div class="package-card hidden group relative rounded-xl overflow-hidden bg-white shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100" data-category="spiritual">
+  <div class="relative h-64 overflow-hidden">
+    <img src="images/packages/ramesharam2.webp" alt="Rameshwaram Pilgrimage" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700">
+    <div class="absolute top-4 right-4 bg-secondary text-white text-xs font-bold px-3 py-1 rounded-full flex items-center shadow-lg">
+      Spiritual
+    </div>
+  </div>
+  <div class="p-6">
+    <div class="flex justify-between items-start mb-3">
+      <h3 class="text-xl font-bold text-dark">Rameshwaram Pilgrimage</h3>
+      <div class="flex items-center text-yellow-400">
+        <i class="fas fa-star"></i>
+        <span class="ml-1 text-sm text-gray-600">4.7</span>
+      </div>
+    </div>
+    <div class="flex items-center text-gray-500 text-sm mb-4">
+      <i class="far fa-clock mr-2"></i>
+      <span>3 Days</span>
+      <span class="mx-2">•</span>
+      <i class="fas fa-users mr-2"></i>
+      <span>10+ People</span>
+    </div>
+    <p class="text-gray-600 mb-5">Visit sacred temples and bathe in holy waters at this important pilgrimage site.</p>
+    
+    <div class="flex flex-wrap gap-2 mb-5">
+      <span class="feature-chip"><i class="fas fa-om mr-1"></i> Temple Tour</span>
+      <span class="feature-chip"><i class="fas fa-water mr-1"></i> Holy Dip</span>
+      <span class="feature-chip"><i class="fas fa-history mr-1"></i> Mythology</span>
+    </div>
+    
+    <div class="flex justify-between items-center pt-4 border-t border-gray-100">
+      <a href="#contact" class="text-secondary font-medium hover:text-primary transition flex items-center group">
+        Explore Details
+        <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform"></i>
+      </a>
+      <button class="btn-primary text-sm py-2 px-4 book-now-btn" data-package="Rameshwaram Pilgrimage">
+        Book Now
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="package-card hidden group relative rounded-xl overflow-hidden bg-white shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100" data-category="adventure">
+  <div class="relative h-64 overflow-hidden">
+    <img src="images/packages/coorg1.webp" alt="Coorg Adventure" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700">
+    <div class="absolute top-4 right-4 bg-secondary text-white text-xs font-bold px-3 py-1 rounded-full flex items-center shadow-lg">
+      Adventure
+    </div>
+  </div>
+  <div class="p-6">
+    <div class="flex justify-between items-start mb-3">
+      <h3 class="text-xl font-bold text-dark">Coorg Adventure</h3>
+      <div class="flex items-center text-yellow-400">
+        <i class="fas fa-star"></i>
+        <span class="ml-1 text-sm text-gray-600">4.8</span>
+      </div>
+    </div>
+    <div class="flex items-center text-gray-500 text-sm mb-4">
+      <i class="far fa-clock mr-2"></i>
+      <span>4 Days</span>
+      <span class="mx-2">•</span>
+      <i class="fas fa-users mr-2"></i>
+      <span>10+ People</span>
+    </div>
+    <p class="text-gray-600 mb-5">Trek through coffee plantations, raft in white waters, and enjoy the misty hills of Karnataka.</p>
+    
+    <div class="flex flex-wrap gap-2 mb-5">
+      <span class="feature-chip"><i class="fas fa-mug-hot mr-1"></i> Coffee Estate</span>
+      <span class="feature-chip"><i class="fas fa-hiking mr-1"></i> Trekking</span>
+      <span class="feature-chip"><i class="fas fa-water mr-1"></i> River Rafting</span>
+    </div>
+    
+    <div class="flex justify-between items-center pt-4 border-t border-gray-100">
+      <a href="#contact" class="text-secondary font-medium hover:text-primary transition flex items-center group">
+        Explore Details
+        <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform"></i>
+      </a>
+      <button class="btn-primary text-sm py-2 px-4 book-now-btn" data-package="Coorg Adventure">
+        Book Now
+      </button>
+    </div>
+  </div>
+</div>
+     
+      <div class="package-card hidden group relative rounded-xl overflow-hidden bg-white shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100" data-category="hillstation">
+  <div class="relative h-64 overflow-hidden">
+    <img src="images/packages/ooty2.webp" alt="Ooty Hill Retreat" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700">
+    <div class="absolute top-4 right-4 bg-secondary text-white text-xs font-bold px-3 py-1 rounded-full flex items-center shadow-lg">
+      Hill Station
+    </div>
+  </div>
+  <div class="p-6">
+    <div class="flex justify-between items-start mb-3">
+      <h3 class="text-xl font-bold text-dark">Ooty Hill Retreat</h3>
+      <div class="flex items-center text-yellow-400">
+        <i class="fas fa-star"></i>
+        <span class="ml-1 text-sm text-gray-600">4.6</span>
+      </div>
+    </div>
+    <div class="flex items-center text-gray-500 text-sm mb-4">
+      <i class="far fa-clock mr-2"></i>
+      <span>3 Days</span>
+      <span class="mx-2">•</span>
+      <i class="fas fa-users mr-2"></i>
+      <span>10+ People</span>
+    </div>
+    <p class="text-gray-600 mb-5">Experience the colonial charm and tea gardens of Tamil Nadu's favorite hill station.</p>
+    
+    <div class="flex flex-wrap gap-2 mb-5">
+      <span class="feature-chip"><i class="fas fa-train mr-1"></i> Toy Train</span>
+      <span class="feature-chip"><i class="fas fa-leaf mr-1"></i> Botanical Gardens</span>
+      <span class="feature-chip"><i class="fas fa-ice-cream mr-1"></i> Local Treats</span>
+    </div>
+    
+    <div class="flex justify-between items-center pt-4 border-t border-gray-100">
+      <a href="#contact" class="text-secondary font-medium hover:text-primary transition flex items-center group">
+        Explore Details
+        <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform"></i>
+      </a>
+      <button class="btn-primary text-sm py-2 px-4 book-now-btn" data-package="Ooty Hill Retreat">
+        Book Now
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="package-card hidden group relative rounded-xl overflow-hidden bg-white shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100" data-category="cultural">
+  <div class="relative h-64 overflow-hidden">
+    <img src="images/packages/madurai2.webp" alt="Madurai Temple Tour" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700">
+    <div class="absolute top-4 right-4 bg-secondary text-white text-xs font-bold px-3 py-1 rounded-full flex items-center shadow-lg">
+      Cultural
+    </div>
+  </div>
+  <div class="p-6">
+    <div class="flex justify-between items-start mb-3">
+      <h3 class="text-xl font-bold text-dark">Madurai Temple Tour</h3>
+      <div class="flex items-center text-yellow-400">
+        <i class="fas fa-star"></i>
+        <span class="ml-1 text-sm text-gray-600">4.7</span>
+      </div>
+    </div>
+    <div class="flex items-center text-gray-500 text-sm mb-4">
+      <i class="far fa-clock mr-2"></i>
+      <span>2 Days</span>
+      <span class="mx-2">•</span>
+      <i class="fas fa-users mr-2"></i>
+      <span>20+ People</span>
+    </div>
+    <p class="text-gray-600 mb-5">Witness the magnificent Meenakshi Temple and experience vibrant South Indian culture.</p>
+    
+    <div class="flex flex-wrap gap-2 mb-5">
+      <span class="feature-chip"><i class="fas fa-om mr-1"></i> Temple Architecture</span>
+      <span class="feature-chip"><i class="fas fa-shopping-bag mr-1"></i> Local Markets</span>
+      <span class="feature-chip"><i class="fas fa-utensils mr-1"></i> Chettinad Cuisine</span>
+    </div>
+    
+    <div class="flex justify-between items-center pt-4 border-t border-gray-100">
+      <a href="#contact" class="text-secondary font-medium hover:text-primary transition flex items-center group">
+        Explore Details
+        <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform"></i>
+      </a>
+      <button class="btn-primary text-sm py-2 px-4 book-now-btn" data-package="Madurai Temple Tour">
+        Book Now
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="package-card hidden group relative rounded-xl overflow-hidden bg-white shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100" data-category="beach">
+  <div class="relative h-64 overflow-hidden">
+    <img src="images/packages/kovallam1.webp" alt="Kovalam Beach Stay" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700">
+    <div class="absolute top-4 right-4 bg-secondary text-white text-xs font-bold px-3 py-1 rounded-full flex items-center shadow-lg">
+      Beach
+    </div>
+  </div>
+  <div class="p-6">
+    <div class="flex justify-between items-start mb-3">
+      <h3 class="text-xl font-bold text-dark">Kovalam Beach Stay</h3>
+      <div class="flex items-center text-yellow-400">
+        <i class="fas fa-star"></i>
+        <span class="ml-1 text-sm text-gray-600">4.5</span>
+      </div>
+    </div>
+    <div class="flex items-center text-gray-500 text-sm mb-4">
+      <i class="far fa-clock mr-2"></i>
+      <span>4 Days</span>
+      <span class="mx-2">•</span>
+      <i class="fas fa-users mr-2"></i>
+      <span>2-4 People</span>
+    </div>
+    <p class="text-gray-600 mb-5">Relax on crescent-shaped beaches and enjoy Ayurvedic treatments in Kerala's beach paradise.</p>
+    
+    <div class="flex flex-wrap gap-2 mb-5">
+      <span class="feature-chip"><i class="fas fa-spa mr-1"></i> Ayurveda</span>
+      <span class="feature-chip"><i class="fas fa-umbrella-beach mr-1"></i> Lighthouse Beach</span>
+      <span class="feature-chip"><i class="fas fa-fish mr-1"></i> Seafood BBQ</span>
+    </div>
+    
+    <div class="flex justify-between items-center pt-4 border-t border-gray-100">
+      <a href="#contact" class="text-secondary font-medium hover:text-primary transition flex items-center group">
+        Explore Details
+        <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform"></i>
+      </a>
+      <button class="btn-primary text-sm py-2 px-4 book-now-btn" data-package="Kovalam Beach Stay">
+        Book Now
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="package-card hidden group relative rounded-xl overflow-hidden bg-white shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100" data-category="nature">
+  <div class="relative h-64 overflow-hidden">
+    <img src="images/packages/athirapilly.webp" alt="Athirapilly Waterfalls" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700">
+    <div class="absolute top-4 right-4 bg-secondary text-white text-xs font-bold px-3 py-1 rounded-full flex items-center shadow-lg">
+      Nature
+    </div>
+  </div>
+  <div class="p-6">
+    <div class="flex justify-between items-start mb-3">
+      <h3 class="text-xl font-bold text-dark">Athirapilly Waterfall Retreat</h3>
+      <div class="flex items-center text-yellow-400">
+        <i class="fas fa-star"></i>
+        <span class="ml-1 text-sm text-gray-600">4.8</span>
+      </div>
+    </div>
+    <div class="flex items-center text-gray-500 text-sm mb-4">
+      <i class="far fa-clock mr-2"></i>
+      <span>3 Days</span>
+      <span class="mx-2">•</span>
+      <i class="fas fa-users mr-2"></i>
+      <span>20+ People</span>
+    </div>
+    <p class="text-gray-600 mb-5">Experience the majestic "Niagara of India" with misty rainforest treks and refreshing waterfall dips.</p>
+    
+    <div class="flex flex-wrap gap-2 mb-5">
+      <span class="feature-chip"><i class="fas fa-water mr-1"></i> Waterfall Views</span>
+      <span class="feature-chip"><i class="fas fa-hiking mr-1"></i> Nature Trails</span>
+      <span class="feature-chip"><i class="fas fa-camera mr-1"></i> Photography</span>
+      <span class="feature-chip"><i class="fas fa-tree mr-1"></i> Rainforest</span>
+    </div>
+    
+    <div class="flex justify-between items-center pt-4 border-t border-gray-100">
+      <a href="#contact" class="text-secondary font-medium hover:text-primary transition flex items-center group">
+        Explore Details
+        <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform"></i>
+      </a>
+      <button class="btn-primary text-sm py-2 px-4 book-now-btn" data-package="Athirapilly Waterfall Retreat">
+        Book Now
+      </button>
+    </div>
+  </div>
+</div>
+      
+      <div class="package-card hidden group relative rounded-xl overflow-hidden bg-white shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100" data-category="luxury">
+        <div class="relative h-64 overflow-hidden">
+          <img src="images/packages/goa2.webp" alt="Goa Retreat" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700">
+          <div class="absolute top-4 right-4 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full flex items-center shadow-lg">
+            Luxury
+          </div>
+        </div>
+        <div class="p-6">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="text-xl font-bold text-dark">Goa Beach Retreat</h3>
+            <div class="flex items-center text-yellow-400">
+              <i class="fas fa-star"></i>
+              <span class="ml-1 text-sm text-gray-600">4.8</span>
+            </div>
+          </div>
+          <div class="flex items-center text-gray-500 text-sm mb-4">
+            <i class="far fa-clock mr-2"></i>
+            <span>4 Days</span>
+            <span class="mx-2">•</span>
+            <i class="fas fa-users mr-2"></i>
+            <span>Private</span>
+          </div>
+          <p class="text-gray-600 mb-5">Relax in luxury beachfront villas with private pools and personalized service.</p>
+          
+          <div class="flex flex-wrap gap-2 mb-5">
+            <span class="feature-chip"><i class="fas fa-umbrella-beach mr-1"></i> Private Beach</span>
+            <span class="feature-chip"><i class="fas fa-spa mr-1"></i> Spa Included</span>
+            <span class="feature-chip"><i class="fas fa-cocktail mr-1"></i> Sunset Cruise</span>
+          </div>
+          
+          <div class="flex justify-between items-center pt-4 border-t border-gray-100">
+            <a href="#contact" class="text-primary font-medium hover:text-secondary transition flex items-center group">
+              Explore Details
+              <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform"></i>
+            </a>
+            <button class="btn-primary text-sm py-2 px-4 book-now-btn" data-package="Goa Beach Retreat">
+              Book Now
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- View More Button -->
+    <div class="text-center mt-12">
+      <button id="view-more-btn" class="view-more-btn">
+        View More Packages
+        <i class="fas fa-chevron-down ml-2 transition-transform duration-300"></i>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- HubSpot Booking Modal -->
+<div id="booking-modal" class="fixed inset-0 bg-black/80 z-50 hidden items-center justify-center p-4">
+  <div class="bg-white rounded-xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+    <div class="relative">
+      <!-- Modal header -->
+      <div class="bg-primary text-white p-6 rounded-t-xl">
+        <div class="flex justify-between items-center">
+          <h3 class="text-2xl font-bold" id="modal-package-title">Package Name</h3>
+          <button id="close-modal" class="text-white hover:text-gray-200 transition">
+            <i class="fas fa-times text-xl"></i>
+          </button>
+        </div>
+        <div class="flex items-center mt-2">
+          <div class="flex items-center text-yellow-300 mr-4">
+            <i class="fas fa-star mr-1"></i>
+            <span id="modal-rating">4.8</span>
+          </div>
+          <div class="flex items-center text-white/90">
+            <i class="far fa-clock mr-1"></i>
+            <span id="modal-duration">2 Days</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Modal body - HubSpot Form -->
+      <div class="p-6">
+        <div class="hs-form-frame" 
+             data-region="na2" 
+             data-form-id="a82dcc66-14f2-42b6-9142-174c3f2fe59a" 
+             data-portal-id="243445389"
+             id="hubspot-form-container">
+          <!-- HubSpot form will be loaded here -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HubSpot Forms Embed Script -->
+<script src="https://js-na2.hsforms.net/forms/embed/243445389.js" defer></script>
+
+<style>
+  /* Grid pattern background */
+  .grid-pattern {
+    background-image: 
+      linear-gradient(to right, rgba(10, 36, 99, 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(10, 36, 99, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    height: 100%;
+  }
+  
+  /* Package card hover effect */
+  .package-card {
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .package-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Feature chips */
+  .feature-chip {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(10, 36, 99, 0.05);
+    border: 1px solid rgba(10, 36, 99, 0.1);
+    color: #0A2463;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    transition: all 0.2s;
+  }
+  
+  .feature-chip:hover {
+    background: rgba(10, 36, 99, 0.1);
+    transform: translateY(-1px);
+  }
+  
+  /* View More button */
+  .view-more-btn {
+    @apply px-8 py-3 bg-white text-primary font-semibold rounded-full border-2 border-primary flex items-center mx-auto;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px -1px rgba(10, 36, 99, 0.1), 0 2px 4px -1px rgba(10, 36, 99, 0.06);
+  }
+  
+  .view-more-btn:hover {
+    @apply bg-primary text-white transform scale-105;
+    box-shadow: 0 10px 15px -3px rgba(10, 36, 99, 0.1), 0 4px 6px -2px rgba(10, 36, 99, 0.05);
+  }
+  
+  .view-more-btn.active i {
+    transform: rotate(180deg);
+  }
+  
+  /* Filter buttons */
+  .filter-btn.active {
+    @apply bg-primary/10 text-primary shadow-sm;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Filter functionality
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const packageCards = document.querySelectorAll('.package-card');
+    
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        // Update active state
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        
+        const filter = button.dataset.filter;
+        
+        // Filter cards
+        packageCards.forEach(card => {
+          if (filter === 'all' || card.dataset.category === filter) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+    
+    // View More functionality
+    const viewMoreBtn = document.getElementById('view-more-btn');
+    let showingAll = false;
+    const hiddenCards = document.querySelectorAll('.package-card.hidden');
+    
+    if (viewMoreBtn && hiddenCards.length > 0) {
+      viewMoreBtn.addEventListener('click', () => {
+        if (showingAll) {
+          // Hide additional cards
+          hiddenCards.forEach(card => {
+            card.classList.add('hidden');
+          });
+          viewMoreBtn.innerHTML = 'View More Packages <i class="fas fa-chevron-down ml-2 transition-transform duration-300"></i>';
+          showingAll = false;
+          
+          // Scroll to packages section
+          document.getElementById('packages').scrollIntoView({ behavior: 'smooth' });
+        } else {
+          // Show all cards
+          hiddenCards.forEach(card => {
+            card.classList.remove('hidden');
+            card.style.display = 'block';
+          });
+          viewMoreBtn.innerHTML = 'Show Less <i class="fas fa-chevron-up ml-2 transition-transform duration-300"></i>';
+          showingAll = true;
+        }
+      });
+    } else if (viewMoreBtn) {
+      viewMoreBtn.style.display = 'none';
+    }
+    
+    // Booking modal functionality with HubSpot integration
+    const modal = document.getElementById('booking-modal');
+    const bookNowButtons = document.querySelectorAll('.book-now-btn');
+    const closeModalBtn = document.getElementById('close-modal');
+    
+    function showModal(packageName, packageRating, packageDuration) {
+      document.getElementById('modal-package-title').textContent = packageName;
+      document.getElementById('modal-rating').textContent = packageRating;
+      document.getElementById('modal-duration').textContent = packageDuration;
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      
+      // Load HubSpot form if not already loaded
+      if (!document.querySelector('#hubspot-form-container iframe')) {
+        // Check if HubSpot forms script is loaded
+        if (window.hbspt) {
+          loadHubSpotForm(packageName);
+        } else {
+          // If not loaded yet, wait for it
+          const checkHubSpot = setInterval(() => {
+            if (window.hbspt) {
+              clearInterval(checkHubSpot);
+              loadHubSpotForm(packageName);
+            }
+          }, 100);
+        }
+      } else {
+        // Form already exists, just update the package field if needed
+        updateHubSpotPackageField(packageName);
+      }
+    }
+    
+    function loadHubSpotForm(packageName) {
+      window.hbspt.forms.create({
+        region: 'na2',
+        portalId: '243445389',
+        formId: 'a82dcc66-14f2-42b6-9142-174c3f2fe59a',
+        target: '#hubspot-form-container',
+        onFormReady: function($form) {
+          // Set the package name in the form
+          updateHubSpotPackageField(packageName);
+        }
+      });
+    }
+    
+    function updateHubSpotPackageField(packageName) {
+      // Try to find the package field and set its value
+      const packageInput = document.querySelector('input[name="package"]');
+      if (packageInput) {
+        packageInput.value = packageName;
+      } else {
+        // If not found immediately, try again after a short delay
+        setTimeout(() => {
+          const retryInput = document.querySelector('input[name="package"]');
+          if (retryInput) {
+            retryInput.value = packageName;
+          }
+        }, 500);
+      }
+    }
+    
+    function hideModal() {
+      modal.classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    }
+    
+    bookNowButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const card = this.closest('.package-card');
+        const title = card.querySelector('h3').textContent;
+        const rating = card.querySelector('.fa-star + span').textContent;
+        const duration = card.querySelector('.fa-clock + span').textContent;
+        
+        showModal(title, rating, duration);
+      });
+    });
+    
+    closeModalBtn.addEventListener('click', hideModal);
+    
+    // Close modal when clicking outside
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) {
+        hideModal();
+      }
+    });
+  });
+</script>
+
+<!-- Features Section - Theme Matching Design -->
+<section class="py-16 bg-gradient-to-r from-primary/5 to-secondary/5">
+  <div class="container mx-auto px-4 sm:px-6">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4 heading-decorator">
+        Why Choose <span class="text-accent">Rejoice</span>
+      </h2>
+      <p class="text-gray-600 max-w-2xl mx-auto">
+        We're committed to making your travel experience exceptional
+      </p>
+    </div>
+    
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+      <!-- Feature 1 -->
+      <div class="feature-card bg-white/80 backdrop-blur-sm rounded-xl p-6 text-center border border-gray-200 hover:border-accent/50 transition-all duration-300 hover:shadow-lg">
+        <div class="text-4xl text-accent mb-3">
+          <i class="fas fa-shield-alt"></i>
+        </div>
+        <h3 class="font-bold mb-2 text-base md:text-lg text-dark">Safe Travels</h3>
+        <p class="text-sm text-gray-600">Verified partners & COVID-safe protocols</p>
+      </div>
+      
+      <!-- Feature 2 -->
+      <div class="feature-card bg-white/80 backdrop-blur-sm rounded-xl p-6 text-center border border-gray-200 hover:border-primary/50 transition-all duration-300 hover:shadow-lg">
+        <div class="text-4xl text-primary mb-3">
+          <i class="fas fa-headset"></i>
+        </div>
+        <h3 class="font-bold mb-2 text-base md:text-lg text-dark">24/7 Support</h3>
+        <p class="text-sm text-gray-600">Dedicated travel concierge</p>
+      </div>
+      
+      <!-- Feature 3 -->
+      <div class="feature-card bg-white/80 backdrop-blur-sm rounded-xl p-6 text-center border border-gray-200 hover:border-secondary/50 transition-all duration-300 hover:shadow-lg">
+        <div class="text-4xl text-secondary mb-3">
+          <i class="fas fa-hand-holding-usd"></i>
+        </div>
+        <h3 class="font-bold mb-2 text-base md:text-lg text-dark">Best Price</h3>
+        <p class="text-sm text-gray-600">Guaranteed best rates</p>
+      </div>
+      
+      <!-- Feature 4 -->
+      <div class="feature-card bg-white/80 backdrop-blur-sm rounded-xl p-6 text-center border border-gray-200 hover:border-accent/50 transition-all duration-300 hover:shadow-lg">
+        <div class="text-4xl text-accent mb-3">
+          <i class="fas fa-exchange-alt"></i>
+        </div>
+        <h3 class="font-bold mb-2 text-base md:text-lg text-dark">Easy Cancellation</h3>
+        <p class="text-sm text-gray-600">Flexible booking options</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Feature card hover effects */
+  .feature-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .feature-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  /* Background gradient that matches theme */
+  .bg-gradient-to-r.from-primary\/5.to-secondary\/5 {
+    background-image: linear-gradient(to right, rgba(10, 36, 99, 0.05), rgba(62, 146, 204, 0.05));
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 640px) {
+    .feature-card {
+      padding: 1.5rem;
+    }
+  }
+</style>
+
+
+
+<!-- Modern Gallery Section -->
+<section id="gallery" class="section-padding bg-gray-50 overflow-hidden">
+  <div class="container mx-auto px-4 sm:px-6">
+    <!-- Section Header -->
+    <div class="text-center mb-12">
+      <div class="inline-block relative">
+        <span class="text-accent font-semibold tracking-wider"></span>
+        <h2 class="text-3xl md:text-4xl font-bold mt-2 mb-4 heading-decorator">
+          Explore Our Gallery
+        </h2>
+      </div>
+      <p class="text-gray-600 max-w-2xl mx-auto text-lg">
+        Discover breathtaking moments from our journeys around the world
+      </p>
+    </div>
+
+    <!-- Mobile View - Horizontal Scroll Gallery -->
+    <div class="lg:hidden">
+      <div class="relative">
+        <div class="flex overflow-x-auto pb-6 -mx-4 px-4 gallery-scroll snap-x snap-mandatory space-x-4 scrollbar-hide">
+          <!-- Mobile Gallery Items -->
+          <div class="flex-none w-4/5 snap-center">
+            <div class="relative rounded-2xl overflow-hidden aspect-square shadow-lg h-full">
+              <img src="images/gallery/belur-nov2024.webp" alt="Belur College Trip" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+                <div>
+                  <h3 class="text-white font-bold text-xl">Belur Heritage Tour</h3>
+                  <p class="text-gray-200 mt-1">Nov 2024 • College Trip</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="flex-none w-4/5 snap-center">
+            <div class="relative rounded-2xl overflow-hidden aspect-square shadow-lg h-full">
+              <img src="images/gallery/chikamangaluru.webp" alt="Chikamangaluru College Trip" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+                <div>
+                  <h3 class="text-white font-bold text-xl">Chikamangaluru Expedition</h3>
+                  <p class="text-gray-200 mt-1">Jun 2024 • College Trip</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="flex-none w-4/5 snap-center">
+            <div class="relative rounded-2xl overflow-hidden aspect-square shadow-lg h-full">
+              <img src="images/gallery/coorg-jan2025.webp" alt="Coorg College Trip" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+                <div>
+                  <h3 class="text-white font-bold text-xl">Coorg Adventure</h3>
+                  <p class="text-gray-200 mt-1">Jan 2025 • College Trip</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex-none w-4/5 snap-center">
+            <div class="relative rounded-2xl overflow-hidden aspect-square shadow-lg h-full">
+              <img src="images/gallery/dandeli-oct2024.webp" alt="Dandeli Industrial Visit" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+                <div>
+                  <h3 class="text-white font-bold text-xl">Dandeli Industry Tour</h3>
+                  <p class="text-gray-200 mt-1">Oct 2024 • Industrial Visit</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="flex-none w-4/5 snap-center">
+            <div class="relative rounded-2xl overflow-hidden aspect-square shadow-lg h-full">
+              <img src="images/gallery/goa-aug25.webp" alt="Goa Friends Get-together" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+                <div>
+                  <h3 class="text-white font-bold text-xl">Goa Reunion</h3>
+                  <p class="text-gray-200 mt-1">Aug 2025 • Friends Get-together</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex-none w-4/5 snap-center">
+            <div class="relative rounded-2xl overflow-hidden aspect-square shadow-lg h-full">
+              <img src="images/gallery/goa-aug2024.webp" alt="Goa Family Vacation" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+                <div>
+                  <h3 class="text-white font-bold text-xl">Goa Family Holiday</h3>
+                  <p class="text-gray-200 mt-1">Aug 2024 • Family Trip</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex-none w-4/5 snap-center">
+            <div class="relative rounded-2xl overflow-hidden aspect-square shadow-lg h-full">
+              <img src="images/gallery/goa-feb-2025.webp" alt="Goa College Trip" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+                <div>
+                  <h3 class="text-white font-bold text-xl">Goa College Tour</h3>
+                  <p class="text-gray-200 mt-1">Feb 2025 • College Trip</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex-none w-4/5 snap-center">
+            <div class="relative rounded-2xl overflow-hidden aspect-square shadow-lg h-full">
+              <img src="images/gallery/goa-jan-2021.webp" alt="Goa Beach Trip with Friends" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+                <div>
+                  <h3 class="text-white font-bold text-xl">Goa Beach Escape</h3>
+                  <p class="text-gray-200 mt-1">Jan 2021 • Friends Trip</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex-none w-4/5 snap-center">
+            <div class="relative rounded-2xl overflow-hidden aspect-square shadow-lg h-full">
+              <img src="images/gallery/munnar-jan26.webp" alt="Munnar Trip with Friends" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+                <div>
+                  <h3 class="text-white font-bold text-xl">Munnar Getaway</h3>
+                  <p class="text-gray-200 mt-1">Jan 2026 • Friends Trip</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex-none w-4/5 snap-center">
+            <div class="relative rounded-2xl overflow-hidden aspect-square shadow-lg h-full">
+              <img src="images/gallery/goa-nov2023.webp" alt="Spiritual Retreat in Goa" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+                <div>
+                  <h3 class="text-white font-bold text-xl">Goa Soul Journey</h3>
+                  <p class="text-gray-200 mt-1">Nov 2023 • Spiritual Visit</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="flex-none w-4/5 snap-center">
+            <div class="relative rounded-2xl overflow-hidden aspect-square shadow-lg h-full">
+              <img src="images/gallery/munnar-oct2023.webp" alt="Munnar Church Group Retreat" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+                <div>
+                  <h3 class="text-white font-bold text-xl">Munnar Faith Retreat</h3>
+                  <p class="text-gray-200 mt-1">Oct 2023 • Church Group</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex-none w-4/5 snap-center">
+            <div class="relative rounded-2xl overflow-hidden aspect-square shadow-lg h-full">
+              <img src="images/gallery/murudeshwar-feb2025.webp" alt="Murudeshwar Trip with Friends" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+                <div>
+                  <h3 class="text-white font-bold text-xl">Murudeshwar Adventure</h3>
+                  <p class="text-gray-200 mt-1">Feb 2025 • Friends Trip</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex-none w-4/5 snap-center">
+            <div class="relative rounded-2xl overflow-hidden aspect-square shadow-lg h-full">
+              <img src="images/gallery/ramakkalmedu-dec2024.webp" alt="Ramakkalmedu Trip with Friends" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+                <div>
+                  <h3 class="text-white font-bold text-xl">Ramakkalmedu Escape</h3>
+                  <p class="text-gray-200 mt-1">Dec 2024 • Friends Trip</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex-none w-4/5 snap-center">
+            <div class="relative rounded-2xl overflow-hidden aspect-square shadow-lg h-full">
+              <img src="images/gallery/ramakkalmedu-june2025.webp" alt="Ramakkalmedu Jeep Safari Adventure" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+                <div>
+                  <h3 class="text-white font-bold text-xl">Ramakkalmedu Wild Ride</h3>
+                  <p class="text-gray-200 mt-1">Jun 2025 • Jeep Safari</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex-none w-4/5 snap-center">
+            <div class="relative rounded-2xl overflow-hidden aspect-square shadow-lg h-full">
+              <img src="images/gallery/tvm-nov2024.webp" alt="Thiruvananthapuram Spiritual Journey" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+                <div>
+                  <h3 class="text-white font-bold text-xl">TVM Sacred Journey</h3>
+                  <p class="text-gray-200 mt-1">Nov 2024 • Spiritual Tour</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex-none w-4/5 snap-center">
+            <div class="relative rounded-2xl overflow-hidden aspect-square shadow-lg h-full">
+              <img src="images/gallery/udupi-feb2023.webp" alt="Udupi Trip with Friends" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+                <div>
+                  <h3 class="text-white font-bold text-xl">Udupi Friends Getaway</h3>
+                  <p class="text-gray-200 mt-1">Feb 2023 • Friends Trip</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="flex justify-center mt-4 space-x-2 dots-container">
+          <span class="w-3 h-3 rounded-full bg-gray-300 dot" data-index="0"></span>
+          <span class="w-3 h-3 rounded-full bg-gray-300 dot" data-index="1"></span>
+          <span class="w-3 h-3 rounded-full bg-gray-300 dot" data-index="2"></span>
+          <span class="w-3 h-3 rounded-full bg-gray-300 dot" data-index="3"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Desktop View - Interactive Grid Gallery -->
+    <div class="hidden lg:block">
+      <!-- Gallery Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 gallery-grid">
+        <!-- Gallery Item 1 -->
+        <div class="gallery-item group relative rounded-2xl overflow-hidden shadow-xl transition-all duration-500 h-full" data-category="adventure">
+          <div class="aspect-w-16 aspect-h-9 w-full h-full">
+            <img src="images/gallery/udupi-feb2023.webp" alt="Himalayan Trek" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition duration-500">
+              <div class="transform translate-y-4 group-hover:translate-y-0 transition duration-500">
+                <span class="text-accent font-medium text-sm">ADVENTURE</span>
+                <h3 class="text-white font-bold text-xl mt-1">Udupi Trek Expedition</h3>
+                <p class="text-gray-200 mt-2 text-sm">Explore the majestic Udupi ranges with our expert guides</p>
+                <div class="flex items-center mt-4 text-gray-300 text-sm">
+                  <i class="fas fa-calendar-alt mr-2"></i>
+                  <span>Feb 2023</span>
+                  <span class="mx-3">•</span>
+                  <i class="fas fa-users mr-2"></i>
+                  <span>3 Days</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Gallery Item 2 -->
+        <div class="gallery-item group relative rounded-2xl overflow-hidden shadow-xl transition-all duration-500 h-full" data-category="beach">
+          <div class="aspect-w-16 aspect-h-9 w-full h-full">
+            <img src="images/gallery/goa-jan-2021.webp" alt="Goa Beach" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition duration-500">
+              <div class="transform translate-y-4 group-hover:translate-y-0 transition duration-500">
+                <span class="text-accent font-medium text-sm">BEACH</span>
+                <h3 class="text-white font-bold text-xl mt-1">Goa Beach Retreat</h3>
+                <p class="text-gray-200 mt-2 text-sm">Relax on pristine beaches with luxury accommodations</p>
+                <div class="flex items-center mt-4 text-gray-300 text-sm">
+                  <i class="fas fa-calendar-alt mr-2"></i>
+                  <span>Jan 2024</span>
+                  <span class="mx-3">•</span>
+                  <i class="fas fa-users mr-2"></i>
+                  <span>8 Days</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Gallery Item 3 -->
+        <div class="gallery-item group relative rounded-2xl overflow-hidden shadow-xl transition-all duration-500 h-full" data-category="culture">
+          <div class="aspect-w-16 aspect-h-9 w-full h-full">
+            <img src="images/gallery/tvm-nov2024.webp" alt="Rajasthan Culture" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition duration-500">
+              <div class="transform translate-y-4 group-hover:translate-y-0 transition duration-500">
+                <span class="text-accent font-medium text-sm">CULTURE</span>
+                <h3 class="text-white font-bold text-xl mt-1">Trivandrum Heritage Tour</h3>
+                <p class="text-gray-200 mt-2 text-sm">Immerse yourself in the rich cultural heritage</p>
+                <div class="flex items-center mt-4 text-gray-300 text-sm">
+                  <i class="fas fa-calendar-alt mr-2"></i>
+                  <span>Nov 2024</span>
+                  <span class="mx-3">•</span>
+                  <i class="fas fa-users mr-2"></i>
+                  <span>15 Days</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Gallery Item 4 -->
+        <div class="gallery-item group relative rounded-2xl overflow-hidden shadow-xl transition-all duration-500 h-full" data-category="adventure">
+          <div class="aspect-w-16 aspect-h-9 w-full h-full">
+            <img src="images/gallery/chikamangaluru.webp" alt="Ladakh Adventure" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition duration-500">
+              <div class="transform translate-y-4 group-hover:translate-y-0 transition duration-500">
+                <span class="text-accent font-medium text-sm">ADVENTURE</span>
+                <h3 class="text-white font-bold text-xl mt-1">Chikmagaluru Expedition</h3>
+                <p class="text-gray-200 mt-2 text-sm">Conquer the highest motorable roads in the world</p>
+                <div class="flex items-center mt-4 text-gray-300 text-sm">
+                  <i class="fas fa-calendar-alt mr-2"></i>
+                  <span>Feb 2023</span>
+                  <span class="mx-3">•</span>
+                  <i class="fas fa-users mr-2"></i>
+                  <span>2 Days</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Gallery Item 5 -->
+        <div class="gallery-item group relative rounded-2xl overflow-hidden shadow-xl transition-all duration-500 h-full" data-category="wildlife">
+          <div class="aspect-w-16 aspect-h-9 w-full h-full">
+            <img src="images/gallery/ramakkalmedu-june2025.webp" alt="Wildlife Safari" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition duration-500">
+              <div class="transform translate-y-4 group-hover:translate-y-0 transition duration-500">
+                <span class="text-accent font-medium text-sm">WILDLIFE</span>
+                <h3 class="text-white font-bold text-xl mt-1">Ramakkalmedu Jeep Safari</h3>
+                <p class="text-gray-200 mt-2 text-sm">Spot wildlife in their natural habitat</p>
+                <div class="flex items-center mt-4 text-gray-300 text-sm">
+                  <i class="fas fa-calendar-alt mr-2"></i>
+                  <span>Jun 2025</span>
+                  <span class="mx-3">•</span>
+                  <i class="fas fa-users mr-2"></i>
+                  <span>4 Days</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Gallery Item 6 -->
+        <div class="gallery-item group relative rounded-2xl overflow-hidden shadow-xl transition-all duration-500 h-full" data-category="beach">
+          <div class="aspect-w-16 aspect-h-9 w-full h-full">
+            <img src="images/gallery/goa-feb-2025.webp" alt="Andaman Beaches" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition duration-500">
+              <div class="transform translate-y-4 group-hover:translate-y-0 transition duration-500">
+                <span class="text-accent font-medium text-sm">BEACH</span>
+                <h3 class="text-white font-bold text-xl mt-1">Goa Island Hopping</h3>
+                <p class="text-gray-200 mt-2 text-sm">Crystal clear waters and pristine white sand beaches</p>
+                <div class="flex items-center mt-4 text-gray-300 text-sm">
+                  <i class="fas fa-calendar-alt mr-2"></i>
+                  <span>Feb 2025</span>
+                  <span class="mx-3">•</span>
+                  <i class="fas fa-users mr-2"></i>
+                  <span>6 Days</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Gallery Item 7 -->
+        <div class="gallery-item group relative rounded-2xl overflow-hidden shadow-xl transition-all duration-500 h-full" data-category="adventure">
+          <div class="aspect-w-16 aspect-h-9 w-full h-full">
+            <img src="images/gallery/dandeli-oct2024.webp" alt="Dandeli College Tour" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition duration-500">
+              <div class="transform translate-y-4 group-hover:translate-y-0 transition duration-500">
+                <span class="text-accent font-medium text-sm">ADVENTURE</span>
+                <h3 class="text-white font-bold text-xl mt-1">Dandeli College Tour</h3>
+                <p class="text-gray-200 mt-2 text-sm">Thrilling adventures and unforgettable memories with friends</p>
+                <div class="flex items-center mt-4 text-gray-300 text-sm">
+                  <i class="fas fa-calendar-alt mr-2"></i>
+                  <span>Oct 2024</span>
+                  <span class="mx-3">•</span>
+                  <i class="fas fa-users mr-2"></i>
+                  <span>7 Days</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gallery Item 8 -->
+        <div class="gallery-item group relative rounded-2xl overflow-hidden shadow-xl transition-all duration-500 h-full" data-category="culture">
+          <div class="aspect-w-16 aspect-h-9 w-full h-full">
+            <img src="images/gallery/belur-nov2024.webp" alt="Belur College Tour" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition duration-500">
+              <div class="transform translate-y-4 group-hover:translate-y-0 transition duration-500">
+                <span class="text-accent font-medium text-sm">CULTURE</span>
+                <h3 class="text-white font-bold text-xl mt-1">Belur College Tour</h3>
+                <p class="text-gray-200 mt-2 text-sm">Exploring the historic temples and heritage of Belur</p>
+                <div class="flex items-center mt-4 text-gray-300 text-sm">
+                  <i class="fas fa-calendar-alt mr-2"></i>
+                  <span>Nov 2024</span>
+                  <span class="mx-3">•</span>
+                  <i class="fas fa-users mr-2"></i>
+                  <span>5 Days</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gallery Item 9 -->
+        <div class="gallery-item group relative rounded-2xl overflow-hidden shadow-xl transition-all duration-500 h-full" data-category="nature">
+          <div class="aspect-w-16 aspect-h-9 w-full h-full">
+            <img src="images/gallery/coorg-jan2025.webp" alt="Coorg Getaway" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition duration-500">
+              <div class="transform translate-y-4 group-hover:translate-y-0 transition duration-500">
+                <span class="text-accent font-medium text-sm">NATURE</span>
+                <h3 class="text-white font-bold text-xl mt-1">Coorg Escape</h3>
+                <p class="text-gray-200 mt-2 text-sm">Discover the misty hills and coffee plantations of Karnataka</p>
+                <div class="flex items-center mt-4 text-gray-300 text-sm">
+                  <i class="fas fa-calendar-alt mr-2"></i>
+                  <span>Jan 2025</span>
+                  <span class="mx-3">•</span>
+                  <i class="fas fa-users mr-2"></i>
+                  <span>4 Days</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gallery Item 10 -->
+        <div class="gallery-item group relative rounded-2xl overflow-hidden shadow-xl transition-all duration-500 h-full" data-category="adventure">
+          <div class="aspect-w-16 aspect-h-9 w-full h-full">
+            <img src="images/gallery/goa-aug25.webp" alt="Goa Friends Trip" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition duration-500">
+              <div class="transform translate-y-4 group-hover:translate-y-0 transition duration-500">
+                <span class="text-accent font-medium text-sm">ADVENTURE</span>
+                <h3 class="text-white font-bold text-xl mt-1">Goa Escapade</h3>
+                <p class="text-gray-200 mt-2 text-sm">Sun, sand and endless fun with friends</p>
+                <div class="flex items-center mt-4 text-gray-300 text-sm">
+                  <i class="fas fa-calendar-alt mr-2"></i>
+                  <span>Aug 2025</span>
+                  <span class="mx-3">•</span>
+                  <i class="fas fa-users mr-2"></i>
+                  <span>2 Days</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gallery Item 11 -->
+        <div class="gallery-item group relative rounded-2xl overflow-hidden shadow-xl transition-all duration-500 h-full" data-category="family">
+          <div class="aspect-w-16 aspect-h-9 w-full h-full">
+            <img src="images/gallery/goa-aug2024.webp" alt="Goa Family Vacation" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition duration-500">
+              <div class="transform translate-y-4 group-hover:translate-y-0 transition duration-500">
+                <span class="text-accent font-medium text-sm">FAMILY</span>
+                <h3 class="text-white font-bold text-xl mt-1">Goa Family Getaway</h3>
+                <p class="text-gray-200 mt-2 text-sm">Creating memories with the whole family on golden beaches</p>
+                <div class="flex items-center mt-4 text-gray-300 text-sm">
+                  <i class="fas fa-calendar-alt mr-2"></i>
+                  <span>Aug 2024</span>
+                  <span class="mx-3">•</span>
+                  <i class="fas fa-users mr-2"></i>
+                  <span>10 Days</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gallery Item 12 -->
+        <div class="gallery-item group relative rounded-2xl overflow-hidden shadow-xl transition-all duration-500 h-full" data-category="education">
+          <div class="aspect-w-16 aspect-h-9 w-full h-full">
+            <img src="images/gallery/goa-jan-2021.webp" alt="Goa Class Trip" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition duration-500">
+              <div class="transform translate-y-4 group-hover:translate-y-0 transition duration-500">
+                <span class="text-accent font-medium text-sm">EDUCATION</span>
+                <h3 class="text-white font-bold text-xl mt-1">Goa Class Adventure</h3>
+                <p class="text-gray-200 mt-2 text-sm">Learning and fun combined on our memorable class trip</p>
+                <div class="flex items-center mt-4 text-gray-300 text-sm">
+                  <i class="fas fa-calendar-alt mr-2"></i>
+                  <span>Jan 2021</span>
+                  <span class="mx-3">•</span>
+                  <i class="fas fa-users mr-2"></i>
+                  <span>12 Days</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- View More Button -->
+      <div class="text-center mt-12">
+        <button class="btn-primary px-8 py-3 rounded-full hover:shadow-lg transition-all">
+          Explore More Destinations
+          <i class="fas fa-arrow-right ml-2"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Gallery Styles */
+  .gallery-scroll {
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+  }
+  
+  .gallery-scroll::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .snap-center {
+    scroll-snap-align: center;
+  }
+  
+  .gallery-item {
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
+                box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  .gallery-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 
+                0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+  
+  .filter-btn {
+    background: rgba(10, 36, 99, 0.05);
+    border: 1px solid rgba(10, 36, 99, 0.1);
+    color: #0A2463;
+  }
+  
+  .filter-btn:hover {
+    background: rgba(10, 36, 99, 0.1);
+  }
+  
+  .filter-btn.active {
+    background: #0A2463;
+    color: white;
+    border-color: #0A2463;
+  }
+  
+  /* Ensure consistent height for gallery items */
+  .gallery-item > div {
+    height: 100%;
+  }
+  
+  /* Responsive Adjustments */
+  @media (min-width: 1024px) {
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+  }
+</style>
+
+<script>
+  // Gallery Filter Functionality
+  document.addEventListener('DOMContentLoaded', function() {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        // Update active state
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        
+        const filter = button.dataset.filter;
+        
+        // Filter items
+        galleryItems.forEach(item => {
+          if (filter === 'all' || item.dataset.category === filter) {
+            item.style.display = 'block';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    });
+    
+    // Mobile Gallery Scroll Indicator
+    const mobileGallery = document.querySelector('.gallery-scroll');
+    const dots = document.querySelectorAll('.dot');
+    
+    if (mobileGallery && dots.length > 0) {
+      // Calculate number of dots needed based on items
+      const items = document.querySelectorAll('.gallery-scroll > div');
+      const dotsContainer = document.querySelector('.dots-container');
+      
+      // Clear existing dots
+      dotsContainer.innerHTML = '';
+      
+      // Add new dots based on item count (grouped by 4)
+      const dotCount = Math.ceil(items.length / 4);
+      for (let i = 0; i < dotCount; i++) {
+        const dot = document.createElement('span');
+        dot.className = 'w-3 h-3 rounded-full bg-gray-300 dot';
+        dot.dataset.index = i;
+        dotsContainer.appendChild(dot);
+      }
+      
+      // Set first dot as active
+      dotsContainer.firstChild.classList.remove('bg-gray-300');
+      dotsContainer.firstChild.classList.add('bg-accent');
+      
+      mobileGallery.addEventListener('scroll', function() {
+        const scrollPercentage = this.scrollLeft / (this.scrollWidth - this.clientWidth);
+        const activeDot = Math.round(scrollPercentage * (dotCount - 1));
+        
+        document.querySelectorAll('.dot').forEach((dot, index) => {
+          if (index === activeDot) {
+            dot.classList.remove('bg-gray-300');
+            dot.classList.add('bg-accent');
+          } else {
+            dot.classList.remove('bg-accent');
+            dot.classList.add('bg-gray-300');
+          }
+        });
+      });
+      
+      // Click on dot to scroll to that position
+      document.querySelectorAll('.dot').forEach(dot => {
+        dot.addEventListener('click', function() {
+          const index = parseInt(this.dataset.index);
+          const itemWidth = items[0].offsetWidth + 16; // width + margin
+          mobileGallery.scrollTo({
+            left: index * 4 * itemWidth,
+            behavior: 'smooth'
+          });
+        });
+      });
+    }
+  });
+</script>
+
+
+
+
+  <!-- Blog Section -->
+  <section class="section-padding bg-gradient-to-br from-white via-gray-50 to-blue-50">
+    <div class="container mx-auto px-4 sm:px-6">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold text-dark mb-3 heading-decorator">
+          Insights & Inspiration
+        </h2>
+        <p class="text-lg text-gray-500 max-w-2xl mx-auto">
+          Expert advice, real stories, and travel wisdom from our community and team.
+        </p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Blog Card 1 -->
+        <div class="blog-flip-card group cursor-pointer perspective" data-card="1">
+          <div class="relative preserve-3d duration-500 blog-flip-inner h-full">
+            <!-- Front -->
+            <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition group overflow-hidden flex flex-col blog-flip-front h-full">
+              <div class="relative h-48 overflow-hidden">
+                <img src="images/blogs/keralablog.webp" alt="Kerala Hidden Gems" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                <span class="absolute top-4 left-4 bg-accent text-white text-xs font-semibold px-3 py-1 rounded-full shadow">Expert Picks</span>
+              </div>
+              <div class="p-6 flex-1 flex flex-col">
+                <div class="flex items-center text-xs text-gray-400 mb-2 space-x-2">
+                  <i class="fas fa-calendar-alt"></i>
+                  <span>May 15, 2025</span>
+                  <span>•</span>
+                  <span>5 min read</span>
+                </div>
+                <h3 class="text-lg font-bold mb-2 group-hover:text-accent transition">10 Hidden Gems in Kerala</h3>
+                <p class="text-gray-600 mb-4 flex-1 text-sm">
+                  Unveil Kerala's best-kept secrets—from misty meadows to tranquil beaches—curated by our travel experts.
+                </p>
+                <a href="#" class="inline-flex items-center text-primary font-semibold hover:text-accent transition text-sm">
+                  Read More <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+              </div>
+            </div>
+            <!-- Back -->
+            <div class="absolute inset-0 bg-white rounded-xl shadow-md p-6 flex flex-col justify-center items-center blog-flip-back h-full">
+              <h3 class="text-lg font-bold mb-4 text-accent">More on Kerala's Hidden Gems</h3>
+              <ul class="text-gray-600 list-disc list-inside mb-4 text-left text-sm">
+                <li>Silent Valley National Park</li>
+                <li>Varkala Cliffs</li>
+                <li>Meesapulimala</li>
+                <li>Marari Beach</li>
+                <li>Chembra Peak</li>
+              </ul>
+              <span class="text-primary font-semibold mt-2 text-sm">Tap to flip back</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Blog Card 2 -->
+        <div class="blog-flip-card group cursor-pointer perspective" data-card="2">
+          <div class="relative preserve-3d duration-500 blog-flip-inner h-full">
+            <!-- Front -->
+            <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition group overflow-hidden flex flex-col blog-flip-front h-full">
+              <div class="relative h-48 overflow-hidden">
+                <img src="images/blogs/ladakhblog.webp" alt="Ladakh Road Trip Guide" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                <span class="absolute top-4 left-4 bg-primary text-white text-xs font-semibold px-3 py-1 rounded-full shadow">Adventure</span>
+              </div>
+              <div class="p-6 flex-1 flex flex-col">
+                <div class="flex items-center text-xs text-gray-400 mb-2 space-x-2">
+                  <i class="fas fa-calendar-alt"></i>
+                  <span>Apr 28, 2025</span>
+                  <span>•</span>
+                  <span>4 min read</span>
+                </div>
+                <h3 class="text-lg font-bold mb-2 group-hover:text-accent transition">Ultimate Guide to Ladakh Road Trips</h3>
+                <p class="text-gray-600 mb-4 flex-1 text-sm">
+                  Everything you need for an epic Ladakh journey: routes, tips, and must-see stops for thrill-seekers.
+                </p>
+                <a href="#" class="inline-flex items-center text-primary font-semibold hover:text-accent transition text-sm">
+                  Read More <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+              </div>
+            </div>
+            <!-- Back -->
+            <div class="absolute inset-0 bg-white rounded-xl shadow-md p-6 flex flex-col justify-center items-center blog-flip-back h-full">
+              <h3 class="text-lg font-bold mb-4 text-primary">Ladakh Road Trip Essentials</h3>
+              <ul class="text-gray-600 list-disc list-inside mb-4 text-left text-sm">
+                <li>Best routes: Manali-Leh & Srinagar-Leh</li>
+                <li>Must-see: Pangong Lake, Nubra Valley</li>
+                <li>Travel tips: Acclimatize, carry permits</li>
+                <li>Ideal time: June to September</li>
+              </ul>
+              <span class="text-primary font-semibold mt-2 text-sm">Tap to flip back</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Blog Card 3 -->
+        <div class="blog-flip-card group cursor-pointer perspective" data-card="3">
+          <div class="relative preserve-3d duration-500 blog-flip-inner h-full">
+            <!-- Front -->
+            <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition group overflow-hidden flex flex-col blog-flip-front h-full">
+              <div class="relative h-48 overflow-hidden">
+                <img src="images/blogs/indiablog.webp" alt="Family Destinations India" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                <span class="absolute top-4 left-4 bg-secondary text-white text-xs font-semibold px-3 py-1 rounded-full shadow">Family</span>
+              </div>
+              <div class="p-6 flex-1 flex flex-col">
+                <div class="flex items-center text-xs text-gray-400 mb-2 space-x-2">
+                  <i class="fas fa-calendar-alt"></i>
+                  <span>Mar 10, 2025</span>
+                  <span>•</span>
+                  <span>6 min read</span>
+                </div>
+                <h3 class="text-lg font-bold mb-2 group-hover:text-accent transition">Family-Friendly Destinations in India</h3>
+                <p class="text-gray-600 mb-4 flex-1 text-sm">
+                  Our top picks for safe, fun, and memorable family getaways across India—adventure and comfort for all ages.
+                </p>
+                <a href="#" class="inline-flex items-center text-primary font-semibold hover:text-accent transition text-sm">
+                  Read More <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+              </div>
+            </div>
+            <!-- Back -->
+            <div class="absolute inset-0 bg-white rounded-xl shadow-md p-6 flex flex-col justify-center items-center blog-flip-back h-full">
+              <h3 class="text-lg font-bold mb-4 text-secondary">Top Family Destinations</h3>
+              <ul class="text-gray-600 list-disc list-inside mb-4 text-left text-sm">
+                <li>Shimla & Manali</li>
+                <li>Goa: Safe beaches</li>
+                <li>Ooty: Botanical gardens</li>
+                <li>Jaipur: Forts & culture</li>
+              </ul>
+              <span class="text-primary font-semibold mt-2 text-sm">Tap to flip back</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Blog Card 4 -->
+        <div class="blog-flip-card group cursor-pointer perspective" data-card="4">
+          <div class="relative preserve-3d duration-500 blog-flip-inner h-full">
+            <!-- Front -->
+            <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition group overflow-hidden flex flex-col blog-flip-front h-full">
+              <div class="relative h-48 overflow-hidden">
+                <img src="images/blogs/rejoiceblog.webp" alt="Custom Trip Planning" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                <span class="absolute top-4 left-4 bg-accent text-white text-xs font-semibold px-3 py-1 rounded-full shadow">How-To</span>
+              </div>
+              <div class="p-6 flex-1 flex flex-col">
+                <div class="flex items-center text-xs text-gray-400 mb-2 space-x-2">
+                  <i class="fas fa-calendar-alt"></i>
+                  <span>Feb 22, 2025</span>
+                  <span>•</span>
+                  <span>3 min read</span>
+                </div>
+                <h3 class="text-lg font-bold mb-2 group-hover:text-accent transition">How to Plan a Custom Trip with Rejoice</h3>
+                <p class="text-gray-600 mb-4 flex-1 text-sm">
+                  Step-by-step guide to designing your dream itinerary with our travel architects.
+                </p>
+                <a href="#" class="inline-flex items-center text-primary font-semibold hover:text-accent transition text-sm">
+                  Read More <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+              </div>
+            </div>
+            <!-- Back -->
+            <div class="absolute inset-0 bg-white rounded-xl shadow-md p-6 flex flex-col justify-center items-center blog-flip-back h-full">
+              <h3 class="text-lg font-bold mb-4 text-accent">Custom Trip Planning Steps</h3>
+              <ol class="text-gray-600 list-decimal list-inside mb-4 text-left text-sm">
+                <li>Share your interests & dates</li>
+                <li>Get personalized itinerary</li>
+                <li>Refine with our experts</li>
+                <li>Book & enjoy support</li>
+              </ol>
+              <span class="text-primary font-semibold mt-2 text-sm">Tap to flip back</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="text-center mt-12">
+        <a href="#" class="btn-primary">
+          Explore All Stories
+        </a>
+      </div>
+    </div>
+  </section>
+
+  
+<!-- Testimonials Section -->
+<section id="testimonials" class="section-padding gradient-bg text-white">
+  <div class="container mx-auto px-4 sm:px-6">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4 heading-decorator">
+        What Our Clients Say
+      </h2>
+      <p class="max-w-2xl mx-auto opacity-90 text-lg">
+        Trusted by thousands of travelers for unforgettable experiences
+      </p>
+    </div>
+    
+    <div class="relative">
+      <!-- Testimonials Carousel Container -->
+      <div class="overflow-hidden">
+        <div class="testimonial-carousel flex transition-all duration-500 ease-out">
+          <!-- Testimonial Items -->
+          <div class="carousel-item flex-shrink-0 w-full md:w-1/3 px-3">
+            <div class="glass-card p-8 rounded-xl h-full flex flex-col">
+              <div class="flex items-center mb-6">
+                <img src="images/client.jpg" alt="John Doe" class="w-14 h-14 rounded-full object-cover mr-4 border-2 border-white border-opacity-30">
+                <div>
+                  <h4 class="font-bold text-lg">Akshay</h4>
+                  <span class="text-sm opacity-80">Adventure Traveler</span>
+                </div>
+              </div>
+              <div class="flex text-yellow-400 mb-5 text-lg">
+                ★ ★ ★ ★ ★
+              </div>
+              <p class="opacity-90 text-base mb-6 flex-grow">
+                "Rejoice crafted my dream safari adventure. Every detail was perfect - from wildlife encounters to luxury lodges. Their local expertise made all the difference!"
+              </p>
+              <div class="text-xs opacity-70">
+                <i class="fas fa-map-marker-alt mr-1"></i> Safari in Bandipur
+              </div>
+            </div>
+          </div>
+          
+          <div class="carousel-item flex-shrink-0 w-full md:w-1/3 px-3">
+            <div class="glass-card p-8 rounded-xl h-full flex flex-col">
+              <div class="flex items-center mb-6">
+                <img src="images/client.jpg" alt="Jane Smith" class="w-14 h-14 rounded-full object-cover mr-4 border-2 border-white border-opacity-30">
+                <div>
+                  <h4 class="font-bold text-lg">Sreerag</h4>
+                  <span class="text-sm opacity-80">Honeymooner</span>
+                </div>
+              </div>
+              <div class="flex text-yellow-400 mb-5 text-lg">
+                ★ ★ ★ ★ ★
+              </div>
+              <p class="opacity-90 text-base mb-6 flex-grow">
+                "Our Maldives honeymoon was pure magic thanks to Rejoice. They surprised us with a private beach dinner under the stars - a moment we'll cherish forever!"
+              </p>
+              <div class="text-xs opacity-70">
+                <i class="fas fa-map-marker-alt mr-1"></i> Maldives
+              </div>
+            </div>
+          </div>
+          
+          <div class="carousel-item flex-shrink-0 w-full md:w-1/3 px-3">
+            <div class="glass-card p-8 rounded-xl h-full flex flex-col">
+              <div class="flex items-center mb-6">
+                <img src="images/client.jpg" alt="Michael Johnson" class="w-14 h-14 rounded-full object-cover mr-4 border-2 border-white border-opacity-30">
+                <div>
+                  <h4 class="font-bold text-lg">Alwyn</h4>
+                  <span class="text-sm opacity-80">Family Traveler</span>
+                </div>
+              </div>
+              <div class="flex text-yellow-400 mb-5 text-lg">
+                ★ ★ ★ ★ ☆
+              </div>
+              <p class="opacity-90 text-base mb-6 flex-grow">
+                "Traveling with three kids is challenging, but Rejoice made it effortless. Their kid-friendly itineraries and emergency support gave us peace of mind."
+              </p>
+              <div class="text-xs opacity-70">
+                <i class="fas fa-map-marker-alt mr-1"></i> Ooty
+              </div>
+            </div>
+          </div>
+          
+          <div class="carousel-item flex-shrink-0 w-full md:w-1/3 px-3">
+            <div class="glass-card p-8 rounded-xl h-full flex flex-col">
+              <div class="flex items-center mb-6">
+                <img src="images/client.jpg" alt="Sarah Williams" class="w-14 h-14 rounded-full object-cover mr-4 border-2 border-white border-opacity-30">
+                <div>
+                  <h4 class="font-bold text-lg">Antonio</h4>
+                  <span class="text-sm opacity-80">Solo Traveler</span>
+                </div>
+              </div>
+              <div class="flex text-yellow-400 mb-5 text-lg">
+                ★ ★ ★ ★ ★
+              </div>
+              <p class="opacity-90 text-base mb-6 flex-grow">
+                "As a solo traveler in Thrissur, I felt incredibly supported. Their 24/7 local contact and detailed cultural tips made all the difference."
+              </p>
+              <div class="text-xs opacity-70">
+                <i class="fas fa-map-marker-alt mr-1"></i>Cultural Tour
+              </div>
+            </div>
+          </div>
+          
+          <div class="carousel-item flex-shrink-0 w-full md:w-1/3 px-3">
+            <div class="glass-card p-8 rounded-xl h-full flex flex-col">
+              <div class="flex items-center mb-6">
+                <img src="images/client.jpg" alt="David Brown" class="w-14 h-14 rounded-full object-cover mr-4 border-2 border-white border-opacity-30">
+                <div>
+                  <h4 class="font-bold text-lg">Mr. Joyal Joy</h4>
+                  <span class="text-sm opacity-80">Business Traveler</span>
+                </div>
+              </div>
+              <div class="flex text-yellow-400 mb-5 text-lg">
+                ★ ★ ★ ★ ★
+              </div>
+              <p class="opacity-90 text-base mb-6 flex-grow">
+                "For our international conferences, Rejoice handles all logistics flawlessly. Their airport meet-and-greet service saves us hours of stress."
+              </p>
+              <div class="text-xs opacity-70">
+                <i class="fas fa-map-marker-alt mr-1"></i> Dubai Business Travel
+              </div>
+            </div>
+          </div>
+
+          <div class="carousel-item flex-shrink-0 w-full md:w-1/3 px-3">
+            <div class="glass-card p-8 rounded-xl h-full flex flex-col">
+              <div class="flex items-center mb-6">
+                <img src="images/client.jpg" alt="David Brown" class="w-14 h-14 rounded-full object-cover mr-4 border-2 border-white border-opacity-30">
+                <div>
+                  <h4 class="font-bold text-lg">Arnold</h4>
+                  <span class="text-sm opacity-80">Traveler</span>
+                </div>
+              </div>
+              <div class="flex text-yellow-400 mb-5 text-lg">
+                ★ ★ ★ ★ ★
+              </div>
+              <p class="opacity-90 text-base mb-6 flex-grow">
+                "For our international conferences, Rejoice handles all logistics flawlessly. Their airport meet-and-greet service saves us hours of stress."
+              </p>
+              <div class="text-xs opacity-70">
+                <i class="fas fa-map-marker-alt mr-1"></i>Business Travel
+              </div>
+            </div>
+          </div>
+
+          <div class="carousel-item flex-shrink-0 w-full md:w-1/3 px-3">
+            <div class="glass-card p-8 rounded-xl h-full flex flex-col">
+              <div class="flex items-center mb-6">
+                <img src="images/client.jpg" alt="David Brown" class="w-14 h-14 rounded-full object-cover mr-4 border-2 border-white border-opacity-30">
+                <div>
+                  <h4 class="font-bold text-lg">Pranay</h4>
+                  <span class="text-sm opacity-80">Business Traveler</span>
+                </div>
+              </div>
+              <div class="flex text-yellow-400 mb-5 text-lg">
+                ★ ★ ★ ★ ★
+              </div>
+              <p class="opacity-90 text-base mb-6 flex-grow">
+                "For our international conferences, Rejoice handles all logistics flawlessly. Their airport meet-and-greet service saves us hours of stress."
+              </p>
+              <div class="text-xs opacity-70">
+                <i class="fas fa-map-marker-alt mr-1"></i> Global Business Travel
+              </div>
+            </div>
+          </div>
+
+          <div class="carousel-item flex-shrink-0 w-full md:w-1/3 px-3">
+            <div class="glass-card p-8 rounded-xl h-full flex flex-col">
+              <div class="flex items-center mb-6">
+                <img src="images/client.jpg" alt="David Brown" class="w-14 h-14 rounded-full object-cover mr-4 border-2 border-white border-opacity-30">
+                <div>
+                  <h4 class="font-bold text-lg">Adhithyan</h4>
+                  <span class="text-sm opacity-80">Pilgrimage Traveler</span>
+                </div>
+              </div>
+              <div class="flex text-yellow-400 mb-5 text-lg">
+                ★ ★ ★ ★ ★
+              </div>
+              <p class="opacity-90 text-base mb-6 flex-grow">
+                "For our Pilgrimage travel, Rejoice handles all stuffs flawlessly. Their airport meet-and-greet service saves us hours of stress."
+              </p>
+              <div class="text-xs opacity-70">
+                <i class="fas fa-map-marker-alt mr-1"></i>Rameshwaram Travel
+              </div>
+            </div>
+          </div>
+          
+          <div class="carousel-item flex-shrink-0 w-full md:w-1/3 px-3">
+            <div class="glass-card p-8 rounded-xl h-full flex flex-col">
+              <div class="flex items-center mb-6">
+                <img src="images/client.jpg" alt="Emily Davis" class="w-14 h-14 rounded-full object-cover mr-4 border-2 border-white border-opacity-30">
+                <div>
+                  <h4 class="font-bold text-lg">Ashin</h4>
+                  <span class="text-sm opacity-80">Luxury Traveler</span>
+                </div>
+              </div>
+              <div class="flex text-yellow-400 mb-5 text-lg">
+                ★ ★ ★ ★ ★
+              </div>
+              <p class="opacity-90 text-base mb-6 flex-grow">
+                "The VIP treatment we received in Mumbai was extraordinary. Private vineyard tours, skip-the-line access everywhere - worth every penny!"
+              </p>
+              <div class="text-xs opacity-70">
+                <i class="fas fa-map-marker-alt mr-1"></i> Mumbai Luxury Tour
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Navigation Arrows -->
+      <button class="testimonial-prev absolute left-0 top-1/2 -translate-y-1/2 -ml-2 md:-ml-4 bg-white bg-opacity-20 rounded-full p-3 hover:bg-opacity-30 transition-all duration-200 shadow-lg hover:scale-110">
+        <i class="fas fa-chevron-left text-white text-xl"></i>
+      </button>
+      <button class="testimonial-next absolute right-0 top-1/2 -translate-y-1/2 -mr-2 md:-mr-4 bg-white bg-opacity-20 rounded-full p-3 hover:bg-opacity-30 transition-all duration-200 shadow-lg hover:scale-110">
+        <i class="fas fa-chevron-right text-white text-xl"></i>
+      </button>
+      
+      <!-- Dots Indicator -->
+      <div class="flex justify-center mt-8 space-x-2 dot-container">
+        <!-- Dots will be added by JavaScript -->
+      </div>
+    </div>
+    
+    <!-- Trust Indicators -->
+    <div class="mt-16 pt-8 border-t border-white border-opacity-20">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        <div>
+          <div class="text-3xl font-bold mb-2">5,000+</div>
+          <div class="opacity-80 text-sm">Happy Travelers</div>
+        </div>
+        <div>
+          <div class="text-3xl font-bold mb-2">98%</div>
+          <div class="opacity-80 text-sm">Positive Reviews</div>
+        </div>
+        <div>
+          <div class="text-3xl font-bold mb-2">150+</div>
+          <div class="opacity-80 text-sm">Destinations</div>
+        </div>
+        <div>
+          <div class="text-3xl font-bold mb-2">24/7</div>
+          <div class="opacity-80 text-sm">Support</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const carousel = document.querySelector('.testimonial-carousel');
+    const prevBtn = document.querySelector('.testimonial-prev');
+    const nextBtn = document.querySelector('.testimonial-next');
+    const items = document.querySelectorAll('.carousel-item');
+    const dotContainer = document.querySelector('.dot-container');
+    let currentIndex = 0;
+    let testimonialsPerView = window.innerWidth >= 768 ? 3 : 1;
+    const totalItems = items.length;
+    
+    // Create dots
+    const totalDots = Math.ceil(totalItems / testimonialsPerView);
+    for (let i = 0; i < totalDots; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'w-3 h-3 rounded-full bg-white bg-opacity-30 cursor-pointer transition-all';
+      dot.addEventListener('click', () => {
+        currentIndex = i;
+        updateCarousel();
+      });
+      dotContainer.appendChild(dot);
+    }
+    const dots = document.querySelectorAll('.dot-container div');
+    
+    function updateCarousel() {
+      const offset = -currentIndex * (100 / testimonialsPerView);
+      carousel.style.transform = `translateX(${offset}%)`;
+      
+      // Update dots
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('bg-opacity-30', index !== currentIndex);
+        dot.classList.toggle('bg-opacity-100', index === currentIndex);
+        dot.classList.toggle('w-3', index !== currentIndex);
+        dot.classList.toggle('w-6', index === currentIndex);
+      });
+      
+      // Update button states
+      prevBtn.disabled = currentIndex === 0;
+      nextBtn.disabled = currentIndex >= totalDots - 1;
+    }
+    
+    prevBtn.addEventListener('click', () => {
+      if (currentIndex > 0) {
+        currentIndex--;
+        updateCarousel();
+      }
+    });
+    
+    nextBtn.addEventListener('click', () => {
+      if (currentIndex < totalDots - 1) {
+        currentIndex++;
+        updateCarousel();
+      }
+    });
+    
+    // Handle window resize
+    function handleResize() {
+      const newPerView = window.innerWidth >= 768 ? 3 : 1;
+      if (newPerView !== testimonialsPerView) {
+        testimonialsPerView = newPerView;
+        
+        // Recreate dots for new layout
+        dotContainer.innerHTML = '';
+        const newTotalDots = Math.ceil(totalItems / testimonialsPerView);
+        for (let i = 0; i < newTotalDots; i++) {
+          const dot = document.createElement('div');
+          dot.className = 'w-3 h-3 rounded-full bg-white bg-opacity-30 cursor-pointer transition-all';
+          dot.addEventListener('click', () => {
+            currentIndex = i;
+            updateCarousel();
+          });
+          dotContainer.appendChild(dot);
+        }
+        
+        currentIndex = 0;
+        updateCarousel();
+      }
+    }
+    
+    window.addEventListener('resize', handleResize);
+    
+    // Initialize
+    updateCarousel();
+    
+    // Auto-rotate every 8 seconds
+    let autoRotate = setInterval(() => {
+      if (currentIndex < totalDots - 1) {
+        currentIndex++;
+      } else {
+        currentIndex = 0;
+      }
+      updateCarousel();
+    }, 8000);
+    
+    // Pause on hover
+    carousel.addEventListener('mouseenter', () => clearInterval(autoRotate));
+    carousel.addEventListener('mouseleave', () => {
+      autoRotate = setInterval(() => {
+        if (currentIndex < totalDots - 1) {
+          currentIndex++;
+        } else {
+          currentIndex = 0;
+        }
+        updateCarousel();
+      }, 8000);
+    });
+  });
+
+  document.addEventListener('DOMContentLoaded', function () {
+  const carousel = document.querySelector('.testimonial-carousel');
+  const prevBtn = document.querySelector('.testimonial-prev');
+  const nextBtn = document.querySelector('.testimonial-next');
+  const items = document.querySelectorAll('.carousel-item');
+  const dotContainer = document.querySelector('.dot-container');
+
+  let currentIndex = 0;
+  let testimonialsPerView = window.innerWidth >= 768 ? 3 : 1;
+  let totalItems = items.length;
+
+  function getTotalDots() {
+    return Math.ceil(totalItems / testimonialsPerView);
+  }
+
+  function createDots() {
+    dotContainer.innerHTML = '';
+    const totalDots = getTotalDots();
+
+    for (let i = 0; i < totalDots; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'w-3 h-3 rounded-full bg-white bg-opacity-30 cursor-pointer transition-all';
+      dot.addEventListener('click', () => {
+        currentIndex = i;
+        updateCarousel();
+      });
+      dotContainer.appendChild(dot);
+    }
+
+    return document.querySelectorAll('.dot-container div');
+  }
+
+  let dots = createDots();
+
+  function updateCarousel() {
+    const offset = -currentIndex * (100 / testimonialsPerView);
+    carousel.style.transform = `translateX(${offset}%)`;
+
+    dots.forEach((dot, index) => {
+      dot.classList.toggle('bg-opacity-30', index !== currentIndex);
+      dot.classList.toggle('bg-opacity-100', index === currentIndex);
+      dot.classList.toggle('w-3', index !== currentIndex);
+      dot.classList.toggle('w-6', index === currentIndex);
+    });
+
+    const totalDots = getTotalDots();
+    prevBtn.disabled = currentIndex === 0;
+    nextBtn.disabled = currentIndex >= totalDots - 1;
+  }
+
+  prevBtn.addEventListener('click', () => {
+    if (currentIndex > 0) {
+      currentIndex--;
+      updateCarousel();
+    }
+  });
+
+  nextBtn.addEventListener('click', () => {
+    const totalDots = getTotalDots();
+    if (currentIndex < totalDots - 1) {
+      currentIndex++;
+      updateCarousel();
+    }
+  });
+
+  window.addEventListener('resize', () => {
+    const newPerView = window.innerWidth >= 768 ? 3 : 1;
+    if (newPerView !== testimonialsPerView) {
+      testimonialsPerView = newPerView;
+      dots = createDots();
+      currentIndex = 0;
+      updateCarousel();
+    }
+  });
+
+  updateCarousel();
+
+  // Auto-play through all cards
+  let autoRotate = setInterval(() => {
+    const totalDots = getTotalDots();
+    if (currentIndex < totalDots - 1) {
+      currentIndex++;
+    } else {
+      currentIndex = 0;
+    }
+    updateCarousel();
+  }, 8000);
+
+  // Pause on hover
+  carousel.addEventListener('mouseenter', () => clearInterval(autoRotate));
+  carousel.addEventListener('mouseleave', () => {
+    autoRotate = setInterval(() => {
+      const totalDots = getTotalDots();
+      if (currentIndex < totalDots - 1) {
+        currentIndex++;
+      } else {
+        currentIndex = 0;
+      }
+      updateCarousel();
+    }, 8000);
+  });
+});
+
+</script>
+
+<style>
+  .glass-card {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .glass-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  }
+  
+  .carousel-item {
+    transition: opacity 0.5s ease;
+  }
+  
+  .heading-decorator {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .heading-decorator::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, #3B82F6, #EC4899);
+    border-radius: 3px;
+  }
+
+    @media (max-width: 767px) {
+    .carousel-item {
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+    }
+
+    .glass-card {
+      padding: 1.5rem;
+    }
+
+    .testimonial-carousel {
+      scroll-snap-type: x mandatory;
+    }
+
+    .carousel-item {
+      scroll-snap-align: start;
+    }
+  }
+</style>
+
+
+
+  
+  <!-- Contact Section -->
+  <section id="contact" class="section-padding bg-white">
+    <div class="container mx-auto px-4 sm:px-6">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4 heading-decorator">
+          Contact Us
+        </h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">
+          Get in touch to start planning your dream vacation
+        </p>
+      </div>
+      
+      <div class="flex flex-col lg:flex-row gap-8 xl:gap-12">
+        <div class="lg:w-1/2">
+          <form class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label for="name" class="block text-gray-700 mb-2 font-medium">Your Name</label>
+                <input type="text" id="name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent">
+              </div>
+              <div>
+                <label for="email" class="block text-gray-700 mb-2 font-medium">Your Email</label>
+                <input type="email" id="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent">
+              </div>
+            </div>
+            
+            <div>
+              <label for="phone" class="block text-gray-700 mb-2 font-medium">Phone Number</label>
+              <input type="tel" id="phone" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent">
+            </div>
+            
+            <div>
+              <label for="subject" class="block text-gray-700 mb-2 font-medium">Subject</label>
+              <input type="text" id="subject" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent">
+            </div>
+            
+            <div>
+              <label for="message" class="block text-gray-700 mb-2 font-medium">Your Message</label>
+              <textarea id="message" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"></textarea>
+            </div>
+            
+            <button type="submit" class="w-full btn-primary">
+              Send Message
+            </button>
+          </form>
+        </div>
+        
+        <div class="lg:w-1/2 mt-8 lg:mt-0">
+          <div class="bg-gray-50 p-6 md:p-8 rounded-xl h-full">
+            <h3 class="text-2xl font-bold mb-6">Contact Information</h3>
+            
+            <div class="space-y-6">
+              <div class="flex items-start">
+                <div class="text-accent text-xl mt-1 mr-4">
+                  <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold mb-1">Address</h4>
+                  <p class="text-gray-600">Vaniyamkulam, Palakkad<br> Kerala, India <br> 679522</p>
+                </div>
+              </div>
+              
+              <div class="flex items-start">
+                <div class="text-accent text-xl mt-1 mr-4">
+                  <i class="fas fa-envelope"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold mb-1">Email</h4>
+                  <p class="text-gray-600">hello@rejoicetourpackages.com</p>
+                </div>
+              </div>
+              
+              <div class="flex items-start">
+                <div class="text-accent text-xl mt-1 mr-4">
+                  <i class="fas fa-phone-alt"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold mb-1">Phone</h4>
+                  <p class="text-gray-600">+91 9562585128
+                  <br>+91 9400709128</p>
+                </div>
+              </div>
+              
+              <div class="flex items-start">
+                <div class="text-accent text-xl mt-1 mr-4">
+                  <i class="fas fa-clock"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold mb-1">Working Hours</h4>
+                  <p class="text-gray-600">Monday - Saturday: 9:00 AM - 7:00 PM</p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="mt-8">
+              <h4 class="font-bold mb-4">Follow Us</h4>
+              <div class="flex space-x-4">
+                <a href="#" class="bg-primary hover:bg-blue-800 text-white w-10 h-10 rounded-full flex items-center justify-center transition">
+                  <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://www.instagram.com/rejoicetourpackages?igsh=MW5wb3VtbmtjZ25xdw==" class="bg-pink-600 hover:bg-pink-700 text-white w-10 h-10 rounded-full flex items-center justify-center transition">
+                  <i class="fab fa-instagram"></i>
+                </a>
+                <a href="#" class="bg-blue-400 hover:bg-blue-500 text-white w-10 h-10 rounded-full flex items-center justify-center transition">
+                  <i class="fab fa-twitter"></i>
+                </a>
+                <a href="https://wa.me/919562585128?" class="bg-green-500 hover:bg-green-600 text-white w-10 h-10 rounded-full flex items-center justify-center transition">
+                  <i class="fab fa-whatsapp"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white py-12">
+    <div class="container mx-auto px-4 sm:px-6">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+        <div>
+          <div class="flex items-center space-x-3 mb-4">
+            <img src="images/logo.png" alt="Rejoice Logo" class="h-10 w-10 object-contain">
+            <span class="text-xl font-bold">REJOICE</span>
+          </div>
+          <p class="text-gray-400 mb-4 text-sm">Crafting unforgettable travel experiences with passion and expertise.</p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/rejoicetourpackages?igsh=MW5wb3VtbmtjZ25xdw==" class="text-gray-400 hover:text-white transition"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+          <ul class="space-y-2">
+            <li><a href="#home" class="text-gray-400 hover:text-white transition text-sm">Home</a></li>
+            <li><a href="#about" class="text-gray-400 hover:text-white transition text-sm">About Us</a></li>
+            <!-- <li><a href="#destinations" class="text-gray-400 hover:text-white transition text-sm">Destinations</a></li> -->
+            <li><a href="#packages" class="text-gray-400 hover:text-white transition text-sm">Packages</a></li>
+            <li><a href="#testimonials" class="text-gray-400 hover:text-white transition text-sm">Testimonials</a></li>
+            <li><a href="#contact" class="text-gray-400 hover:text-white transition text-sm">Contact</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-bold mb-4">Support</h3>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-400 hover:text-white transition text-sm">FAQs</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition text-sm">Privacy Policy</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition text-sm">Terms & Conditions</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition text-sm">Cancellation Policy</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition text-sm">Blog</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-bold mb-4">Newsletter</h3>
+          <p class="text-gray-400 mb-4 text-sm">Subscribe to our newsletter for the latest offers and travel inspiration.</p>
+          <form class="flex">
+            <input type="email" placeholder="Your email" class="px-4 py-2 rounded-l-lg focus:outline-none text-dark w-full text-sm">
+            <button type="submit" class="bg-accent hover:bg-orange-600 px-4 py-2 rounded-r-lg transition">
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+      
+      <div class="border-t border-gray-800 pt-8 text-center text-gray-400 text-sm">
+        <p>&copy;2025 Rejoice Tour Packages. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WhatsApp Float -->
+  <a href="https://wa.me/919562585128" target="_blank" class="fixed bottom-6 right-6 bg-green-500 text-white w-14 h-14 rounded-full flex items-center justify-center text-2xl shadow-lg hover:bg-green-600 transition z-50">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <script>
+    // Mobile Menu Toggle
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+    
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        
+        if(this.getAttribute('href') === '#') return;
+        
+        const target = document.querySelector(this.getAttribute('href'));
+        if(target) {
+          window.scrollTo({
+            top: target.offsetTop - 80,
+            behavior: 'smooth'
+          });
+          
+          // Close mobile menu if open
+          mobileMenu.classList.add('hidden');
+        }
+      });
+    });
+    
+    // Add shadow to navbar on scroll
+    window.addEventListener('scroll', function() {
+      const nav = document.querySelector('nav');
+      if(window.scrollY > 50) {
+        nav.classList.add('shadow-xl');
+      } else {
+        nav.classList.remove('shadow-xl');
+      }
+    });
+    
+    // Form submission
+    const contactForm = document.querySelector('form');
+    if(contactForm) {
+      contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        alert('Thank you for your message! We will get back to you soon.');
+        this.reset();
+      });
+    }
+    
+    // Trip planner form submission
+    const tripPlannerForm = document.getElementById('tripPlannerForm');
+    const tripPlannerResult = document.getElementById('tripPlannerResult');
+    
+    if(tripPlannerForm && tripPlannerResult) {
+      tripPlannerForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const dest = document.getElementById('planner-destination').value;
+        const from = document.getElementById('planner-from').value;
+        const to = document.getElementById('planner-to').value;
+        const travelers = document.getElementById('planner-travelers').value;
+        const type = document.getElementById('planner-type').value;
+        
+        if(!dest || !from || !to || !travelers || !type) {
+          tripPlannerResult.textContent = "Please fill in all fields to plan your trip.";
+          tripPlannerResult.classList.remove('hidden', 'bg-green-50', 'text-green-700');
+          tripPlannerResult.classList.add('bg-red-50', 'text-red-700', 'border-red-200');
+          return;
+        }
+        
+        tripPlannerResult.innerHTML = `<strong class="text-lg">Trip Planned!</strong><br>
+          <span class="font-semibold">Destination:</span> ${dest}<br>
+          <span class="font-semibold">Dates:</span> ${from} to ${to}<br>
+          <span class="font-semibold">Travelers:</span> ${travelers}<br>
+          <span class="font-semibold">Type:</span> ${type}<br>
+          <span class="block mt-2">Our team will contact you soon with a personalized itinerary.</span>`;
+        
+        tripPlannerResult.classList.remove('hidden', 'bg-red-50', 'text-red-700', 'border-red-200');
+        tripPlannerResult.classList.add('bg-green-50', 'text-green-700', 'border-green-200');
+        
+        this.reset();
+      });
+    }
+    
+    // Blog flip cards
+    document.querySelectorAll('.blog-flip-card').forEach(card => {
+      card.addEventListener('click', function () {
+        this.classList.toggle('flipped');
+      });
+    });
+  </script>
+</body>
+</html>
