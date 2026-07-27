@@ -2689,6 +2689,111 @@
   </div>
 </section>
 
+<style>
+  .faq-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-card[open] .faq-icon {
+    transform: rotate(45deg);
+    background: rgba(255, 125, 0, 0.12);
+    color: #FF7D00;
+  }
+
+  .faq-card[open] {
+    border-color: rgba(255, 125, 0, 0.18);
+    box-shadow: 0 12px 30px rgba(10, 36, 99, 0.08);
+  }
+</style>
+
+<!-- FAQ Section -->
+<section id="faq" class="section-padding bg-gradient-to-br from-white via-blue-50 to-gray-50 relative overflow-hidden">
+  <div class="absolute inset-0 opacity-40 pointer-events-none">
+    <div class="absolute top-10 left-10 w-72 h-72 bg-accent/10 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-10 right-10 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
+  </div>
+  <div class="container mx-auto px-4 sm:px-6 relative z-10">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4 heading-decorator text-dark">
+        Frequently Asked Questions
+      </h2>
+      <p class="max-w-2xl mx-auto text-gray-600 text-lg">
+        Quick answers to the most common travel questions, so planning feels simple and stress-free.
+      </p>
+    </div>
+
+    <div class="grid lg:grid-cols-12 gap-8 items-start">
+      <div class="lg:col-span-4">
+        <div class="bg-primary text-white rounded-2xl p-8 shadow-xl h-full">
+          <span class="inline-flex items-center px-3 py-1 rounded-full bg-white/15 text-sm font-semibold mb-5">Travel Help</span>
+          <h3 class="text-2xl md:text-3xl font-bold mb-4 leading-tight">Everything you need before booking a trip</h3>
+          <p class="text-white/85 mb-6 leading-relaxed">
+            We’ve answered the questions travelers usually ask before they confirm a package, customize an itinerary, or travel with us.
+          </p>
+          <div class="space-y-4 text-sm text-white/90">
+            <div class="flex items-center gap-3">
+              <i class="fas fa-check-circle text-accent"></i>
+              <span>Clear booking and payment guidance</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <i class="fas fa-check-circle text-accent"></i>
+              <span>Flexible custom trip planning</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <i class="fas fa-check-circle text-accent"></i>
+              <span>Support while you are traveling</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-8 space-y-4">
+        <details class="faq-card group bg-white rounded-2xl shadow-md border border-blue-100 overflow-hidden" open>
+          <summary class="faq-summary flex items-center justify-between gap-4 p-5 md:p-6 cursor-pointer list-none">
+            <span class="font-semibold text-lg text-dark">How does the booking process work?</span>
+            <span class="faq-icon flex items-center justify-center w-10 h-10 rounded-full bg-accent/10 text-accent shrink-0 transition-transform duration-300">+</span>
+          </summary>
+          <div class="px-5 md:px-6 pb-6 text-gray-600 leading-relaxed">
+            Share your travel dates, destination, number of guests, and budget. We’ll suggest a suitable package or create a custom itinerary, then confirm the details before final booking.
+          </div>
+        </details>
+
+        <details class="faq-card group bg-white rounded-2xl shadow-md border border-blue-100 overflow-hidden">
+          <summary class="faq-summary flex items-center justify-between gap-4 p-5 md:p-6 cursor-pointer list-none">
+            <span class="font-semibold text-lg text-dark">What is your cancellation policy?</span>
+            <span class="faq-icon flex items-center justify-center w-10 h-10 rounded-full bg-accent/10 text-accent shrink-0 transition-transform duration-300">+</span>
+          </summary>
+          <div class="px-5 md:px-6 pb-6 text-gray-600 leading-relaxed">
+            Cancellation terms depend on the package, hotel, and transport bookings involved. We’ll clearly explain the applicable policy before you pay so there are no surprises.
+          </div>
+        </details>
+
+        <details class="faq-card group bg-white rounded-2xl shadow-md border border-blue-100 overflow-hidden">
+          <summary class="faq-summary flex items-center justify-between gap-4 p-5 md:p-6 cursor-pointer list-none">
+            <span class="font-semibold text-lg text-dark">Which payment methods do you accept?</span>
+            <span class="faq-icon flex items-center justify-center w-10 h-10 rounded-full bg-accent/10 text-accent shrink-0 transition-transform duration-300">+</span>
+          </summary>
+          <div class="px-5 md:px-6 pb-6 text-gray-600 leading-relaxed">
+            We accept standard payment options commonly used for travel bookings. If you prefer, we can also guide you through advance payment and balance payment steps.
+          </div>
+        </details>
+
+        <details class="faq-card group bg-white rounded-2xl shadow-md border border-blue-100 overflow-hidden">
+          <summary class="faq-summary flex items-center justify-between gap-4 p-5 md:p-6 cursor-pointer list-none">
+            <span class="font-semibold text-lg text-dark">Can you create a custom trip plan for us?</span>
+            <span class="faq-icon flex items-center justify-center w-10 h-10 rounded-full bg-accent/10 text-accent shrink-0 transition-transform duration-300">+</span>
+          </summary>
+          <div class="px-5 md:px-6 pb-6 text-gray-600 leading-relaxed">
+            Yes. Tell us your destination, style of travel, dates, and interests. We can build honeymoon, family, group, corporate, or pilgrimage itineraries tailored to your needs.
+          </div>
+        </details>
+
+
+      </div>
+    </div>
+  </div>
+</section>
+
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     const carousel = document.querySelector('.testimonial-carousel');
@@ -3123,6 +3228,8 @@
 <script>document.getElementById('copy-year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
+
+
 
 
 
