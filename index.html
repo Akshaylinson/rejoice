@@ -1429,22 +1429,19 @@
     if (viewMoreBtn && hiddenCards.length > 0) {
       viewMoreBtn.addEventListener('click', () => {
         if (showingAll) {
-          // Hide additional cards
           hiddenCards.forEach(card => {
             card.classList.add('hidden');
+            card.style.display = '';
           });
-          viewMoreBtn.innerHTML = 'View More Packages <i class="fas fa-chevron-down ml-2 transition-transform duration-300"></i>';
+          viewMoreBtn.innerHTML = 'View More Packages <i class="fas fa-chevron-down ml-2"></i>';
           showingAll = false;
-          
-          // Scroll to packages section
           document.getElementById('packages').scrollIntoView({ behavior: 'smooth' });
         } else {
-          // Show all cards
           hiddenCards.forEach(card => {
             card.classList.remove('hidden');
             card.style.display = 'block';
           });
-          viewMoreBtn.innerHTML = 'Show Less <i class="fas fa-chevron-up ml-2 transition-transform duration-300"></i>';
+          viewMoreBtn.innerHTML = 'Show Less <i class="fas fa-chevron-up ml-2"></i>';
           showingAll = true;
         }
       });
