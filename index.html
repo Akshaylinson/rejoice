@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -89,6 +89,41 @@
   </script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700;800&display=swap');
+
+    select {
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23FF7D00' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.85rem center;
+      background-size: 1.1rem;
+      padding-right: 2.5rem !important;
+      border: 2px solid #FF7D00 !important;
+      border-radius: 0.625rem !important;
+      color: #1E1E24;
+      font-family: 'Exo 2', sans-serif;
+      cursor: pointer;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    select:focus {
+      outline: none;
+      border-color: #FF7D00 !important;
+      box-shadow: 0 0 0 3px rgba(255, 125, 0, 0.15) !important;
+    }
+
+    select option {
+      font-family: 'Exo 2', sans-serif;
+      color: #1E1E24;
+      background: #fff;
+      padding: 0.5rem;
+    }
+
+    select option:checked,
+    select option:hover {
+      background: #FF7D00;
+      color: #fff;
+    }
     
     html {
       scroll-behavior: smooth;
@@ -355,7 +390,7 @@
     <div class="container mx-auto px-4 sm:px-6 relative z-20 flex flex-col items-center justify-center py-20">
       <div class="text-center text-white mb-10 max-w-4xl mx-auto">
         <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 animate-fadeIn">
-          <span class="text-accent">REJOICE</span> IN EVERY JOURNEY
+          <span class="text-accent">REJOICE<br></span> IN EVERY JOURNEY
         </h1>
         <p class="text-lg sm:text-xl md:text-2xl mb-8 mx-auto animate-fadeIn animation-delay-200">
           Your dream trip, expertly planned. Celebrate with 10k+ happy travelers!
@@ -446,7 +481,7 @@
             <form id="tripPlannerForm" class="space-y-5">
               <div>
                 <label class="block text-gray-700 mb-2 font-medium" for="planner-destination">Destination</label>
-                <select id="planner-destination" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent bg-white">
+                <select id="planner-destination" class="w-full px-4 py-3 bg-white">
                   <option value="">Select destination</option>
                   <option value="Ladakh">Ladakh</option>
                   <option value="Goa">Goa</option>
@@ -474,7 +509,7 @@
               
               <div>
                 <label class="block text-gray-700 mb-2 font-medium" for="planner-type">Trip Type</label>
-                <select id="planner-type" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent bg-white">
+                <select id="planner-type" class="w-full px-4 py-3 bg-white">
                   <option value="">Select type</option>
                   <option value="Adventure">Adventure</option>
                   <option value="Family">Family</option>
@@ -1271,7 +1306,7 @@
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1"><i class="fas fa-tag mr-1 text-accent"></i> Trip Type</label>
             <select id="bk-triptype"
-              class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition bg-white">
+              class="w-full px-4 py-2.5 text-sm bg-white">
               <option value="">Select type</option>
               <option>Family</option>
               <option>Honeymoon</option>
@@ -1288,7 +1323,7 @@
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1"><i class="fas fa-rupee-sign mr-1 text-accent"></i> Approximate Budget (per person)</label>
           <select id="bk-budget"
-            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition bg-white">
+            class="w-full px-4 py-2.5 text-sm bg-white">
             <option value="">Select budget range</option>
             <option>Under â‚¹5,000</option>
             <option>â‚¹5,000 â€“ â‚¹10,000</option>
