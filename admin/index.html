@@ -718,7 +718,7 @@
             </td>
           </tr>`;
       }).join('');
-      document.getElementById('bookings-page-info').textContent = `Showing ${start + 1}Ã¢â‚¬â€œ${Math.min(start + PAGE_SIZE, items.length)} of ${items.length}`;
+      document.getElementById("bookings-page-info").textContent = `Showing ${start + 1} - ${Math.min(start + PAGE_SIZE, items.length)} of ${items.length}`;
       document.getElementById('bookings-prev').disabled = bookingsCurrentPage === 0;
       document.getElementById('bookings-next').disabled = bookingsCurrentPage >= totalPages - 1;
       const activeSearch = document.getElementById('search-input').value.trim();
@@ -842,7 +842,7 @@
             </td>
           </tr>`;
       }).join('');
-      document.getElementById('contacts-page-info').textContent = `Showing ${start + 1}Ã¢â‚¬â€œ${Math.min(start + PAGE_SIZE, items.length)} of ${items.length}`;
+      document.getElementById("contacts-page-info").textContent = `Showing ${start + 1} - ${Math.min(start + PAGE_SIZE, items.length)} of ${items.length}`;
       document.getElementById('contacts-prev').disabled = contactsCurrentPage === 0;
       document.getElementById('contacts-next').disabled = contactsCurrentPage >= totalPages - 1;
       const activeSearch = document.getElementById('contact-search-input').value.trim();
