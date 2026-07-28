@@ -189,35 +189,34 @@
         </div>
       </section>
 
-      <section id="bookings" class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-[0_18px_50px_rgba(15,23,42,0.05)]">
-        <div class="border-b border-slate-200 px-6 py-5 sm:px-8">
+      <section id="bookings" class="overflow-hidden rounded-3xl border border-green-700 bg-green-600 shadow-[0_18px_50px_rgba(15,23,42,0.08)]">
+        <div class="border-b border-white/15 px-6 py-5 sm:px-8">
           <div class="flex flex-col gap-4">
             <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">Live booking matrix</p>
-                <h2 class="mt-1 text-xl font-semibold text-slate-900">Customer requests and status updates</h2>
+                <p class="text-xs font-semibold uppercase tracking-[0.18em] text-green-100">Live booking matrix</p>
+                <h2 class="mt-1 text-xl font-semibold text-white">Customer requests and status updates</h2>
               </div>
-              <p class="text-sm text-slate-500">Sticky headers, compact rows, and quick notes access.</p>
+              <p class="text-sm text-green-100">Sticky headers, compact rows, and quick notes access.</p>
             </div>
             <div class="relative w-full lg:max-w-2xl">
-              <svg class="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m21 21-4.3-4.3M11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14Z" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <input type="text" id="search-input" onkeyup="filterTable()" placeholder="Search customer, package, email, phone, trip type, or status..." class="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pl-11 pr-4 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-green-300 focus:ring-4 focus:ring-green-100">
+              <svg class="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-green-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m21 21-4.3-4.3M11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14Z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <input type="text" id="search-input" onkeyup="filterTable()" placeholder="Search customer, package, email, phone, trip type, or status..." class="w-full rounded-xl border border-white/20 bg-white py-3 pl-11 pr-4 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-green-300 focus:ring-4 focus:ring-green-100">
             </div>
           </div>
         </div>
-        <div class="overflow-x-auto">
+        <div class="overflow-x-auto bg-white">
           <div id="bookings-scroll-container">
             <table class="min-w-full border-collapse text-left">
               <thead class="sticky top-0 z-10 bg-slate-100/95 backdrop-blur">
                 <tr class="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-500">
-                  <th class="px-4 py-4 w-10">#</th>
                   <th class="px-4 py-4">Customer</th>
                   <th class="px-4 py-4">Package</th>
                 </tr>
               </thead>
               <tbody id="bookings-table-body" class="divide-y divide-slate-100 text-sm">
                 <tr>
-                  <td colspan="3" class="px-4 py-16 text-center text-slate-400">
+                  <td colspan="2" class="px-4 py-16 text-center text-slate-400">
                     <div class="inline-flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 text-slate-500">
                       <svg class="h-5 w-5 animate-spin text-green-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12a9 9 0 1 1-6.22-8.56" stroke-linecap="round" stroke-linejoin="round"/></svg>
                       Loading live booking records...
@@ -228,48 +227,47 @@
             </table>
           </div>
         </div>
-        <div class="flex items-center justify-between border-t border-slate-100 px-6 py-3">
-          <span id="bookings-page-info" class="text-xs font-medium text-slate-400"></span>
+        <div class="flex items-center justify-between border-t border-white/15 px-6 py-3">
+          <span id="bookings-page-info" class="text-xs font-medium text-green-100"></span>
           <div class="flex items-center gap-2">
-            <button id="bookings-prev" onclick="bookingsPage(-1)" class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 text-slate-400 transition hover:border-green-300 hover:text-green-600 disabled:opacity-30 disabled:cursor-not-allowed">
+            <button id="bookings-prev" onclick="bookingsPage(-1)" class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-white/40 text-white transition hover:border-white hover:text-white disabled:opacity-30 disabled:cursor-not-allowed">
               <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
-            <button id="bookings-next" onclick="bookingsPage(1)" class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 text-slate-400 transition hover:border-green-300 hover:text-green-600 disabled:opacity-30 disabled:cursor-not-allowed">
+            <button id="bookings-next" onclick="bookingsPage(1)" class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-white/40 text-white transition hover:border-white hover:text-white disabled:opacity-30 disabled:cursor-not-allowed">
               <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
           </div>
         </div>
       </section>
 
-      <section id="contacts" class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-[0_18px_50px_rgba(15,23,42,0.05)]">
-        <div class="border-b border-slate-200 px-6 py-5 sm:px-8">
+      <section id="contacts" class="overflow-hidden rounded-3xl border border-green-700 bg-green-600 shadow-[0_18px_50px_rgba(15,23,42,0.08)]">
+        <div class="border-b border-white/15 px-6 py-5 sm:px-8">
           <div class="flex flex-col gap-4">
             <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">Contact enquiries</p>
-                <h2 class="mt-1 text-xl font-semibold text-slate-900">Messages from visitors</h2>
+                <p class="text-xs font-semibold uppercase tracking-[0.18em] text-green-100">Contact enquiries</p>
+                <h2 class="mt-1 text-xl font-semibold text-white">Messages from visitors</h2>
               </div>
 
             </div>
             <div class="relative w-full lg:max-w-2xl">
-              <svg class="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m21 21-4.3-4.3M11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14Z" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <input type="text" id="contact-search-input" onkeyup="filterContactTable()" placeholder="Search name, email, phone, subject, or status..." class="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pl-11 pr-4 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-green-300 focus:ring-4 focus:ring-green-100">
+              <svg class="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-green-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m21 21-4.3-4.3M11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14Z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <input type="text" id="contact-search-input" onkeyup="filterContactTable()" placeholder="Search name, email, phone, subject, or status..." class="w-full rounded-xl border border-white/20 bg-white py-3 pl-11 pr-4 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-green-300 focus:ring-4 focus:ring-green-100">
             </div>
           </div>
         </div>
-        <div class="overflow-x-auto">
+        <div class="overflow-x-auto bg-white">
           <div id="contacts-scroll-container">
             <table class="min-w-full border-collapse text-left">
               <thead class="sticky top-0 z-10 bg-slate-100/95 backdrop-blur">
                 <tr class="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-500">
-                  <th class="px-4 py-4 w-10">#</th>
                   <th class="px-4 py-4">Contact</th>
                   <th class="px-4 py-4">Subject</th>
                 </tr>
               </thead>
               <tbody id="contacts-table-body" class="divide-y divide-slate-100 text-sm">
                 <tr>
-                  <td colspan="3" class="px-4 py-16 text-center text-slate-400">
+                  <td colspan="2" class="px-4 py-16 text-center text-slate-400">
                     <div class="inline-flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 text-slate-500">
                       <svg class="h-5 w-5 animate-spin text-green-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12a9 9 0 1 1-6.22-8.56" stroke-linecap="round" stroke-linejoin="round"/></svg>
                       Loading contact enquiries...
@@ -280,13 +278,13 @@
             </table>
           </div>
         </div>
-        <div class="flex items-center justify-between border-t border-slate-100 px-6 py-3">
-          <span id="contacts-page-info" class="text-xs font-medium text-slate-400"></span>
+        <div class="flex items-center justify-between border-t border-white/15 px-6 py-3">
+          <span id="contacts-page-info" class="text-xs font-medium text-green-100"></span>
           <div class="flex items-center gap-2">
-            <button id="contacts-prev" onclick="contactsPage(-1)" class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 text-slate-400 transition hover:border-green-300 hover:text-green-600 disabled:opacity-30 disabled:cursor-not-allowed">
+            <button id="contacts-prev" onclick="contactsPage(-1)" class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-white/40 text-white transition hover:border-white hover:text-white disabled:opacity-30 disabled:cursor-not-allowed">
               <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
-            <button id="contacts-next" onclick="contactsPage(1)" class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 text-slate-400 transition hover:border-green-300 hover:text-green-600 disabled:opacity-30 disabled:cursor-not-allowed">
+            <button id="contacts-next" onclick="contactsPage(1)" class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-white/40 text-white transition hover:border-white hover:text-white disabled:opacity-30 disabled:cursor-not-allowed">
               <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
           </div>
@@ -671,7 +669,7 @@
     function renderTable(items) {
       const tableBody = document.getElementById('bookings-table-body');
       if (items.length === 0) {
-        tableBody.innerHTML = `<tr><td colspan="3" class="px-4 py-16 text-center"><div class="mx-auto max-w-sm rounded-2xl border border-slate-200 bg-slate-50 px-6 py-8 text-base font-semibold text-slate-700">No bookings found.</div></td></tr>`;
+        tableBody.innerHTML = `<tr><td colspan="2" class="px-4 py-16 text-center"><div class="mx-auto max-w-sm rounded-2xl border border-slate-200 bg-slate-50 px-6 py-8 text-base font-semibold text-slate-700">No bookings found.</div></td></tr>`;
         document.getElementById('bookings-page-info').textContent = '';
         document.getElementById('bookings-prev').disabled = true;
         document.getElementById('bookings-next').disabled = true;
@@ -700,7 +698,6 @@
         const searchText = [customerName, email, phone, packageName, travelDate, travellingFrom, tripType, days, people, budget, status].join(' ').toLowerCase();
         return `
           <tr class="table-row-item group border-b border-slate-100 cursor-pointer transition hover:bg-green-50/40" onclick="openBookingModal(${idx})" data-search="${escapeHtml(searchText)}">
-            <td class="px-4 py-4 text-xs font-medium text-slate-400 w-10">${idx + 1}</td>
             <td class="px-4 py-4 min-w-0">
               <div class="flex items-center gap-3">
                 <div class="flex h-9 w-9 flex-none items-center justify-center rounded-xl text-xs font-bold ${bubbleClass}">${escapeHtml(initials)}</div>
@@ -773,7 +770,7 @@
     function showError(msg) {
       document.getElementById("bookings-table-body").innerHTML = `
         <tr>
-          <td colspan="3" class="px-6 py-16 text-center text-red-600">
+          <td colspan="2" class="px-6 py-16 text-center text-red-600">
             <div class="mx-auto max-w-md rounded-2xl border border-red-200 bg-red-50 px-6 py-8">
               <div class="text-base font-semibold text-red-700">Unable to load live records</div>
               <p class="mt-2 text-sm leading-6 text-red-600">${escapeHtml(msg)}</p>
@@ -802,7 +799,7 @@
     function renderContactTable(items) {
       const tbody = document.getElementById('contacts-table-body');
       if (!items.length) {
-        tbody.innerHTML = `<tr><td colspan="3" class="px-4 py-16 text-center"><div class="mx-auto max-w-sm rounded-2xl border border-slate-200 bg-slate-50 px-6 py-8 text-base font-semibold text-slate-700">No contact enquiries found.</div></td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="2" class="px-4 py-16 text-center"><div class="mx-auto max-w-sm rounded-2xl border border-slate-200 bg-slate-50 px-6 py-8 text-base font-semibold text-slate-700">No contact enquiries found.</div></td></tr>`;
         document.getElementById('contacts-page-info').textContent = '';
         document.getElementById('contacts-prev').disabled = true;
         document.getElementById('contacts-next').disabled = true;
@@ -825,7 +822,6 @@
         const searchText = [name, email, phone, subject, status].join(' ').toLowerCase();
         return `
           <tr class="contact-row-item group border-b border-slate-100 cursor-pointer transition hover:bg-green-50/40" onclick="openContactModal(${idx})" data-search="${escapeHtml(searchText)}">
-            <td class="px-4 py-4 text-xs font-medium text-slate-400 w-10">${idx + 1}</td>
             <td class="px-4 py-4 min-w-0">
               <div class="flex items-center gap-3">
                 <div class="flex h-9 w-9 flex-none items-center justify-center rounded-xl text-xs font-bold ${bubbleClass}">${escapeHtml(initials)}</div>
@@ -833,7 +829,7 @@
                   <div class="font-semibold text-slate-900 truncate max-w-[140px] sm:max-w-none">${escapeHtml(name)}</div>
                   <div class="flex items-center gap-1.5 mt-0.5">
                     <span class="h-1.5 w-1.5 rounded-full flex-none ${statusDot}"></span>
-                    <span class="text-[11px] text-slate-400 capitalize">${escapeHtml(status)}</span>
+                  <span class="text-[11px] text-slate-400 capitalize">${escapeHtml(status)}</span>
                   </div>
                 </div>
               </div>
@@ -864,7 +860,7 @@
 
     function showContactError(msg) {
       document.getElementById('contacts-table-body').innerHTML = `
-        <tr><td colspan="3" class="px-6 py-16 text-center">
+        <tr><td colspan="2" class="px-6 py-16 text-center">
           <div class="mx-auto max-w-md rounded-2xl border border-red-200 bg-red-50 px-6 py-8">
             <div class="text-base font-semibold text-red-700">Unable to load contacts</div>
             <p class="mt-2 text-sm text-red-600">${escapeHtml(msg)}</p>
@@ -971,6 +967,7 @@
   </script>
 </body>
 </html>
+
 
 
 
