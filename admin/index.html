@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -20,19 +20,29 @@
 
       <div class="mt-6 rounded-2xl border border-green-500 bg-green-700/50 p-4 shadow-sm">
         <div class="flex items-center justify-between text-xs font-semibold uppercase tracking-[0.2em] text-green-100">
-          <span>System</span>
+          <span>Summary</span>
           <span class="rounded-full bg-emerald-500 px-2 py-1 text-white">Live</span>
         </div>
         <div class="mt-4 space-y-3">
           <div class="grid grid-cols-2 gap-3">
             <div class="rounded-xl bg-green-700/60 p-3 ring-1 ring-green-500">
-              <div class="text-[11px] font-medium uppercase tracking-[0.16em] text-green-100">Total</div>
+              <div class="text-[11px] font-medium uppercase tracking-[0.16em] text-green-100">Bookings</div>
               <div id="sidebar-total" class="mt-1 text-2xl font-semibold text-white">0</div>
             </div>
+            <div class="rounded-xl bg-green-700/60 p-3 ring-1 ring-green-500">
+              <div class="text-[11px] font-medium uppercase tracking-[0.16em] text-green-100">Enquiries</div>
+              <div id="sidebar-contacts-total" class="mt-1 text-2xl font-semibold text-white">0</div>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
             <div class="rounded-xl bg-emerald-500/20 p-3 ring-1 ring-emerald-400/40">
-              <div class="text-[11px] font-medium uppercase tracking-[0.16em] text-emerald-300">Today</div>
+              <div class="text-[11px] font-medium uppercase tracking-[0.16em] text-emerald-300">Book. Today</div>
               <div id="sidebar-today" class="mt-1 text-2xl font-semibold text-emerald-200">0</div>
               <div id="sidebar-today-date" class="text-[10px] text-emerald-300 leading-tight"></div>
+            </div>
+            <div class="rounded-xl bg-emerald-500/20 p-3 ring-1 ring-emerald-400/40">
+              <div class="text-[11px] font-medium uppercase tracking-[0.16em] text-emerald-300">Enq. Today</div>
+              <div id="sidebar-contacts-today" class="mt-1 text-2xl font-semibold text-emerald-200">0</div>
             </div>
           </div>
           <div class="rounded-xl bg-green-700/60 p-3 ring-1 ring-green-500">
@@ -90,17 +100,19 @@
         </button>
       </div>
 
-      <div class="mt-6 rounded-2xl border border-green-500 bg-green-700/50 p-4">
-        <div class="text-xs font-semibold uppercase tracking-[0.2em] text-green-100">Live metrics</div>
+      <div class="mt-6 rounded-2xl border border-green-500 bg-green-700/50 p-4 shadow-sm">
+        <div class="flex items-center justify-between text-xs font-semibold uppercase tracking-[0.2em] text-green-100">
+          <span>Summary</span>
+          <span class="rounded-full bg-white/15 px-2 py-1 text-white/90">Totals</span>
+        </div>
         <div class="mt-4 grid grid-cols-2 gap-3 text-sm">
           <div class="rounded-xl bg-green-700/60 p-3 ring-1 ring-green-500">
-            <div class="text-[11px] uppercase tracking-[0.14em] text-green-100">Total</div>
-            <div id="mobile-total" class="mt-1 text-xl font-semibold text-white">0</div>
+            <div class="text-[11px] uppercase tracking-[0.14em] text-green-100">Bookings</div>
+            <div id="mobile-sidebar-total" class="mt-1 text-xl font-semibold text-white">0</div>
           </div>
-          <div class="rounded-xl bg-emerald-500/20 p-3 ring-1 ring-emerald-400/40">
-            <div class="text-[11px] uppercase tracking-[0.14em] text-emerald-300">Today</div>
-            <div id="mobile-today" class="mt-1 text-xl font-semibold text-emerald-200">0</div>
-            <div id="mobile-today-date" class="text-[10px] text-emerald-300 leading-tight"></div>
+          <div class="rounded-xl bg-green-700/60 p-3 ring-1 ring-green-500">
+            <div class="text-[11px] uppercase tracking-[0.14em] text-green-100">Enquiries</div>
+            <div id="mobile-sidebar-contacts-total" class="mt-1 text-xl font-semibold text-white">0</div>
           </div>
         </div>
       </div>
@@ -150,15 +162,14 @@
           <div class="flex flex-col gap-3">
             <div class="grid grid-cols-2 gap-3">
               <div class="rounded-2xl border border-green-500 bg-green-700/60 p-4 shadow-sm ring-1 ring-green-500">
-                <div class="text-xs font-semibold uppercase tracking-[0.16em] text-green-100">Total</div>
-                <div id="hero-total" class="mt-2 text-3xl font-bold text-white">0</div>
+                <div class="text-xs font-semibold uppercase tracking-[0.16em] text-green-100">Bookings Today</div>
+                <div id="hero-today-count" class="mt-2 text-3xl font-bold text-white">0</div>
+                <div id="hero-today-date" class="text-[11px] font-medium text-green-200 mt-0.5"></div>
               </div>
               <div class="rounded-2xl border border-white/20 bg-white/15 p-4 shadow-sm">
-                <div class="text-xs font-semibold uppercase tracking-[0.16em] text-green-100">Today</div>
-                <div class="mt-2 flex items-baseline gap-1.5">
-                  <span id="hero-today-count" class="text-3xl font-bold text-white">0</span>
-                </div>
-                <div id="hero-today-date" class="text-[11px] font-medium text-green-200 mt-0.5"></div>
+                <div class="text-xs font-semibold uppercase tracking-[0.16em] text-green-100">Enquiries Today</div>
+                <div id="hero-contacts-today" class="mt-2 text-3xl font-bold text-white">0</div>
+                <div id="hero-contacts-today-date" class="text-[11px] font-medium text-green-200 mt-0.5"></div>
               </div>
             </div>
             <div class="rounded-2xl border border-green-500 bg-green-700/60 p-4 shadow-sm ring-1 ring-green-500">
@@ -288,8 +299,8 @@
           <div id="bm-avatar" class="flex h-11 w-11 flex-none items-center justify-center rounded-2xl text-sm font-bold"></div>
           <div>
             <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">Booking Details</p>
-            <h3 id="bm-name" class="text-lg font-bold tracking-tight text-slate-900">—</h3>
-            <p id="bm-booked-on" class="text-[11px] text-slate-400 mt-0.5">—</p>
+            <h3 id="bm-name" class="text-lg font-bold tracking-tight text-slate-900">Ã¢â‚¬â€</h3>
+            <p id="bm-booked-on" class="text-[11px] text-slate-400 mt-0.5">Ã¢â‚¬â€</p>
           </div>
         </div>
         <button type="button" onclick="closeBookingModal()" class="mt-0.5 inline-flex h-9 w-9 flex-none items-center justify-center rounded-full border border-slate-200 text-slate-400 transition hover:bg-slate-100">
@@ -302,35 +313,35 @@
 
         <!-- Package + Status row -->
         <div class="flex flex-wrap items-center gap-2">
-          <span id="bm-package" class="inline-flex rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700">—</span>
-          <span id="bm-status-badge" class="inline-flex rounded-full border px-3 py-1 text-xs font-semibold">—</span>
+          <span id="bm-package" class="inline-flex rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700">Ã¢â‚¬â€</span>
+          <span id="bm-status-badge" class="inline-flex rounded-full border px-3 py-1 text-xs font-semibold">Ã¢â‚¬â€</span>
         </div>
 
         <!-- Info grid -->
         <div class="grid grid-cols-2 gap-3 sm:grid-cols-3">
           <div class="rounded-2xl bg-slate-50 p-3.5 ring-1 ring-slate-200">
             <div class="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-400">Travel Date</div>
-            <div id="bm-traveldate" class="mt-1 text-sm font-semibold text-slate-900">—</div>
+            <div id="bm-traveldate" class="mt-1 text-sm font-semibold text-slate-900">Ã¢â‚¬â€</div>
           </div>
           <div class="rounded-2xl bg-slate-50 p-3.5 ring-1 ring-slate-200">
             <div class="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-400">Travelling From</div>
-            <div id="bm-from" class="mt-1 text-sm font-semibold text-slate-900">—</div>
+            <div id="bm-from" class="mt-1 text-sm font-semibold text-slate-900">Ã¢â‚¬â€</div>
           </div>
           <div class="rounded-2xl bg-slate-50 p-3.5 ring-1 ring-slate-200">
             <div class="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-400">Trip Type</div>
-            <div id="bm-triptype" class="mt-1 text-sm font-semibold text-slate-900">—</div>
+            <div id="bm-triptype" class="mt-1 text-sm font-semibold text-slate-900">Ã¢â‚¬â€</div>
           </div>
           <div class="rounded-2xl bg-slate-50 p-3.5 ring-1 ring-slate-200">
             <div class="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-400">Persons</div>
-            <div id="bm-people" class="mt-1 text-sm font-semibold text-slate-900">—</div>
+            <div id="bm-people" class="mt-1 text-sm font-semibold text-slate-900">Ã¢â‚¬â€</div>
           </div>
           <div class="rounded-2xl bg-slate-50 p-3.5 ring-1 ring-slate-200">
             <div class="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-400">Days</div>
-            <div id="bm-days" class="mt-1 text-sm font-semibold text-slate-900">—</div>
+            <div id="bm-days" class="mt-1 text-sm font-semibold text-slate-900">Ã¢â‚¬â€</div>
           </div>
           <div class="rounded-2xl bg-emerald-50 p-3.5 ring-1 ring-emerald-100">
             <div class="text-[10px] font-semibold uppercase tracking-[0.16em] text-emerald-600">Budget</div>
-            <div id="bm-budget" class="mt-1 text-sm font-semibold text-emerald-700">—</div>
+            <div id="bm-budget" class="mt-1 text-sm font-semibold text-emerald-700">Ã¢â‚¬â€</div>
           </div>
         </div>
 
@@ -339,18 +350,18 @@
           <div class="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-400 mb-3">Contact</div>
           <div class="flex items-center gap-2 text-sm">
             <svg class="h-4 w-4 flex-none text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v16H4z" stroke-linecap="round" stroke-linejoin="round"/><path d="m4 8 8 5 8-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span id="bm-email" class="text-slate-700">—</span>
+            <span id="bm-email" class="text-slate-700">Ã¢â‚¬â€</span>
           </div>
           <div class="flex items-center gap-2 text-sm">
             <svg class="h-4 w-4 flex-none text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 3.08 4.18 2 2 0 0 1 5.09 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L9.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span id="bm-phone" class="text-slate-700">—</span>
+            <span id="bm-phone" class="text-slate-700">Ã¢â‚¬â€</span>
           </div>
         </div>
 
         <!-- Notes -->
         <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
           <div class="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-400 mb-3">Customer Notes</div>
-          <div id="bm-notes" class="whitespace-pre-wrap text-sm leading-7 text-slate-700">—</div>
+          <div id="bm-notes" class="whitespace-pre-wrap text-sm leading-7 text-slate-700">Ã¢â‚¬â€</div>
         </div>
 
         <!-- Status update -->
@@ -379,8 +390,8 @@
           <div id="cm-avatar" class="flex h-11 w-11 flex-none items-center justify-center rounded-2xl text-sm font-bold"></div>
           <div>
             <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">Contact Enquiry</p>
-            <h3 id="cm-name" class="text-lg font-bold tracking-tight text-slate-900">—</h3>
-            <p id="cm-received-on" class="text-[11px] text-slate-400 mt-0.5">—</p>
+            <h3 id="cm-name" class="text-lg font-bold tracking-tight text-slate-900">Ã¢â‚¬â€</h3>
+            <p id="cm-received-on" class="text-[11px] text-slate-400 mt-0.5">Ã¢â‚¬â€</p>
           </div>
         </div>
         <button type="button" onclick="closeContactModal()" class="mt-0.5 inline-flex h-9 w-9 flex-none items-center justify-center rounded-full border border-slate-200 text-slate-400 transition hover:bg-slate-100">
@@ -389,23 +400,23 @@
       </div>
       <div class="px-5 py-5 sm:px-7 sm:py-6 space-y-5">
         <div class="flex flex-wrap items-center gap-2">
-          <span id="cm-subject" class="inline-flex rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700">—</span>
-          <span id="cm-status-badge" class="inline-flex rounded-full border px-3 py-1 text-xs font-semibold">—</span>
+          <span id="cm-subject" class="inline-flex rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700">Ã¢â‚¬â€</span>
+          <span id="cm-status-badge" class="inline-flex rounded-full border px-3 py-1 text-xs font-semibold">Ã¢â‚¬â€</span>
         </div>
         <div class="rounded-2xl border border-slate-200 bg-white p-4 space-y-2">
           <div class="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-400 mb-3">Contact</div>
           <div class="flex items-center gap-2 text-sm">
             <svg class="h-4 w-4 flex-none text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v16H4z" stroke-linecap="round" stroke-linejoin="round"/><path d="m4 8 8 5 8-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span id="cm-email" class="text-slate-700">—</span>
+            <span id="cm-email" class="text-slate-700">Ã¢â‚¬â€</span>
           </div>
           <div class="flex items-center gap-2 text-sm">
             <svg class="h-4 w-4 flex-none text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 3.08 4.18 2 2 0 0 1 5.09 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L9.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span id="cm-phone" class="text-slate-700">—</span>
+            <span id="cm-phone" class="text-slate-700">Ã¢â‚¬â€</span>
           </div>
         </div>
         <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
           <div class="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-400 mb-3">Message</div>
-          <div id="cm-message" class="whitespace-pre-wrap text-sm leading-7 text-slate-700">—</div>
+          <div id="cm-message" class="whitespace-pre-wrap text-sm leading-7 text-slate-700">Ã¢â‚¬â€</div>
         </div>
         <div class="rounded-2xl border border-slate-200 bg-white p-4">
           <div class="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-400 mb-3">Update Status</div>
@@ -457,7 +468,7 @@
       return trimmed || '--';
     }
 
-function initialsFromName(name) {
+    function initialsFromName(name) {
       const parts = String(name || 'Guest').trim().split(/\s+/).filter(Boolean);
       const first = parts[0] ? parts[0][0] : 'G';
       const second = parts[1] ? parts[1][0] : (parts[0] && parts[0][1] ? parts[0][1] : 'R');
@@ -475,6 +486,56 @@ function initialsFromName(name) {
       ];
       const seed = String(name || 'Guest').split('').reduce((sum, char) => sum + char.charCodeAt(0), 0);
       return palette[seed % palette.length];
+    }
+
+    function setTextIfExists(id, value) {
+      const el = document.getElementById(id);
+      if (el) el.innerText = value;
+    }
+
+    function parseDashboardDate(value) {
+      if (value instanceof Date) return value;
+      if (value === null || value === undefined) return null;
+      const text = String(value).trim();
+      if (!text) return null;
+
+      const isoMatch = text.match(/^(\d{4})-(\d{2})-(\d{2})(?:[T\s](\d{2}):(\d{2}):(\d{2}))?/);
+      if (isoMatch) {
+        const year = Number(isoMatch[1]);
+        const month = Number(isoMatch[2]) - 1;
+        const day = Number(isoMatch[3]);
+        const hour = Number(isoMatch[4] || 0);
+        const minute = Number(isoMatch[5] || 0);
+        const second = Number(isoMatch[6] || 0);
+        return new Date(year, month, day, hour, minute, second);
+      }
+
+      const slashMatch = text.match(/^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{4})$/);
+      if (slashMatch) {
+        const first = Number(slashMatch[1]);
+        const second = Number(slashMatch[2]);
+        const year = Number(slashMatch[3]);
+        const day = first > 12 ? first : second > 12 ? second : first;
+        const month = first > 12 ? second - 1 : second > 12 ? first - 1 : second - 1;
+        return new Date(year, month, day);
+      }
+
+      const parsed = new Date(text);
+      return isNaN(parsed) ? null : parsed;
+    }
+
+    function isSameCalendarDay(value, reference = new Date()) {
+      const parsed = parseDashboardDate(value);
+      if (!parsed) return false;
+      return parsed.getFullYear() === reference.getFullYear()
+        && parsed.getMonth() === reference.getMonth()
+        && parsed.getDate() === reference.getDate();
+    }
+
+    function formatDashboardDate(value) {
+      const parsed = parseDashboardDate(value);
+      if (!parsed) return '--';
+      return parsed.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
     }
 
     let activeBookingIdx = null;
@@ -501,9 +562,7 @@ function initialsFromName(name) {
         return (v !== undefined && v !== null && String(v).trim() !== '') ? String(v).trim() : '--';
       };
 
-      const bookingDate = item.timestamp
-        ? new Date(item.timestamp).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })
-        : '--';
+      const bookingDate = formatDashboardDate(item.timestamp);
 
       document.getElementById('bm-name').textContent = customerName;
       document.getElementById('bm-booked-on').textContent = 'Booked on ' + bookingDate;
@@ -653,7 +712,7 @@ function initialsFromName(name) {
             </td>
           </tr>`;
       }).join('');
-      document.getElementById('bookings-page-info').textContent = `Showing ${start + 1}–${Math.min(start + PAGE_SIZE, items.length)} of ${items.length}`;
+      document.getElementById('bookings-page-info').textContent = `Showing ${start + 1}Ã¢â‚¬â€œ${Math.min(start + PAGE_SIZE, items.length)} of ${items.length}`;
       document.getElementById('bookings-prev').disabled = bookingsCurrentPage === 0;
       document.getElementById('bookings-next').disabled = bookingsCurrentPage >= totalPages - 1;
       const activeSearch = document.getElementById('search-input').value.trim();
@@ -664,36 +723,35 @@ function initialsFromName(name) {
       bookingsCurrentPage += dir;
       renderTable(globalBookingsData);
     }
+
     function countTodayBookings(items) {
       const today = new Date();
-      const todayStr = today.toLocaleDateString('en-CA'); // YYYY-MM-DD
-      return items.filter(item => {
-        const ts = item.timestamp;
-        if (!ts) return false;
-        const d = new Date(ts);
-        return !isNaN(d) && d.toLocaleDateString('en-CA') === todayStr;
-      }).length;
+      return items.filter(item => isSameCalendarDay(item.timestamp, today)).length;
     }
 
     function updateMetrics(items) {
       const total = items.length;
       const todayCount = countTodayBookings(items);
       const todayLabel = new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short' });
-      const todayText = todayCount === 0
-        ? `0 today (${todayLabel})`
-        : `${todayCount} booking${todayCount > 1 ? 's' : ''} today`;
 
-      document.getElementById('hero-total').innerText = total;
-      document.getElementById('hero-today-count').innerText = todayCount;
-      document.getElementById('hero-today-date').innerText = todayLabel;
+      setTextIfExists('hero-today-count', todayCount);
+      setTextIfExists('hero-today-date', todayLabel);
 
-      document.getElementById('sidebar-total').innerText = total;
-      document.getElementById('sidebar-today').innerText = todayCount;
-      document.getElementById('sidebar-today-date').innerText = todayLabel;
+      setTextIfExists('sidebar-total', total);
+      setTextIfExists('sidebar-today', todayCount);
+      setTextIfExists('sidebar-today-date', todayLabel);
 
-      document.getElementById('mobile-total').innerText = total;
-      document.getElementById('mobile-today').innerText = todayCount;
-      document.getElementById('mobile-today-date').innerText = todayLabel;
+      setTextIfExists('mobile-sidebar-total', total);
+    }
+
+    function updateContactMetrics(items) {
+      const todayLabel = new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short' });
+      const todayCount = items.filter(item => isSameCalendarDay(item.timestamp)).length;
+
+      setTextIfExists('hero-contacts-today', todayCount);
+      setTextIfExists('hero-contacts-today-date', todayLabel);
+      setTextIfExists('sidebar-contacts-total', items.length);
+      setTextIfExists('mobile-sidebar-contacts-total', items.length);
     }
     function filterTable() {
       const searchVal = document.getElementById("search-input").value.toLowerCase();
@@ -725,6 +783,7 @@ function initialsFromName(name) {
         if (json.status === 'success') {
           globalContactsData = json.data;
           renderContactTable(globalContactsData);
+          updateContactMetrics(globalContactsData);
         } else {
           showContactError(json.message);
         }
@@ -777,7 +836,7 @@ function initialsFromName(name) {
             </td>
           </tr>`;
       }).join('');
-      document.getElementById('contacts-page-info').textContent = `Showing ${start + 1}–${Math.min(start + PAGE_SIZE, items.length)} of ${items.length}`;
+      document.getElementById('contacts-page-info').textContent = `Showing ${start + 1}Ã¢â‚¬â€œ${Math.min(start + PAGE_SIZE, items.length)} of ${items.length}`;
       document.getElementById('contacts-prev').disabled = contactsCurrentPage === 0;
       document.getElementById('contacts-next').disabled = contactsCurrentPage >= totalPages - 1;
       const activeSearch = document.getElementById('contact-search-input').value.trim();
@@ -819,9 +878,7 @@ function initialsFromName(name) {
       avatar.textContent = initialsFromName(name);
       avatar.className = `flex h-11 w-11 flex-none items-center justify-center rounded-2xl text-sm font-bold ${bubbleClassFromName(name)}`;
 
-      const receivedDate = item.timestamp
-        ? new Date(item.timestamp).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })
-        : '--';
+      const receivedDate = formatDashboardDate(item.timestamp);
 
       document.getElementById('cm-name').textContent = name;
       document.getElementById('cm-received-on').textContent = 'Received on ' + receivedDate;
