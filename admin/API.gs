@@ -2,7 +2,7 @@
  * ==========================================================
  * Rejoice Booking — Unified Admin API
  * ?type=contacts  → Contacts sheet
- * (default)       → Bookings (Sheet1 / active sheet)
+ * (default)       → Bookings (Sheet1)
  * File : API.gs
  * ==========================================================
  */
@@ -16,10 +16,8 @@ function doGet(e) {
     }
 
     const sheet = e.parameter.type === "contacts"
-      ? SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Contact")
-      : SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-
-    if (!sheet) return respond({ status: "error", message: "Sheet not found." });
+      ? getOrCreateSheet_("Contact", ['Timestamp', 'Name', 'Email', 'Phone', 'Subject', 'Message', 'Status'])
+      : getOrCreateSheet_("Sheet1", ['Timestamp', 'Package', 'Name', 'Phone', 'Email', 'Travelling From', 'Travel Date', 'Days', 'People', 'Trip Type', 'Budget', 'Notes', 'Status']);
 
     const values = sheet.getDataRange().getValues();
     if (values.length <= 1) return respond({ status: "success", count: 0, data: [] });
@@ -55,6 +53,14 @@ function doPost(e) {
     try { jsonData = JSON.parse(raw); } catch (_) {}
 
     if (jsonData && !jsonData.token) {
+      const isBooking = jsonData.package || jsonData.travelDate || jsonData.numberOfDays || jsonData.numberOfPeople || jsonData.tripType || jsonData.budget || jsonData.notes;
+
+      if (isBooking) {
+        saveBooking(jsonData);
+        sendBookingEmail(jsonData);
+        return respond({ status: 'success', message: 'Booking saved.' });
+      }
+
       saveContact(jsonData);
       sendContactEmail(jsonData);
       return respond({ status: 'success', message: 'Contact saved.' });
@@ -81,10 +87,8 @@ function doPost(e) {
     }
 
     const sheet = params.type === 'contacts'
-      ? SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Contact')
-      : SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-
-    if (!sheet) return respond({ status: 'error', message: 'Sheet not found.' });
+      ? getOrCreateSheet_('Contact', ['Timestamp', 'Name', 'Email', 'Phone', 'Subject', 'Message', 'Status'])
+      : getOrCreateSheet_('Sheet1', ['Timestamp', 'Package', 'Name', 'Phone', 'Email', 'Travelling From', 'Travel Date', 'Days', 'People', 'Trip Type', 'Budget', 'Notes', 'Status']);
 
     const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0]
       .map(h => h.toString().trim().toLowerCase().replace(/\s+/g, ''));
