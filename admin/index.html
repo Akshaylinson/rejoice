@@ -113,7 +113,7 @@
 
       </nav>
 
-      <button onclick="fetchBookings(); closeMobileNav();" class="mt-auto inline-flex items-center justify-center gap-2 rounded-xl bg-white/20 px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-white/30">
+      <button onclick="location.reload()" class="mt-auto inline-flex items-center justify-center gap-2 rounded-xl bg-white/20 px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-white/30">
         <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4v6h6M20 20v-6h-6" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 8a8 8 0 0 0-14.24-4.72L4 10m16 6-1.76 6.72A8 8 0 0 1 4 14" stroke-linecap="round" stroke-linejoin="round"/></svg>
         Refresh data
       </button>
@@ -131,7 +131,7 @@
             <h1 class="text-lg font-semibold tracking-tight text-white sm:text-xl">REJOICE</h1>
           </div>
         </div>
-        <button onclick="fetchBookings()" class="inline-flex items-center justify-center rounded-xl border border-white/20 bg-white/10 px-3 py-2.5 text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-white/20">
+        <button onclick="location.reload()" class="inline-flex items-center justify-center rounded-xl border border-white/20 bg-white/10 px-3 py-2.5 text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-white/20">
           <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4v6h6M20 20v-6h-6" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 8a8 8 0 0 0-14.24-4.72L4 10m16 6-1.76 6.72A8 8 0 0 1 4 14" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
       </div>
@@ -189,25 +189,38 @@
           </div>
         </div>
         <div class="overflow-x-auto">
-          <table class="min-w-full border-collapse text-left">
-            <thead class="sticky top-0 z-10 bg-slate-100/95 backdrop-blur">
-              <tr class="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-500">
-                <th class="px-4 py-4 w-10">#</th>
-                <th class="px-4 py-4">Customer</th>
-                <th class="px-4 py-4">Package</th>
-              </tr>
-            </thead>
-            <tbody id="bookings-table-body" class="divide-y divide-slate-100 text-sm">
-              <tr>
-                <td colspan="3" class="px-4 py-16 text-center text-slate-400">
-                  <div class="inline-flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 text-slate-500">
-                    <svg class="h-5 w-5 animate-spin text-green-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12a9 9 0 1 1-6.22-8.56" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    Loading live booking records...
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <div id="bookings-scroll-container">
+            <table class="min-w-full border-collapse text-left">
+              <thead class="sticky top-0 z-10 bg-slate-100/95 backdrop-blur">
+                <tr class="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-500">
+                  <th class="px-4 py-4 w-10">#</th>
+                  <th class="px-4 py-4">Customer</th>
+                  <th class="px-4 py-4">Package</th>
+                </tr>
+              </thead>
+              <tbody id="bookings-table-body" class="divide-y divide-slate-100 text-sm">
+                <tr>
+                  <td colspan="3" class="px-4 py-16 text-center text-slate-400">
+                    <div class="inline-flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 text-slate-500">
+                      <svg class="h-5 w-5 animate-spin text-green-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12a9 9 0 1 1-6.22-8.56" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      Loading live booking records...
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="flex items-center justify-between border-t border-slate-100 px-6 py-3">
+          <span id="bookings-page-info" class="text-xs font-medium text-slate-400"></span>
+          <div class="flex items-center gap-2">
+            <button id="bookings-prev" onclick="bookingsPage(-1)" class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 text-slate-400 transition hover:border-green-300 hover:text-green-600 disabled:opacity-30 disabled:cursor-not-allowed">
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <button id="bookings-next" onclick="bookingsPage(1)" class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 text-slate-400 transition hover:border-green-300 hover:text-green-600 disabled:opacity-30 disabled:cursor-not-allowed">
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
         </div>
       </section>
 
@@ -219,10 +232,7 @@
                 <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">Contact enquiries</p>
                 <h2 class="mt-1 text-xl font-semibold text-slate-900">Messages from visitors</h2>
               </div>
-              <button onclick="fetchContacts()" class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-semibold text-slate-600 transition hover:bg-slate-100">
-                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4v6h6M20 20v-6h-6" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 8a8 8 0 0 0-14.24-4.72L4 10m16 6-1.76 6.72A8 8 0 0 1 4 14" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                Refresh
-              </button>
+
             </div>
             <div class="relative w-full lg:max-w-2xl">
               <svg class="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m21 21-4.3-4.3M11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14Z" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -231,25 +241,38 @@
           </div>
         </div>
         <div class="overflow-x-auto">
-          <table class="min-w-full border-collapse text-left">
-            <thead class="sticky top-0 z-10 bg-slate-100/95 backdrop-blur">
-              <tr class="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-500">
-                <th class="px-4 py-4 w-10">#</th>
-                <th class="px-4 py-4">Contact</th>
-                <th class="px-4 py-4">Subject</th>
-              </tr>
-            </thead>
-            <tbody id="contacts-table-body" class="divide-y divide-slate-100 text-sm">
-              <tr>
-                <td colspan="3" class="px-4 py-16 text-center text-slate-400">
-                  <div class="inline-flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 text-slate-500">
-                    <svg class="h-5 w-5 animate-spin text-green-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12a9 9 0 1 1-6.22-8.56" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    Loading contact enquiries...
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <div id="contacts-scroll-container">
+            <table class="min-w-full border-collapse text-left">
+              <thead class="sticky top-0 z-10 bg-slate-100/95 backdrop-blur">
+                <tr class="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-500">
+                  <th class="px-4 py-4 w-10">#</th>
+                  <th class="px-4 py-4">Contact</th>
+                  <th class="px-4 py-4">Subject</th>
+                </tr>
+              </thead>
+              <tbody id="contacts-table-body" class="divide-y divide-slate-100 text-sm">
+                <tr>
+                  <td colspan="3" class="px-4 py-16 text-center text-slate-400">
+                    <div class="inline-flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 text-slate-500">
+                      <svg class="h-5 w-5 animate-spin text-green-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12a9 9 0 1 1-6.22-8.56" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      Loading contact enquiries...
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="flex items-center justify-between border-t border-slate-100 px-6 py-3">
+          <span id="contacts-page-info" class="text-xs font-medium text-slate-400"></span>
+          <div class="flex items-center gap-2">
+            <button id="contacts-prev" onclick="contactsPage(-1)" class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 text-slate-400 transition hover:border-green-300 hover:text-green-600 disabled:opacity-30 disabled:cursor-not-allowed">
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <button id="contacts-next" onclick="contactsPage(1)" class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 text-slate-400 transition hover:border-green-300 hover:text-green-600 disabled:opacity-30 disabled:cursor-not-allowed">
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
         </div>
       </section>
 
@@ -398,8 +421,11 @@
   <script>
     const APPS_SCRIPT_API_URL = "https://script.google.com/macros/s/AKfycbyF_fslbdDDOhVXt583BBFlSF64Hm1wlVaqV_P3KHVQnDvNCJh68N-CTpjjEXl0HQEw/exec";
     const AUTH_TOKEN = "AjmalR2026";
+    const PAGE_SIZE = 5;
     let globalBookingsData = [];
     let globalContactsData = [];
+    let bookingsCurrentPage = 0;
+    let contactsCurrentPage = 0;
 
     function openMobileNav() {
       const sidebar = document.getElementById('mobile-sidebar');
@@ -580,9 +606,17 @@ function initialsFromName(name) {
       const tableBody = document.getElementById('bookings-table-body');
       if (items.length === 0) {
         tableBody.innerHTML = `<tr><td colspan="3" class="px-4 py-16 text-center"><div class="mx-auto max-w-sm rounded-2xl border border-slate-200 bg-slate-50 px-6 py-8 text-base font-semibold text-slate-700">No bookings found.</div></td></tr>`;
+        document.getElementById('bookings-page-info').textContent = '';
+        document.getElementById('bookings-prev').disabled = true;
+        document.getElementById('bookings-next').disabled = true;
         return;
       }
-      tableBody.innerHTML = items.map((item, idx) => {
+      const totalPages = Math.ceil(items.length / PAGE_SIZE);
+      if (bookingsCurrentPage >= totalPages) bookingsCurrentPage = totalPages - 1;
+      const start = bookingsCurrentPage * PAGE_SIZE;
+      const pageItems = items.slice(start, start + PAGE_SIZE);
+      tableBody.innerHTML = pageItems.map((item, i) => {
+        const idx = start + i;
         const customerName = item.name || 'Unknown';
         const email = item.email || '--';
         const phone = item.phone || '--';
@@ -619,8 +653,16 @@ function initialsFromName(name) {
             </td>
           </tr>`;
       }).join('');
+      document.getElementById('bookings-page-info').textContent = `Showing ${start + 1}–${Math.min(start + PAGE_SIZE, items.length)} of ${items.length}`;
+      document.getElementById('bookings-prev').disabled = bookingsCurrentPage === 0;
+      document.getElementById('bookings-next').disabled = bookingsCurrentPage >= totalPages - 1;
       const activeSearch = document.getElementById('search-input').value.trim();
       if (activeSearch) filterTable();
+    }
+
+    function bookingsPage(dir) {
+      bookingsCurrentPage += dir;
+      renderTable(globalBookingsData);
     }
     function countTodayBookings(items) {
       const today = new Date();
@@ -695,9 +737,17 @@ function initialsFromName(name) {
       const tbody = document.getElementById('contacts-table-body');
       if (!items.length) {
         tbody.innerHTML = `<tr><td colspan="3" class="px-4 py-16 text-center"><div class="mx-auto max-w-sm rounded-2xl border border-slate-200 bg-slate-50 px-6 py-8 text-base font-semibold text-slate-700">No contact enquiries found.</div></td></tr>`;
+        document.getElementById('contacts-page-info').textContent = '';
+        document.getElementById('contacts-prev').disabled = true;
+        document.getElementById('contacts-next').disabled = true;
         return;
       }
-      tbody.innerHTML = items.map((item, idx) => {
+      const totalPages = Math.ceil(items.length / PAGE_SIZE);
+      if (contactsCurrentPage >= totalPages) contactsCurrentPage = totalPages - 1;
+      const start = contactsCurrentPage * PAGE_SIZE;
+      const pageItems = items.slice(start, start + PAGE_SIZE);
+      tbody.innerHTML = pageItems.map((item, i) => {
+        const idx = start + i;
         const name = item.name || 'Unknown';
         const email = item.email || '--';
         const phone = item.phone || '--';
@@ -727,8 +777,16 @@ function initialsFromName(name) {
             </td>
           </tr>`;
       }).join('');
+      document.getElementById('contacts-page-info').textContent = `Showing ${start + 1}–${Math.min(start + PAGE_SIZE, items.length)} of ${items.length}`;
+      document.getElementById('contacts-prev').disabled = contactsCurrentPage === 0;
+      document.getElementById('contacts-next').disabled = contactsCurrentPage >= totalPages - 1;
       const activeSearch = document.getElementById('contact-search-input').value.trim();
       if (activeSearch) filterContactTable();
+    }
+
+    function contactsPage(dir) {
+      contactsCurrentPage += dir;
+      renderContactTable(globalContactsData);
     }
 
     function filterContactTable() {
