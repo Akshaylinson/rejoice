@@ -58,6 +58,12 @@
           </span>
           Bookings
         </a>
+        <a href="#contacts" class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-green-100 transition hover:bg-white/10">
+          <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10 text-green-100">
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          Contacts
+        </a>
 
 
       </nav>
@@ -102,6 +108,7 @@
       <nav class="mt-6 space-y-1">
         <a href="#overview" class="flex items-center gap-3 rounded-xl bg-white/20 px-4 py-3 text-sm font-semibold text-white ring-1 ring-white/20">Overview</a>
         <a href="#bookings" class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-green-100 hover:bg-white/10">Bookings</a>
+        <a href="#contacts" class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-green-100 hover:bg-white/10">Contacts</a>
 
 
       </nav>
@@ -204,6 +211,48 @@
         </div>
       </section>
 
+      <section id="contacts" class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-[0_18px_50px_rgba(15,23,42,0.05)]">
+        <div class="border-b border-slate-200 px-6 py-5 sm:px-8">
+          <div class="flex flex-col gap-4">
+            <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">Contact enquiries</p>
+                <h2 class="mt-1 text-xl font-semibold text-slate-900">Messages from visitors</h2>
+              </div>
+              <button onclick="fetchContacts()" class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-semibold text-slate-600 transition hover:bg-slate-100">
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4v6h6M20 20v-6h-6" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 8a8 8 0 0 0-14.24-4.72L4 10m16 6-1.76 6.72A8 8 0 0 1 4 14" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Refresh
+              </button>
+            </div>
+            <div class="relative w-full lg:max-w-2xl">
+              <svg class="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m21 21-4.3-4.3M11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14Z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <input type="text" id="contact-search-input" onkeyup="filterContactTable()" placeholder="Search name, email, phone, subject, or status..." class="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pl-11 pr-4 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-green-300 focus:ring-4 focus:ring-green-100">
+            </div>
+          </div>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="min-w-full border-collapse text-left">
+            <thead class="sticky top-0 z-10 bg-slate-100/95 backdrop-blur">
+              <tr class="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-500">
+                <th class="px-4 py-4 w-10">#</th>
+                <th class="px-4 py-4">Contact</th>
+                <th class="px-4 py-4">Subject</th>
+              </tr>
+            </thead>
+            <tbody id="contacts-table-body" class="divide-y divide-slate-100 text-sm">
+              <tr>
+                <td colspan="3" class="px-4 py-16 text-center text-slate-400">
+                  <div class="inline-flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 text-slate-500">
+                    <svg class="h-5 w-5 animate-spin text-green-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12a9 9 0 1 1-6.22-8.56" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    Loading contact enquiries...
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
     </main>
   </div>
   <div id="booking-modal" aria-hidden="true" class="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-slate-950/50 px-0 sm:px-4 py-0 sm:py-6 opacity-0 pointer-events-none transition duration-300">
@@ -298,11 +347,59 @@
     </div>
   </div>
 
+  <!-- Contact Modal -->
+  <div id="contact-modal" aria-hidden="true" class="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-slate-950/50 px-0 sm:px-4 py-0 sm:py-6 opacity-0 pointer-events-none transition duration-300">
+    <div class="absolute inset-0" onclick="closeContactModal()"></div>
+    <div id="contact-modal-panel" class="relative z-10 w-full sm:max-w-2xl max-h-[92dvh] sm:max-h-[88vh] overflow-y-auto translate-y-8 sm:scale-95 rounded-t-[28px] sm:rounded-[28px] border border-slate-200 bg-white shadow-[0_30px_120px_rgba(15,23,42,0.25)] transition duration-300 flex flex-col">
+      <div class="flex items-start justify-between gap-4 border-b border-slate-100 px-5 py-4 sm:px-7 sm:py-5 sticky top-0 bg-white rounded-t-[28px] z-10">
+        <div class="flex items-center gap-3">
+          <div id="cm-avatar" class="flex h-11 w-11 flex-none items-center justify-center rounded-2xl text-sm font-bold"></div>
+          <div>
+            <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">Contact Enquiry</p>
+            <h3 id="cm-name" class="text-lg font-bold tracking-tight text-slate-900">—</h3>
+            <p id="cm-received-on" class="text-[11px] text-slate-400 mt-0.5">—</p>
+          </div>
+        </div>
+        <button type="button" onclick="closeContactModal()" class="mt-0.5 inline-flex h-9 w-9 flex-none items-center justify-center rounded-full border border-slate-200 text-slate-400 transition hover:bg-slate-100">
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 6 12 12M18 6 6 18" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+      <div class="px-5 py-5 sm:px-7 sm:py-6 space-y-5">
+        <div class="flex flex-wrap items-center gap-2">
+          <span id="cm-subject" class="inline-flex rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700">—</span>
+          <span id="cm-status-badge" class="inline-flex rounded-full border px-3 py-1 text-xs font-semibold">—</span>
+        </div>
+        <div class="rounded-2xl border border-slate-200 bg-white p-4 space-y-2">
+          <div class="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-400 mb-3">Contact</div>
+          <div class="flex items-center gap-2 text-sm">
+            <svg class="h-4 w-4 flex-none text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v16H4z" stroke-linecap="round" stroke-linejoin="round"/><path d="m4 8 8 5 8-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span id="cm-email" class="text-slate-700">—</span>
+          </div>
+          <div class="flex items-center gap-2 text-sm">
+            <svg class="h-4 w-4 flex-none text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 3.08 4.18 2 2 0 0 1 5.09 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L9.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span id="cm-phone" class="text-slate-700">—</span>
+          </div>
+        </div>
+        <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+          <div class="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-400 mb-3">Message</div>
+          <div id="cm-message" class="whitespace-pre-wrap text-sm leading-7 text-slate-700">—</div>
+        </div>
+        <div class="rounded-2xl border border-slate-200 bg-white p-4">
+          <div class="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-400 mb-3">Update Status</div>
+          <div class="flex gap-3">
+            <button id="cm-btn-new" onclick="setContactStatus('new')" class="flex-1 rounded-xl border-2 py-2.5 text-sm font-semibold transition">New</button>
+            <button id="cm-btn-closed" onclick="setContactStatus('closed')" class="flex-1 rounded-xl border-2 py-2.5 text-sm font-semibold transition">Closed</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     const APPS_SCRIPT_API_URL = "https://script.google.com/macros/s/AKfycbyF_fslbdDDOhVXt583BBFlSF64Hm1wlVaqV_P3KHVQnDvNCJh68N-CTpjjEXl0HQEw/exec";
     const AUTH_TOKEN = "AjmalR2026";
-
     let globalBookingsData = [];
+    let globalContactsData = [];
 
     function openMobileNav() {
       const sidebar = document.getElementById('mobile-sidebar');
@@ -579,14 +676,176 @@ function initialsFromName(name) {
       `;
     }
 
+    async function fetchContacts() {
+      try {
+        const res = await fetch(`${APPS_SCRIPT_API_URL}?token=${AUTH_TOKEN}&type=contacts`);
+        const json = await res.json();
+        if (json.status === 'success') {
+          globalContactsData = json.data;
+          renderContactTable(globalContactsData);
+        } else {
+          showContactError(json.message);
+        }
+      } catch (err) {
+        showContactError('Network error. Check your Contact API deployment.');
+      }
+    }
+
+    function renderContactTable(items) {
+      const tbody = document.getElementById('contacts-table-body');
+      if (!items.length) {
+        tbody.innerHTML = `<tr><td colspan="3" class="px-4 py-16 text-center"><div class="mx-auto max-w-sm rounded-2xl border border-slate-200 bg-slate-50 px-6 py-8 text-base font-semibold text-slate-700">No contact enquiries found.</div></td></tr>`;
+        return;
+      }
+      tbody.innerHTML = items.map((item, idx) => {
+        const name = item.name || 'Unknown';
+        const email = item.email || '--';
+        const phone = item.phone || '--';
+        const subject = item.subject || '--';
+        const status = item.status || 'new';
+        const initials = initialsFromName(name);
+        const bubbleClass = bubbleClassFromName(name);
+        const statusDot = status.toLowerCase() === 'closed' ? 'bg-slate-400' : 'bg-emerald-500';
+        const searchText = [name, email, phone, subject, status].join(' ').toLowerCase();
+        return `
+          <tr class="contact-row-item group border-b border-slate-100 cursor-pointer transition hover:bg-green-50/40" onclick="openContactModal(${idx})" data-search="${escapeHtml(searchText)}">
+            <td class="px-4 py-4 text-xs font-medium text-slate-400 w-10">${idx + 1}</td>
+            <td class="px-4 py-4 min-w-0">
+              <div class="flex items-center gap-3">
+                <div class="flex h-9 w-9 flex-none items-center justify-center rounded-xl text-xs font-bold ${bubbleClass}">${escapeHtml(initials)}</div>
+                <div class="min-w-0 flex-1">
+                  <div class="font-semibold text-slate-900 truncate max-w-[140px] sm:max-w-none">${escapeHtml(name)}</div>
+                  <div class="flex items-center gap-1.5 mt-0.5">
+                    <span class="h-1.5 w-1.5 rounded-full flex-none ${statusDot}"></span>
+                    <span class="text-[11px] text-slate-400 capitalize">${escapeHtml(status)}</span>
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td class="px-4 py-4 w-[45%]">
+              <span class="inline-block max-w-full rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700 truncate">${escapeHtml(subject)}</span>
+            </td>
+          </tr>`;
+      }).join('');
+      const activeSearch = document.getElementById('contact-search-input').value.trim();
+      if (activeSearch) filterContactTable();
+    }
+
+    function filterContactTable() {
+      const val = document.getElementById('contact-search-input').value.toLowerCase();
+      document.querySelectorAll('.contact-row-item').forEach(row => {
+        row.style.display = row.textContent.toLowerCase().includes(val) ? '' : 'none';
+      });
+    }
+
+    function showContactError(msg) {
+      document.getElementById('contacts-table-body').innerHTML = `
+        <tr><td colspan="3" class="px-6 py-16 text-center">
+          <div class="mx-auto max-w-md rounded-2xl border border-red-200 bg-red-50 px-6 py-8">
+            <div class="text-base font-semibold text-red-700">Unable to load contacts</div>
+            <p class="mt-2 text-sm text-red-600">${escapeHtml(msg)}</p>
+          </div>
+        </td></tr>`;
+    }
+
+    let activeContactIdx = null;
+
+    function openContactModal(idx) {
+      const item = globalContactsData[idx];
+      if (!item) return;
+      activeContactIdx = idx;
+      const name = item.name || 'Guest';
+      const status = item.status || 'new';
+
+      const avatar = document.getElementById('cm-avatar');
+      avatar.textContent = initialsFromName(name);
+      avatar.className = `flex h-11 w-11 flex-none items-center justify-center rounded-2xl text-sm font-bold ${bubbleClassFromName(name)}`;
+
+      const receivedDate = item.timestamp
+        ? new Date(item.timestamp).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })
+        : '--';
+
+      document.getElementById('cm-name').textContent = name;
+      document.getElementById('cm-received-on').textContent = 'Received on ' + receivedDate;
+      document.getElementById('cm-subject').textContent = item.subject || '--';
+      document.getElementById('cm-email').textContent = item.email || '--';
+      document.getElementById('cm-phone').textContent = item.phone || '--';
+      document.getElementById('cm-message').textContent = item.message || 'No message provided.';
+
+      updateContactStatusButtons(status);
+
+      const modal = document.getElementById('contact-modal');
+      const panel = document.getElementById('contact-modal-panel');
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+      modal.classList.add('opacity-100', 'pointer-events-auto');
+      panel.classList.remove('translate-y-8', 'sm:scale-95');
+      panel.classList.add('translate-y-0', 'sm:scale-100');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('overflow-hidden');
+    }
+
+    function updateContactStatusButtons(status) {
+      const btnNew = document.getElementById('cm-btn-new');
+      const btnClosed = document.getElementById('cm-btn-closed');
+      const badge = document.getElementById('cm-status-badge');
+      if (status === 'closed') {
+        btnNew.className = 'flex-1 rounded-xl border-2 border-slate-200 bg-white py-2.5 text-sm font-semibold text-slate-500 transition hover:border-emerald-300 hover:text-emerald-600';
+        btnClosed.className = 'flex-1 rounded-xl border-2 border-slate-800 bg-slate-900 py-2.5 text-sm font-semibold text-white transition';
+        badge.textContent = 'Closed';
+        badge.className = 'inline-flex rounded-full border border-slate-300 bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600';
+      } else {
+        btnNew.className = 'flex-1 rounded-xl border-2 border-emerald-500 bg-emerald-500 py-2.5 text-sm font-semibold text-white transition';
+        btnClosed.className = 'flex-1 rounded-xl border-2 border-slate-200 bg-white py-2.5 text-sm font-semibold text-slate-500 transition hover:border-slate-800 hover:text-slate-800';
+        badge.textContent = 'New';
+        badge.className = 'inline-flex rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700';
+      }
+    }
+
+    async function setContactStatus(status) {
+      if (activeContactIdx === null) return;
+      const item = globalContactsData[activeContactIdx];
+      if (!item._rowNumber) return;
+      try {
+        const body = new URLSearchParams({ token: AUTH_TOKEN, sheetRowIndex: item._rowNumber, status, type: 'contacts' });
+        const res = await fetch(APPS_SCRIPT_API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: body.toString()
+        });
+        const result = await res.json();
+        if (result.status === 'success') {
+          item.status = status;
+          updateContactStatusButtons(status);
+          renderContactTable(globalContactsData);
+        } else {
+          alert('Failed to update: ' + result.message);
+        }
+      } catch (e) {
+        alert('Network error while saving contact status.');
+      }
+    }
+
+    function closeContactModal() {
+      const modal = document.getElementById('contact-modal');
+      const panel = document.getElementById('contact-modal-panel');
+      modal.classList.add('opacity-0', 'pointer-events-none');
+      modal.classList.remove('opacity-100', 'pointer-events-auto');
+      panel.classList.add('translate-y-8', 'sm:scale-95');
+      panel.classList.remove('translate-y-0', 'sm:scale-100');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('overflow-hidden');
+      activeContactIdx = null;
+    }
+
     document.addEventListener('keydown', function (event) {
       if (event.key === 'Escape') {
         closeBookingModal();
+        closeContactModal();
         closeMobileNav();
       }
     });
 
-    window.onload = fetchBookings;
+    window.onload = () => { fetchBookings(); fetchContacts(); };
   </script>
 </body>
 </html>

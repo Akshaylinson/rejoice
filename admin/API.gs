@@ -1,117 +1,109 @@
-﻿/**
+/**
  * ==========================================================
- * Rejoice Booking
- * Admin Dashboard API Engine Module (CORS Optimized)
+ * Rejoice Booking — Unified Admin API
+ * ?type=contacts  → Contacts sheet
+ * (default)       → Bookings (Sheet1 / active sheet)
  * File : API.gs
  * ==========================================================
  */
 
-const API_SECRET_TOKEN = "AjmalR2026"; 
+const API_SECRET_TOKEN = "AjmalR2026";
 
 function doGet(e) {
   try {
-    // 1. Authenticate Request
-    const incomingToken = e.parameter.token;
-    if (incomingToken !== API_SECRET_TOKEN) {
-      return ContentService.createTextOutput(JSON.stringify({ 
-        status: "error", 
-        message: "Unauthorized access token." 
-      }))
-      .setMimeType(ContentService.MimeType.JSON);
+    if (e.parameter.token !== API_SECRET_TOKEN) {
+      return respond({ status: "error", message: "Unauthorized access token." });
     }
 
-    // 2. Open Spreadsheet Data Ledger
-    const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-    const dataRange = sheet.getDataRange();
-    const values = dataRange.getValues();
+    const sheet = e.parameter.type === "contacts"
+      ? SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Contact")
+      : SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
 
-    if (values.length <= 1) {
-      return ContentService.createTextOutput(JSON.stringify({ status: "success", data: [] }))
-                          .setMimeType(ContentService.MimeType.JSON);
-    }
+    if (!sheet) return respond({ status: "error", message: "Sheet not found." });
 
-    // 3. Extract Clean Lowercase Header Strings
+    const values = sheet.getDataRange().getValues();
+    if (values.length <= 1) return respond({ status: "success", count: 0, data: [] });
+
     const headers = values[0].map(h => h.toString().trim().toLowerCase().replace(/\s+/g, ''));
-    
-    // 4. Transform Sheet Rows into Structured JSON Objects
-    const bookingsList = [];
-    for (let i = 1; i < values.length; i++) {
-      let row = values[i];
-      let booking = {};
-      
-      headers.forEach((header, index) => {
-        let val = row[index];
-        if (val instanceof Date) {
-          val = val.toLocaleDateString();
-        }
-        booking[header || "column_" + index] = val;
-      });
 
-      booking._rowNumber = i + 1; // 1-based sheet row for doPost updates
-      bookingsList.push(booking);
+    const rows = [];
+    for (let i = 1; i < values.length; i++) {
+      const obj = {};
+      headers.forEach((h, idx) => {
+        let val = values[i][idx];
+        if (val instanceof Date) val = val.toLocaleDateString();
+        obj[h || "col_" + idx] = val;
+      });
+      obj._rowNumber = i + 1;
+      rows.push(obj);
     }
 
-    bookingsList.reverse(); // Newest bookings first
+    rows.reverse();
+    return respond({ status: "success", count: rows.length, data: rows });
 
-    // 5. Output JSON data structure
-    return ContentService.createTextOutput(JSON.stringify({
-      status: "success",
-      count: bookingsList.length,
-      data: bookingsList
-    })).setMimeType(ContentService.MimeType.JSON);
-
-  } catch(error) {
-    return ContentService.createTextOutput(JSON.stringify({ 
-      status: "error", 
-      message: error.toString() 
-    })).setMimeType(ContentService.MimeType.JSON);
+  } catch (err) {
+    return respond({ status: "error", message: err.toString() });
   }
 }
 
 function doPost(e) {
   try {
     const raw = e.postData.contents || '';
+
+    // --- Try JSON first (contact form — may arrive as text/plain due to no-cors) ---
+    let jsonData = null;
+    try { jsonData = JSON.parse(raw); } catch (_) {}
+
+    if (jsonData && !jsonData.token) {
+      saveContact(jsonData);
+      sendContactEmail(jsonData);
+      return respond({ status: 'success', message: 'Contact saved.' });
+    }
+
+    // --- Admin status update (URL-encoded, requires token) ---
     const params = {};
     raw.split('&').forEach(pair => {
-      const [k, v] = pair.split('=').map(decodeURIComponent);
+      const eqIdx = pair.indexOf('=');
+      if (eqIdx === -1) return;
+      const k = decodeURIComponent(pair.substring(0, eqIdx));
+      const v = decodeURIComponent(pair.substring(eqIdx + 1));
       if (k) params[k] = v;
     });
 
     if (params.token !== API_SECRET_TOKEN) {
-      return ContentService.createTextOutput(JSON.stringify({
-        status: "error", message: "Unauthorized."
-      })).setMimeType(ContentService.MimeType.JSON);
+      return respond({ status: 'error', message: 'Unauthorized.' });
     }
 
     const rowNumber = parseInt(params.sheetRowIndex);
     const newStatus = params.status;
-
     if (!rowNumber || !newStatus) {
-      return ContentService.createTextOutput(JSON.stringify({
-        status: "error", message: "Missing rowNumber or status."
-      })).setMimeType(ContentService.MimeType.JSON);
+      return respond({ status: 'error', message: 'Missing rowNumber or status.' });
     }
 
-    const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    const sheet = params.type === 'contacts'
+      ? SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Contact')
+      : SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+
+    if (!sheet) return respond({ status: 'error', message: 'Sheet not found.' });
+
     const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0]
       .map(h => h.toString().trim().toLowerCase().replace(/\s+/g, ''));
 
-    let statusColIndex = headers.indexOf('status');
-    if (statusColIndex === -1) {
-      // Append a new Status column if it doesn't exist
-      statusColIndex = headers.length;
-      sheet.getRange(1, statusColIndex + 1).setValue('Status');
+    let statusCol = headers.indexOf('status');
+    if (statusCol === -1) {
+      statusCol = headers.length;
+      sheet.getRange(1, statusCol + 1).setValue('Status');
     }
 
-    sheet.getRange(rowNumber, statusColIndex + 1).setValue(newStatus);
+    sheet.getRange(rowNumber, statusCol + 1).setValue(newStatus);
+    return respond({ status: 'success', message: 'Status updated.' });
 
-    return ContentService.createTextOutput(JSON.stringify({
-      status: "success", message: "Status updated."
-    })).setMimeType(ContentService.MimeType.JSON);
-
-  } catch(error) {
-    return ContentService.createTextOutput(JSON.stringify({
-      status: "error", message: error.toString()
-    })).setMimeType(ContentService.MimeType.JSON);
+  } catch (err) {
+    return respond({ status: 'error', message: err.toString() });
   }
+}
+
+function respond(obj) {
+  return ContentService.createTextOutput(JSON.stringify(obj))
+    .setMimeType(ContentService.MimeType.JSON);
 }
