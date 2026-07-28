@@ -32,7 +32,7 @@ function saveContact(data) {
   data = data || {};
   const sheet = getOrCreateSheet_('Contact', ['Timestamp', 'Name', 'Email', 'Phone', 'Subject', 'Message', 'Status']);
   sheet.appendRow([
-    new Date().toLocaleString(),
+    new Date().toISOString(),
     data.name || '',
     data.email || '',
     data.phone || '',
@@ -62,7 +62,7 @@ function saveBooking(data) {
   ]);
 
   sheet.appendRow([
-    new Date().toLocaleString(),
+    new Date().toISOString(),
     data.package || '',
     data.name || '',
     data.phone || '',
