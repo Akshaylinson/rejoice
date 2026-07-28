@@ -1,4 +1,4 @@
-﻿﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -3050,36 +3050,35 @@
       
       <div class="flex flex-col lg:flex-row gap-8 xl:gap-12">
         <div class="lg:w-1/2">
-          <form class="space-y-6">
+          <form id="contactForm" class="space-y-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label for="name" class="block text-gray-700 mb-2 font-medium">Your Name</label>
-                <input type="text" id="name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent">
+                <label for="ct-name" class="block text-gray-700 mb-2 font-medium">Your Name</label>
+                <input type="text" id="ct-name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent">
               </div>
               <div>
-                <label for="email" class="block text-gray-700 mb-2 font-medium">Your Email</label>
-                <input type="email" id="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent">
+                <label for="ct-email" class="block text-gray-700 mb-2 font-medium">Your Email</label>
+                <input type="email" id="ct-email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent">
               </div>
             </div>
             
             <div>
-              <label for="phone" class="block text-gray-700 mb-2 font-medium">Phone Number</label>
-              <input type="tel" id="phone" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent">
+              <label for="ct-phone" class="block text-gray-700 mb-2 font-medium">Phone Number</label>
+              <input type="tel" id="ct-phone" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent">
             </div>
             
             <div>
-              <label for="subject" class="block text-gray-700 mb-2 font-medium">Subject</label>
-              <input type="text" id="subject" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent">
+              <label for="ct-subject" class="block text-gray-700 mb-2 font-medium">Subject</label>
+              <input type="text" id="ct-subject" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent">
             </div>
             
             <div>
-              <label for="message" class="block text-gray-700 mb-2 font-medium">Your Message</label>
-              <textarea id="message" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"></textarea>
+              <label for="ct-message" class="block text-gray-700 mb-2 font-medium">Your Message</label>
+              <textarea id="ct-message" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"></textarea>
             </div>
             
-            <button type="submit" class="w-full btn-primary">
-              Send Message
-            </button>
+            <button type="submit" id="ct-submit" class="w-full btn-primary">Send Message</button>
+            <p id="ct-status" class="hidden text-center text-sm font-medium"></p>
           </form>
         </div>
         
@@ -3248,13 +3247,43 @@
       }
     });
     
-    // Form submission
-    const contactForm = document.querySelector('form');
+    const CONTACT_URL = 'https://script.google.com/macros/s/AKfycbyF_fslbdDDOhVXt583BBFlSF64Hm1wlVaqV_P3KHVQnDvNCJh68N-CTpjjEXl0HQEw/exec';
+
+    const contactForm = document.getElementById('contactForm');
     if(contactForm) {
       contactForm.addEventListener('submit', function(e) {
         e.preventDefault();
-        alert('Thank you for your message! We will get back to you soon.');
-        this.reset();
+        const btn = document.getElementById('ct-submit');
+        const status = document.getElementById('ct-status');
+
+        btn.disabled = true;
+        btn.textContent = 'Sending...';
+
+        fetch(CONTACT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: document.getElementById('ct-name').value.trim(),
+            email: document.getElementById('ct-email').value.trim(),
+            phone: document.getElementById('ct-phone').value.trim(),
+            subject: document.getElementById('ct-subject').value.trim(),
+            message: document.getElementById('ct-message').value.trim()
+          })
+        })
+        .then(() => {
+          status.textContent = '✅ Message sent! We will get back to you soon.';
+          status.className = 'text-center text-sm font-medium text-green-600';
+          this.reset();
+        })
+        .catch(() => {
+          status.textContent = '❌ Something went wrong. Please try again.';
+          status.className = 'text-center text-sm font-medium text-red-600';
+        })
+        .finally(() => {
+          btn.disabled = false;
+          btn.textContent = 'Send Message';
+        });
       });
     }
     

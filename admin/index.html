@@ -1,0 +1,609 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rejoice Packages | Admin Dashboard</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-slate-50 text-slate-900 antialiased">
+  <div class="fixed inset-0 -z-10 bg-gradient-to-br from-white via-slate-50 to-slate-100"></div>
+  <div class="fixed inset-x-0 top-0 -z-10 h-64 bg-gradient-to-b from-emerald-50/70 to-transparent"></div>
+
+  <aside class="hidden lg:fixed lg:inset-y-0 lg:left-0 lg:z-40 lg:flex lg:w-64 lg:flex-col lg:border-r lg:border-green-700 lg:bg-green-600">
+    <div class="flex h-full flex-col px-5 py-6">
+      <div class="flex items-center gap-3">
+        <img src="logo.png" class="h-9 w-auto object-contain" alt="Rejoice Logo">
+        <div class="text-lg font-bold tracking-tight text-white">Admin Dashboard</div>
+      </div>
+
+      <div class="mt-6 rounded-2xl border border-green-500 bg-green-700/50 p-4 shadow-sm">
+        <div class="flex items-center justify-between text-xs font-semibold uppercase tracking-[0.2em] text-green-100">
+          <span>System</span>
+          <span class="rounded-full bg-emerald-500 px-2 py-1 text-white">Live</span>
+        </div>
+        <div class="mt-4 space-y-3">
+          <div class="grid grid-cols-2 gap-3">
+            <div class="rounded-xl bg-green-700/60 p-3 ring-1 ring-green-500">
+              <div class="text-[11px] font-medium uppercase tracking-[0.16em] text-green-100">Total</div>
+              <div id="sidebar-total" class="mt-1 text-2xl font-semibold text-white">0</div>
+            </div>
+            <div class="rounded-xl bg-emerald-500/20 p-3 ring-1 ring-emerald-400/40">
+              <div class="text-[11px] font-medium uppercase tracking-[0.16em] text-emerald-300">Today</div>
+              <div id="sidebar-today" class="mt-1 text-2xl font-semibold text-emerald-200">0</div>
+              <div id="sidebar-today-date" class="text-[10px] text-emerald-300 leading-tight"></div>
+            </div>
+          </div>
+          <div class="rounded-xl bg-green-700/60 p-3 ring-1 ring-green-500">
+            <div class="text-[11px] font-medium uppercase tracking-[0.16em] text-green-100">Sync status</div>
+            <div class="mt-1 inline-flex items-center gap-2 text-sm font-semibold text-emerald-300">
+              <span class="h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_0_6px_rgba(52,211,153,0.2)]"></span>
+              Connected live
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <nav class="mt-6 space-y-1">
+        <a href="#overview" class="flex items-center gap-3 rounded-xl bg-white/20 px-4 py-3 text-sm font-semibold text-white ring-1 ring-white/20">
+          <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/20 text-white">
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          Overview
+        </a>
+        <a href="#bookings" class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-green-100 transition hover:bg-white/10">
+          <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10 text-green-100">
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 3v3M17 3v3M4 8h16M5 6h14a1 1 0 0 1 1 1v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a1 1 0 0 1 1-1Z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          Bookings
+        </a>
+
+
+      </nav>
+
+      <div class="mt-auto rounded-2xl border border-green-500 bg-green-700/50 p-4 shadow-sm">
+        <div class="text-xs font-semibold uppercase tracking-[0.2em] text-green-100">Operational pulse</div>
+        <div class="mt-2 text-sm leading-6 text-green-100">Booking details, notes, and status updates in one place.</div>
+      </div>
+    </div>
+  </aside>
+
+  <div id="mobile-backdrop" class="fixed inset-0 z-40 hidden bg-slate-950/30 backdrop-blur-sm lg:hidden" onclick="closeMobileNav()"></div>
+  <aside id="mobile-sidebar" class="fixed inset-y-0 left-0 z-50 w-72 -translate-x-full transform border-r border-green-700 bg-green-600 shadow-2xl transition duration-300 lg:hidden">
+    <div class="flex h-full flex-col px-5 py-6">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <img src="logo.png" class="h-9 w-auto object-contain" alt="Rejoice Logo">
+          <div>
+            <div class="text-lg font-bold text-white">Admin Dashboard</div>
+          </div>
+        </div>
+        <button type="button" onclick="closeMobileNav()" class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-green-500 text-green-100 hover:bg-green-700">
+          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m6 6 12 12M18 6 6 18" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+
+      <div class="mt-6 rounded-2xl border border-green-500 bg-green-700/50 p-4">
+        <div class="text-xs font-semibold uppercase tracking-[0.2em] text-green-100">Live metrics</div>
+        <div class="mt-4 grid grid-cols-2 gap-3 text-sm">
+          <div class="rounded-xl bg-green-700/60 p-3 ring-1 ring-green-500">
+            <div class="text-[11px] uppercase tracking-[0.14em] text-green-100">Total</div>
+            <div id="mobile-total" class="mt-1 text-xl font-semibold text-white">0</div>
+          </div>
+          <div class="rounded-xl bg-emerald-500/20 p-3 ring-1 ring-emerald-400/40">
+            <div class="text-[11px] uppercase tracking-[0.14em] text-emerald-300">Today</div>
+            <div id="mobile-today" class="mt-1 text-xl font-semibold text-emerald-200">0</div>
+            <div id="mobile-today-date" class="text-[10px] text-emerald-300 leading-tight"></div>
+          </div>
+        </div>
+      </div>
+
+      <nav class="mt-6 space-y-1">
+        <a href="#overview" class="flex items-center gap-3 rounded-xl bg-white/20 px-4 py-3 text-sm font-semibold text-white ring-1 ring-white/20">Overview</a>
+        <a href="#bookings" class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-green-100 hover:bg-white/10">Bookings</a>
+
+
+      </nav>
+
+      <button onclick="fetchBookings(); closeMobileNav();" class="mt-auto inline-flex items-center justify-center gap-2 rounded-xl bg-white/20 px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-white/30">
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4v6h6M20 20v-6h-6" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 8a8 8 0 0 0-14.24-4.72L4 10m16 6-1.76 6.72A8 8 0 0 1 4 14" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Refresh data
+      </button>
+    </div>
+  </aside>
+
+  <div class="lg:pl-64">
+    <header class="sticky top-0 z-30 border-b border-green-700 bg-green-600 text-white shadow-lg shadow-green-950/10 backdrop-blur-xl">
+      <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
+        <div class="flex items-center gap-3">
+          <button type="button" onclick="openMobileNav()" class="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-white/20 bg-white/10 text-white shadow-sm transition hover:bg-white/20 lg:hidden">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div>
+            <h1 class="text-lg font-semibold tracking-tight text-white sm:text-xl">REJOICE</h1>
+          </div>
+        </div>
+        <button onclick="fetchBookings()" class="inline-flex items-center justify-center rounded-xl border border-white/20 bg-white/10 px-3 py-2.5 text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-white/20">
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4v6h6M20 20v-6h-6" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 8a8 8 0 0 0-14.24-4.72L4 10m16 6-1.76 6.72A8 8 0 0 1 4 14" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="mx-auto max-w-7xl space-y-6 px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
+      <section id="overview" class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-[0_20px_60px_rgba(15,23,42,0.06)]">
+        <div class="grid gap-6 p-6 sm:p-8 lg:grid-cols-[1.3fr_0.7fr] lg:items-end">
+          <div>
+            <div class="inline-flex items-center gap-2 rounded-full border border-green-100 bg-green-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-green-700">
+              Live travel operations
+            </div>
+            <h2 class="mt-4 text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">Rejoice Admin Dashboard</h2>
+            <p class="mt-3 max-w-2xl text-sm leading-6 text-slate-500 sm:text-base">View booking details from Google Sheets, check the latest entries, and update booking status without extra noise.</p>
+          </div>
+          <div class="flex flex-col gap-3">
+            <div class="grid grid-cols-2 gap-3">
+              <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4 shadow-sm">
+                <div class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-400">Total</div>
+                <div id="hero-total" class="mt-2 text-3xl font-bold text-slate-900">0</div>
+              </div>
+              <div class="rounded-2xl border border-emerald-100 bg-emerald-50 p-4 shadow-sm">
+                <div class="text-xs font-semibold uppercase tracking-[0.16em] text-emerald-600">Today</div>
+                <div class="mt-2 flex items-baseline gap-1.5">
+                  <span id="hero-today-count" class="text-3xl font-bold text-emerald-700">0</span>
+                </div>
+                <div id="hero-today-date" class="text-[11px] font-medium text-emerald-400 mt-0.5"></div>
+              </div>
+            </div>
+            <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+              <div class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-400">Integration status</div>
+              <div class="mt-2 inline-flex items-center gap-2 text-sm font-semibold text-emerald-600">
+                <span class="h-2.5 w-2.5 rounded-full bg-emerald-500 shadow-[0_0_0_6px_rgba(16,185,129,0.12)]"></span>
+                Connected live
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="bookings" class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-[0_18px_50px_rgba(15,23,42,0.05)]">
+        <div class="border-b border-slate-200 px-6 py-5 sm:px-8">
+          <div class="flex flex-col gap-4">
+            <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">Live booking matrix</p>
+                <h2 class="mt-1 text-xl font-semibold text-slate-900">Customer requests and status updates</h2>
+              </div>
+              <p class="text-sm text-slate-500">Sticky headers, compact rows, and quick notes access.</p>
+            </div>
+            <div class="relative w-full lg:max-w-2xl">
+              <svg class="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m21 21-4.3-4.3M11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14Z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <input type="text" id="search-input" onkeyup="filterTable()" placeholder="Search customer, package, email, phone, trip type, or status..." class="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pl-11 pr-4 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-green-300 focus:ring-4 focus:ring-green-100">
+            </div>
+          </div>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="min-w-full border-collapse text-left">
+            <thead class="sticky top-0 z-10 bg-slate-100/95 backdrop-blur">
+              <tr class="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-500">
+                <th class="px-4 py-4 w-10">#</th>
+                <th class="px-4 py-4">Customer</th>
+                <th class="px-4 py-4">Package</th>
+              </tr>
+            </thead>
+            <tbody id="bookings-table-body" class="divide-y divide-slate-100 text-sm">
+              <tr>
+                <td colspan="3" class="px-4 py-16 text-center text-slate-400">
+                  <div class="inline-flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 text-slate-500">
+                    <svg class="h-5 w-5 animate-spin text-green-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12a9 9 0 1 1-6.22-8.56" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    Loading live booking records...
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </main>
+  </div>
+  <div id="booking-modal" aria-hidden="true" class="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-slate-950/50 px-0 sm:px-4 py-0 sm:py-6 opacity-0 pointer-events-none transition duration-300">
+    <div class="absolute inset-0" onclick="closeBookingModal()"></div>
+    <div id="booking-modal-panel" class="relative z-10 w-full sm:max-w-2xl max-h-[92dvh] sm:max-h-[88vh] overflow-y-auto translate-y-8 sm:scale-95 rounded-t-[28px] sm:rounded-[28px] border border-slate-200 bg-white shadow-[0_30px_120px_rgba(15,23,42,0.25)] transition duration-300 flex flex-col">
+
+      <!-- Modal Header -->
+      <div class="flex items-start justify-between gap-4 border-b border-slate-100 px-5 py-4 sm:px-7 sm:py-5 sticky top-0 bg-white rounded-t-[28px] z-10">
+        <div class="flex items-center gap-3">
+          <div id="bm-avatar" class="flex h-11 w-11 flex-none items-center justify-center rounded-2xl text-sm font-bold"></div>
+          <div>
+            <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">Booking Details</p>
+            <h3 id="bm-name" class="text-lg font-bold tracking-tight text-slate-900">—</h3>
+            <p id="bm-booked-on" class="text-[11px] text-slate-400 mt-0.5">—</p>
+          </div>
+        </div>
+        <button type="button" onclick="closeBookingModal()" class="mt-0.5 inline-flex h-9 w-9 flex-none items-center justify-center rounded-full border border-slate-200 text-slate-400 transition hover:bg-slate-100">
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 6 12 12M18 6 6 18" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="px-5 py-5 sm:px-7 sm:py-6 space-y-5">
+
+        <!-- Package + Status row -->
+        <div class="flex flex-wrap items-center gap-2">
+          <span id="bm-package" class="inline-flex rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700">—</span>
+          <span id="bm-status-badge" class="inline-flex rounded-full border px-3 py-1 text-xs font-semibold">—</span>
+        </div>
+
+        <!-- Info grid -->
+        <div class="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <div class="rounded-2xl bg-slate-50 p-3.5 ring-1 ring-slate-200">
+            <div class="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-400">Travel Date</div>
+            <div id="bm-traveldate" class="mt-1 text-sm font-semibold text-slate-900">—</div>
+          </div>
+          <div class="rounded-2xl bg-slate-50 p-3.5 ring-1 ring-slate-200">
+            <div class="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-400">Travelling From</div>
+            <div id="bm-from" class="mt-1 text-sm font-semibold text-slate-900">—</div>
+          </div>
+          <div class="rounded-2xl bg-slate-50 p-3.5 ring-1 ring-slate-200">
+            <div class="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-400">Trip Type</div>
+            <div id="bm-triptype" class="mt-1 text-sm font-semibold text-slate-900">—</div>
+          </div>
+          <div class="rounded-2xl bg-slate-50 p-3.5 ring-1 ring-slate-200">
+            <div class="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-400">Persons</div>
+            <div id="bm-people" class="mt-1 text-sm font-semibold text-slate-900">—</div>
+          </div>
+          <div class="rounded-2xl bg-slate-50 p-3.5 ring-1 ring-slate-200">
+            <div class="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-400">Days</div>
+            <div id="bm-days" class="mt-1 text-sm font-semibold text-slate-900">—</div>
+          </div>
+          <div class="rounded-2xl bg-emerald-50 p-3.5 ring-1 ring-emerald-100">
+            <div class="text-[10px] font-semibold uppercase tracking-[0.16em] text-emerald-600">Budget</div>
+            <div id="bm-budget" class="mt-1 text-sm font-semibold text-emerald-700">—</div>
+          </div>
+        </div>
+
+        <!-- Contact -->
+        <div class="rounded-2xl border border-slate-200 bg-white p-4 space-y-2">
+          <div class="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-400 mb-3">Contact</div>
+          <div class="flex items-center gap-2 text-sm">
+            <svg class="h-4 w-4 flex-none text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v16H4z" stroke-linecap="round" stroke-linejoin="round"/><path d="m4 8 8 5 8-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span id="bm-email" class="text-slate-700">—</span>
+          </div>
+          <div class="flex items-center gap-2 text-sm">
+            <svg class="h-4 w-4 flex-none text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 3.08 4.18 2 2 0 0 1 5.09 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L9.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span id="bm-phone" class="text-slate-700">—</span>
+          </div>
+        </div>
+
+        <!-- Notes -->
+        <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+          <div class="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-400 mb-3">Customer Notes</div>
+          <div id="bm-notes" class="whitespace-pre-wrap text-sm leading-7 text-slate-700">—</div>
+        </div>
+
+        <!-- Status update -->
+        <div class="rounded-2xl border border-slate-200 bg-white p-4">
+          <div class="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-400 mb-3">Update Status</div>
+          <div class="flex gap-3">
+            <button id="bm-btn-new" onclick="setBookingStatus('new')" class="flex-1 rounded-xl border-2 py-2.5 text-sm font-semibold transition">
+              New
+            </button>
+            <button id="bm-btn-closed" onclick="setBookingStatus('closed')" class="flex-1 rounded-xl border-2 py-2.5 text-sm font-semibold transition">
+              Closed
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const APPS_SCRIPT_API_URL = "https://script.google.com/macros/s/AKfycbyF_fslbdDDOhVXt583BBFlSF64Hm1wlVaqV_P3KHVQnDvNCJh68N-CTpjjEXl0HQEw/exec";
+    const AUTH_TOKEN = "AjmalR2026";
+
+    let globalBookingsData = [];
+
+    function openMobileNav() {
+      const sidebar = document.getElementById('mobile-sidebar');
+      const backdrop = document.getElementById('mobile-backdrop');
+      sidebar.classList.remove('-translate-x-full');
+      backdrop.classList.remove('hidden');
+      document.body.classList.add('overflow-hidden');
+    }
+
+    function closeMobileNav() {
+      const sidebar = document.getElementById('mobile-sidebar');
+      const backdrop = document.getElementById('mobile-backdrop');
+      sidebar.classList.add('-translate-x-full');
+      backdrop.classList.add('hidden');
+      document.body.classList.remove('overflow-hidden');
+    }
+
+    function escapeHtml(value) {
+      return String(value == null ? '' : value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function formatMoney(rawValue) {
+      const trimmed = String(rawValue || '').trim();
+      return trimmed || '--';
+    }
+
+function initialsFromName(name) {
+      const parts = String(name || 'Guest').trim().split(/\s+/).filter(Boolean);
+      const first = parts[0] ? parts[0][0] : 'G';
+      const second = parts[1] ? parts[1][0] : (parts[0] && parts[0][1] ? parts[0][1] : 'R');
+      return (first + second).toUpperCase();
+    }
+
+    function bubbleClassFromName(name) {
+      const palette = [
+        'bg-blue-600 text-white',
+        'bg-slate-900 text-white',
+        'bg-emerald-600 text-white',
+        'bg-indigo-600 text-white',
+        'bg-cyan-600 text-white',
+        'bg-amber-500 text-white'
+      ];
+      const seed = String(name || 'Guest').split('').reduce((sum, char) => sum + char.charCodeAt(0), 0);
+      return palette[seed % palette.length];
+    }
+
+    let activeBookingIdx = null;
+
+    function openBookingModal(idx) {
+      const item = globalBookingsData[idx];
+      if (!item) return;
+      activeBookingIdx = idx;
+
+      const customerName = item.name || 'Guest';
+      const status = item.status || 'new';
+
+      // Avatar
+      const avatar = document.getElementById('bm-avatar');
+      avatar.textContent = initialsFromName(customerName);
+      avatar.className = `flex h-11 w-11 flex-none items-center justify-center rounded-2xl text-sm font-bold ${bubbleClassFromName(customerName)}`;
+
+      const raw = (key) => {
+        // Try exact key first, then case+space insensitive match
+        if (item[key] !== undefined && item[key] !== null && String(item[key]).trim() !== '') return String(item[key]).trim();
+        const normalised = key.replace(/\s+/g, '').toLowerCase();
+        const found = Object.keys(item).find(k => k.replace(/\s+/g, '').toLowerCase() === normalised);
+        const v = found ? item[found] : undefined;
+        return (v !== undefined && v !== null && String(v).trim() !== '') ? String(v).trim() : '--';
+      };
+
+      const bookingDate = item.timestamp
+        ? new Date(item.timestamp).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })
+        : '--';
+
+      document.getElementById('bm-name').textContent = customerName;
+      document.getElementById('bm-booked-on').textContent = 'Booked on ' + bookingDate;
+      document.getElementById('bm-package').textContent = raw('package');
+      document.getElementById('bm-traveldate').textContent = raw('travel date');
+      document.getElementById('bm-from').textContent = raw('travelling from');
+      document.getElementById('bm-triptype').textContent = raw('trip type');
+      document.getElementById('bm-people').textContent = raw('people');
+      document.getElementById('bm-days').textContent = raw('days');
+      document.getElementById('bm-budget').textContent = raw('budget');
+      document.getElementById('bm-email').textContent = raw('email');
+      document.getElementById('bm-phone').textContent = raw('phone');
+      document.getElementById('bm-notes').textContent = item.notes || 'No extra requirements shared yet.';
+
+      updateStatusButtons(status);
+
+      const modal = document.getElementById('booking-modal');
+      const panel = document.getElementById('booking-modal-panel');
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+      modal.classList.add('opacity-100', 'pointer-events-auto');
+      panel.classList.remove('translate-y-8', 'sm:scale-95');
+      panel.classList.add('translate-y-0', 'sm:scale-100');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('overflow-hidden');
+    }
+
+    function updateStatusButtons(status) {
+      const btnNew = document.getElementById('bm-btn-new');
+      const btnClosed = document.getElementById('bm-btn-closed');
+      const badge = document.getElementById('bm-status-badge');
+
+      if (status === 'closed') {
+        btnNew.className = 'flex-1 rounded-xl border-2 border-slate-200 bg-white py-2.5 text-sm font-semibold text-slate-500 transition hover:border-emerald-300 hover:text-emerald-600';
+        btnClosed.className = 'flex-1 rounded-xl border-2 border-slate-800 bg-slate-900 py-2.5 text-sm font-semibold text-white transition';
+        badge.textContent = 'Closed';
+        badge.className = 'inline-flex rounded-full border border-slate-300 bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600';
+      } else {
+        btnNew.className = 'flex-1 rounded-xl border-2 border-emerald-500 bg-emerald-500 py-2.5 text-sm font-semibold text-white transition';
+        btnClosed.className = 'flex-1 rounded-xl border-2 border-slate-200 bg-white py-2.5 text-sm font-semibold text-slate-500 transition hover:border-slate-800 hover:text-slate-800';
+        badge.textContent = 'New';
+        badge.className = 'inline-flex rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700';
+      }
+    }
+
+    async function setBookingStatus(status) {
+      if (activeBookingIdx === null) return;
+      const item = globalBookingsData[activeBookingIdx];
+      const rowNumber = item._rowNumber;
+      if (!rowNumber) return;
+      try {
+        const body = new URLSearchParams({ token: AUTH_TOKEN, sheetRowIndex: rowNumber, status: status });
+        const response = await fetch(APPS_SCRIPT_API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: body.toString()
+        });
+        const result = await response.json();
+        if (result.status === 'success') {
+          item.status = status;
+          updateStatusButtons(status);
+          renderTable(globalBookingsData);
+        } else {
+          alert('Failed to update status: ' + result.message);
+        }
+      } catch (e) {
+        alert('Network error while saving status. Check your Apps Script deployment.');
+      }
+    }
+
+    function closeBookingModal() {
+      const modal = document.getElementById('booking-modal');
+      const panel = document.getElementById('booking-modal-panel');
+      modal.classList.add('opacity-0', 'pointer-events-none');
+      modal.classList.remove('opacity-100', 'pointer-events-auto');
+      panel.classList.add('translate-y-8', 'sm:scale-95');
+      panel.classList.remove('translate-y-0', 'sm:scale-100');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('overflow-hidden');
+      activeBookingIdx = null;
+    }
+    async function fetchBookings() {
+      try {
+        const fetchUrl = `${APPS_SCRIPT_API_URL}?token=${AUTH_TOKEN}`;
+        const response = await fetch(fetchUrl);
+        const jsonResult = await response.json();
+
+        if (jsonResult.status === "success") {
+          globalBookingsData = jsonResult.data;
+          renderTable(globalBookingsData);
+          updateMetrics(globalBookingsData);
+        } else {
+          showError(`API Refusal Error: ${jsonResult.message}`);
+        }
+      } catch (err) {
+        showError("Network Endpoint Error. Ensure your web app deployment handles CORS and is set to run execution access as 'Anyone'.");
+      }
+    }
+
+    function renderTable(items) {
+      const tableBody = document.getElementById('bookings-table-body');
+      if (items.length === 0) {
+        tableBody.innerHTML = `<tr><td colspan="3" class="px-4 py-16 text-center"><div class="mx-auto max-w-sm rounded-2xl border border-slate-200 bg-slate-50 px-6 py-8 text-base font-semibold text-slate-700">No bookings found.</div></td></tr>`;
+        return;
+      }
+      tableBody.innerHTML = items.map((item, idx) => {
+        const customerName = item.name || 'Unknown';
+        const email = item.email || '--';
+        const phone = item.phone || '--';
+        const packageName = item.package || 'General Booking';
+        const travelDate = item.traveldate || item['travel date'] || 'TBD';
+        const travellingFrom = item.travellingfrom || item['travelling from'] || '--';
+        const tripType = item.triptype || item['trip type'] || '--';
+        const days = item.days || '--';
+        const people = item.people || '--';
+        const budget = item.budget || '--';
+        const status = item.status || 'new';
+        const initials = initialsFromName(customerName);
+        const bubbleClass = bubbleClassFromName(customerName);
+        const statusDot = status.toLowerCase() === 'closed' ? 'bg-slate-400' : 'bg-emerald-500';
+        const searchText = [customerName, email, phone, packageName, travelDate, travellingFrom, tripType, days, people, budget, status].join(' ').toLowerCase();
+        return `
+          <tr class="table-row-item group border-b border-slate-100 cursor-pointer transition hover:bg-green-50/40" onclick="openBookingModal(${idx})" data-search="${escapeHtml(searchText)}">
+            <td class="px-4 py-4 text-xs font-medium text-slate-400 w-10">${idx + 1}</td>
+            <td class="px-4 py-4 min-w-0">
+              <div class="flex items-center gap-3">
+                <div class="flex h-9 w-9 flex-none items-center justify-center rounded-xl text-xs font-bold ${bubbleClass}">${escapeHtml(initials)}</div>
+                <div class="min-w-0 flex-1">
+                  <div class="font-semibold text-slate-900 truncate max-w-[140px] sm:max-w-none">${escapeHtml(customerName)}</div>
+                  <div class="flex items-center gap-1.5 mt-0.5">
+                    <span class="h-1.5 w-1.5 rounded-full flex-none ${statusDot}"></span>
+                    <span class="text-[11px] text-slate-400 capitalize">${escapeHtml(status)}</span>
+                  </div>
+                  <span class="sr-only">${escapeHtml(email)} ${escapeHtml(phone)} ${escapeHtml(travellingFrom)} ${escapeHtml(tripType)} ${escapeHtml(days)} ${escapeHtml(people)} ${escapeHtml(budget)} ${escapeHtml(travelDate)}</span>
+                </div>
+              </div>
+            </td>
+            <td class="px-4 py-4 w-[45%]">
+              <span class="inline-block max-w-full rounded-full border border-green-200 bg-green-50 px-3 py-1 text-xs font-semibold text-green-700 truncate">${escapeHtml(packageName)}</span>
+            </td>
+          </tr>`;
+      }).join('');
+      const activeSearch = document.getElementById('search-input').value.trim();
+      if (activeSearch) filterTable();
+    }
+    function countTodayBookings(items) {
+      const today = new Date();
+      const todayStr = today.toLocaleDateString('en-CA'); // YYYY-MM-DD
+      return items.filter(item => {
+        const ts = item.timestamp;
+        if (!ts) return false;
+        const d = new Date(ts);
+        return !isNaN(d) && d.toLocaleDateString('en-CA') === todayStr;
+      }).length;
+    }
+
+    function updateMetrics(items) {
+      const total = items.length;
+      const todayCount = countTodayBookings(items);
+      const todayLabel = new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short' });
+      const todayText = todayCount === 0
+        ? `0 today (${todayLabel})`
+        : `${todayCount} booking${todayCount > 1 ? 's' : ''} today`;
+
+      document.getElementById('hero-total').innerText = total;
+      document.getElementById('hero-today-count').innerText = todayCount;
+      document.getElementById('hero-today-date').innerText = todayLabel;
+
+      document.getElementById('sidebar-total').innerText = total;
+      document.getElementById('sidebar-today').innerText = todayCount;
+      document.getElementById('sidebar-today-date').innerText = todayLabel;
+
+      document.getElementById('mobile-total').innerText = total;
+      document.getElementById('mobile-today').innerText = todayCount;
+      document.getElementById('mobile-today-date').innerText = todayLabel;
+    }
+    function filterTable() {
+      const searchVal = document.getElementById("search-input").value.toLowerCase();
+      const rows = document.querySelectorAll(".table-row-item");
+
+      rows.forEach((row) => {
+        const textBlob = row.textContent.toLowerCase();
+        row.style.display = textBlob.includes(searchVal) ? "" : "none";
+      });
+    }
+
+    function showError(msg) {
+      document.getElementById("bookings-table-body").innerHTML = `
+        <tr>
+          <td colspan="3" class="px-6 py-16 text-center text-red-600">
+            <div class="mx-auto max-w-md rounded-2xl border border-red-200 bg-red-50 px-6 py-8">
+              <div class="text-base font-semibold text-red-700">Unable to load live records</div>
+              <p class="mt-2 text-sm leading-6 text-red-600">${escapeHtml(msg)}</p>
+            </div>
+          </td>
+        </tr>
+      `;
+    }
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') {
+        closeBookingModal();
+        closeMobileNav();
+      }
+    });
+
+    window.onload = fetchBookings;
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
